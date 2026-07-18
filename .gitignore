@@ -46,4 +46,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-key.ts*.deb
+key.ts*.deb.vscode/
