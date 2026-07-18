@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/lib/auth/store'
 
 const DEFAULT_USER = {
@@ -9,8 +10,17 @@ const DEFAULT_USER = {
 }
 
 export function DesktopUserMenu() {
-  const { user, logout } = useAuthStore()
-  const isLoggedIn = !!user
+  const user = useAuthStore((s) => s.user)
+  const logout = useAuthStore((s) => s.logout)
+  const [hydrated, setHydrated] = useState(false)
+
+  useEffect(() => {
+    const unsub = useAuthStore.persist.onFinishHydration(() => setHydrated(true))
+    if (useAuthStore.persist.hasHydrated()) setHydrated(true)
+    return () => unsub()
+  }, [])
+
+  const isLoggedIn = hydrated && !!user
 
   const initials = isLoggedIn
     ? (user.firstName?.[0] ?? user.email[0]).toUpperCase()
