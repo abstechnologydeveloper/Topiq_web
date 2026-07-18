@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [age, setAge] = useState(16)
   const [grade, setGrade] = useState('SS3')
   const [board, setBoard] = useState('WAEC')
-  const { login } = useAuthStore()
+  const { login, updateOnboarding } = useAuthStore()
   const router = useRouter()
 
   const handleSocialLogin = async (provider: string) => {
@@ -20,6 +20,7 @@ export default function LoginPage() {
   }
 
   const handleOnboarding = () => {
+    updateOnboarding({ firstName, lastName, age, grade, board })
     router.push('/')
   }
 
