@@ -73,9 +73,11 @@ export default function LoginPage() {
                 <label className="block text-sm font-medium text-surface-700 mb-2">Age</label>
                 <div className="grid grid-cols-7 gap-1.5">
                   {AGES.slice(0, INITIAL_AGE_LIMIT).map((a) => (
-                    <PillButton key={a} selected={age === a} onClick={() => selectAge(a)}>
-                      {a}
-                    </PillButton>
+                    <div key={a} className="w-full">
+                      <PillButton selected={age === a} onClick={() => selectAge(a)}>
+                        {a}
+                      </PillButton>
+                    </div>
                   ))}
                   {!showAllAges ? (
                     <button
