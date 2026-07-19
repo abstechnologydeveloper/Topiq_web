@@ -95,7 +95,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
                 <div className="mt-2 h-1 bg-surface-100 rounded-full overflow-hidden">
                   <div className="h-full rounded-full" style={{
                     width: `${t.masteryScore}%`,
-                    backgroundColor: t.masteryScore >= 70 ? '#4ADE80' : t.masteryScore < 50 ? '#FBBF24' : '#7C3AED'
+                    backgroundColor: t.masteryScore >= 70 ? '#4ADE80' : t.masteryScore < 50 ? '#FBBF24' : 'var(--color-brand-400)'
                   }} />
                 </div>
                 <p className="text-xs text-surface-400 mt-1">{t.questions.length} questions · {t.flashcards.length} flashcards</p>
