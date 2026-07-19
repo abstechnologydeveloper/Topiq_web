@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AuthButton } from '@/components/auth/auth-button'
 import { DesktopUserMenu } from '@/components/auth/user-menu'
+import { ThemeProvider } from '@/components/theme/theme-provider'
 import { ThemeToggle } from '@/components/theme/theme-toggle'
 import { DesktopNav, MobileNav } from '@/components/navigation/sidebar-nav'
 import './globals.css'
@@ -18,7 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="font-sans min-h-screen bg-surface-50" suppressHydrationWarning>
-        {/* Desktop Sidebar - fixed */}
+        <ThemeProvider>
+          {/* Desktop Sidebar - fixed */}
         <aside className="hidden lg:flex flex-col fixed left-0 top-0 w-56 bg-surface-50 border-r border-surface-200 min-h-screen">
           <div className="p-5">
             <Link href="/" className="flex items-center gap-2 text-lg font-bold text-brand-600">
@@ -50,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <MobileNav />
         </div>
+        </ThemeProvider>
       </body>
     </html>
   )
