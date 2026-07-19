@@ -3,63 +3,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/auth/store'
+import { StepIndicator } from './components/step-indicator'
+import { PillButton } from './components/pill-button'
 
 const GRADES = ['JSS1', 'JSS2', 'JSS3', 'SS1', 'SS2', 'SS3', '100L', '200L', '300L', '400L', '500L']
 const BOARDS = ['None', 'WAEC', 'JAMB', 'NECO', 'GCE', 'IGCSE']
 const AGES = Array.from({ length: 14 }, (_, i) => i + 12)
-
-function StepIndicator({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="flex items-center gap-2 mb-8">
-      {Array.from({ length: total }, (_, i) => (
-        <div key={i} className="flex items-center gap-2 flex-1">
-          <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
-              i < current
-                ? 'bg-brand-600 text-white'
-                : i === current
-                  ? 'bg-brand-50 text-brand-700 border-2 border-brand-600'
-                  : 'bg-surface-100 text-surface-400'
-            }`}
-          >
-            {i < current ? '✓' : i + 1}
-          </div>
-          {i < total - 1 && (
-            <div
-              className={`flex-1 h-0.5 rounded transition-colors ${
-                i < current ? 'bg-brand-600' : 'bg-surface-200'
-              }`}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function PillButton({
-  selected,
-  onClick,
-  children,
-}: {
-  selected: boolean
-  onClick: () => void
-  children: React.ReactNode
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition ${
-        selected
-          ? 'bg-brand-50 border-brand-300 text-brand-700'
-          : 'border-surface-200 text-surface-600 hover:border-brand-200 hover:text-surface-700'
-      }`}
-    >
-      {children}
-    </button>
-  )
-}
 
 export default function LoginPage() {
   const [step, setStep] = useState<'login' | 'onboarding'>('login')
