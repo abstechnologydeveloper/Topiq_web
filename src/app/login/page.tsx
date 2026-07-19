@@ -9,7 +9,7 @@ import { PillButton } from './components/pill-button'
 const GRADES = ['JSS1', 'JSS2', 'JSS3', 'SS1', 'SS2', 'SS3', '100L', '200L', '300L', '400L', '500L']
 const BOARDS = ['None', 'WAEC', 'JAMB', 'NECO', 'GCE', 'IGCSE']
 const AGES = Array.from({ length: 39 }, (_, i) => i + 12)
-const INITIAL_AGE_LIMIT = 8
+const INITIAL_AGE_LIMIT = 14
 
 export default function LoginPage() {
   const [step, setStep] = useState<'login' | 'onboarding'>('login')
@@ -72,20 +72,31 @@ export default function LoginPage() {
               <div>
                 <label className="block text-sm font-medium text-surface-700 mb-2">Age</label>
                 <div className="flex flex-wrap gap-1.5">
-                  {(showAllAges ? AGES : AGES.slice(0, INITIAL_AGE_LIMIT)).map((a) => (
+                  {AGES.slice(0, INITIAL_AGE_LIMIT).map((a) => (
                     <PillButton key={a} selected={age === a} onClick={() => selectAge(a)}>
                       {a}
                     </PillButton>
                   ))}
-                  {!showAllAges && AGES.length > INITIAL_AGE_LIMIT && (
+                  {!showAllAges && (
                     <button
                       type="button"
                       onClick={() => setShowAllAges(true)}
                       className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-dashed border-surface-300 text-surface-500 hover:border-brand-300 hover:text-brand-600 transition"
                     >
-                      +{AGES.length - INITIAL_AGE_LIMIT} more
+                      25+
                     </button>
                   )}
+                  <div
+                    className={`flex flex-wrap gap-1.5 overflow-hidden transition-all duration-300 ease-out ${
+                      showAllAges ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    {AGES.slice(INITIAL_AGE_LIMIT).map((a) => (
+                      <PillButton key={a} selected={age === a} onClick={() => selectAge(a)}>
+                        {a}
+                      </PillButton>
+                    ))}
+                  </div>
                 </div>
               </div>
 
