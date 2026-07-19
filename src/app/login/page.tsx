@@ -8,7 +8,8 @@ import { PillButton } from './components/pill-button'
 
 const GRADES = ['JSS1', 'JSS2', 'JSS3', 'SS1', 'SS2', 'SS3', '100L', '200L', '300L', '400L', '500L']
 const BOARDS = ['None', 'WAEC', 'JAMB', 'NECO', 'GCE', 'IGCSE']
-const AGES = Array.from({ length: 14 }, (_, i) => i + 12)
+const AGES = Array.from({ length: 39 }, (_, i) => i + 12)
+const INITIAL_AGE_LIMIT = 8
 
 export default function LoginPage() {
   const [step, setStep] = useState<'login' | 'onboarding'>('login')
@@ -17,6 +18,7 @@ export default function LoginPage() {
   const [age, setAge] = useState(16)
   const [grade, setGrade] = useState('SS3')
   const [board, setBoard] = useState('WAEC')
+  const [showAllAges, setShowAllAges] = useState(false)
   const { login, updateOnboarding } = useAuthStore()
   const router = useRouter()
 
@@ -28,6 +30,11 @@ export default function LoginPage() {
   const handleOnboarding = () => {
     updateOnboarding({ firstName, lastName, age, grade, board })
     router.push('/')
+  }
+
+  const selectAge = (value: number) => {
+    setAge(value)
+    if (value >= AGES[INITIAL_AGE_LIMIT]) setShowAllAges(true)
   }
 
   if (step === 'onboarding') {
@@ -65,11 +72,20 @@ export default function LoginPage() {
               <div>
                 <label className="block text-sm font-medium text-surface-700 mb-2">Age</label>
                 <div className="flex flex-wrap gap-1.5">
-                  {AGES.map((a) => (
-                    <PillButton key={a} selected={age === a} onClick={() => setAge(a)}>
+                  {(showAllAges ? AGES : AGES.slice(0, INITIAL_AGE_LIMIT)).map((a) => (
+                    <PillButton key={a} selected={age === a} onClick={() => selectAge(a)}>
                       {a}
                     </PillButton>
                   ))}
+                  {!showAllAges && AGES.length > INITIAL_AGE_LIMIT && (
+                    <button
+                      type="button"
+                      onClick={() => setShowAllAges(true)}
+                      className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-dashed border-surface-300 text-surface-500 hover:border-brand-300 hover:text-brand-600 transition"
+                    >
+                      +{AGES.length - INITIAL_AGE_LIMIT} more
+                    </button>
+                  )}
                 </div>
               </div>
 
