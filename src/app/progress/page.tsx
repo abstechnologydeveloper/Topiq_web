@@ -1,57 +1,69 @@
-import { SUBJECTS, TOPICS, STATS } from '@/lib/data'
+'use client'
+
+import { SUBJECTS, TOPICS } from '@/lib/data'
+import { Eyebrow, PageTitle, StatGrid } from '@/components/ui/shared'
+import Link from 'next/link'
 
 export default function ProgressPage() {
-  const getBarColor = (s: number) => s >= 70 ? 'bg-green-500' : s < 50 ? 'bg-amber-400' : 'bg-brand-600'
+  const avgMastery = Math.round(SUBJECTS.reduce((a, s) => a + s.masteryScore, 0) / SUBJECTS.length)
+  const totalQ = TOPICS.reduce((a, t) => a + t.questions.length, 0)
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-surface-900">Your Progress</h1>
-      <p className="mt-2 text-surface-500">Keep it up — every day counts toward mastery.</p>
+      <Link href="/" className="flex items-center gap-2 text-ash text-[13px] font-semibold mb-3.5 w-fit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Discover
+      </Link>
+      <Eyebrow>This term</Eyebrow>
+      <PageTitle title="Your progress" sub="Grounded in what you've actually covered, not a guess." />
 
-      <div className="grid grid-cols-3 gap-3 mt-6">
-        <div className="rounded-lg border bg-surface-50 p-4"><p className="text-xs text-surface-400">Answered</p><p className="text-2xl font-bold text-surface-900">{STATS.answered}</p></div>
-        <div className="rounded-lg border bg-surface-50 p-4"><p className="text-xs text-surface-400">Mastered</p><p className="text-2xl font-bold text-surface-900">{STATS.mastered}</p></div>
-        <div className="rounded-lg border bg-surface-50 p-4"><p className="text-xs text-surface-400">Streak</p><p className="text-2xl font-bold text-surface-900">{STATS.streak}d</p></div>
+      <div className="flex items-center gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3.5 mb-5 cursor-pointer"
+        onClick={() => window.location.href = '/subscription'}>
+        <span className="text-[22px]">🔥</span>
+        <div>
+          <div className="font-bold text-[13.5px] text-surface-900">Free plan</div>
+          <div className="text-[11.5px] text-ash">Upgrade to Plus for unlimited Sabi AI + mock exams</div>
+        </div>
       </div>
 
-      <section className="mt-6">
-        <h2 className="text-lg font-semibold text-surface-900 mb-2">Activity Heatmap</h2>
-        <div className="flex gap-[2px] overflow-x-auto pb-2">
-          {Array.from({ length: 84 }, (_, i) => {
-            const lvl = (i * 7 + 5) % 5
-            const colors = ['bg-surface-100', 'bg-purple-200', 'bg-purple-400', 'bg-purple-600', 'bg-purple-900']
-            return <div key={i} className={`w-3 h-3 rounded-sm flex-shrink-0 ${colors[lvl]}`} />
-          })}
-        </div>
-      </section>
+      <StatGrid stats={[
+        { num: '12', lbl: 'day streak' },
+        { num: totalQ.toString(), lbl: 'questions asked' },
+        { num: `${avgMastery}%`, lbl: 'avg. mastery' },
+      ]} />
 
-      <section className="mt-6">
-        <h2 className="text-lg font-semibold text-surface-900 mb-3">Per Subject</h2>
-        <div className="space-y-3">
-          {SUBJECTS.map(s => {
-            const tops = TOPICS.filter(t => t.subjectId === s.id)
-            return (
-              <div key={s.id} className="rounded-xl border bg-surface-50 p-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-semibold text-surface-900">{s.icon} {s.name}</h3>
-                  <span className="text-sm font-bold text-brand-600">{s.masteryScore}%</span>
-                </div>
-                <div className="mt-2 h-1 bg-surface-100 rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${getBarColor(s.masteryScore)}`} style={{ width: `${s.masteryScore}%` }} />
-                </div>
-                <p className="text-xs text-surface-400 mt-1">{s.questionCount} questions · {s.topicCount} topics</p>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {tops.map(t => (
-                    <span key={t.id} className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${t.masteryScore >= 70 ? 'bg-green-50 text-green-700' : t.masteryScore < 50 ? 'bg-amber-50 text-amber-700' : 'bg-brand-50 text-brand-700'}`}>
-                      {t.name}: {t.masteryScore}%
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </section>
+      <Eyebrow>Study activity, last 7 days</Eyebrow>
+      <div className="grid grid-cols-[88px_repeat(7,1fr)] gap-1.5 items-center mb-5">
+        <div />
+        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+          <div key={i} className="text-[9.5px] text-ash text-center font-mono">{d}</div>
+        ))}
+        {['8am', '10am', '12pm', '2pm', '4pm', '6pm'].map((t, i) => (
+          <>
+            <div key={t} className="text-[11.5px] font-bold text-ash">{t}</div>
+            {[0, 1, 2, 3, 4, 5, 6].map((d) => {
+              const levels = [0, 1, 2, 1, 0, 0, 0, 1, 3, 2, 1, 0, 2, 2, 1, 0, 0, 1, 3, 2, 1, 0, 2, 2, 1, 0, 0, 1, 3, 2, 1, 0, 2, 2, 1, 0, 0, 1, 3, 2, 1, 0]
+              const idx = i * 7 + d
+              const lvl = levels[idx % levels.length]
+              const colors = ['bg-paper-dim', 'bg-brand-50', 'bg-brand-200', 'bg-brand-600']
+              return <div key={d} className={`aspect-square rounded-[5px] ${colors[lvl] || 'bg-paper-dim'}`} />
+            })}
+          </>
+        ))}
+      </div>
+
+      <Eyebrow>Mastery by subject</Eyebrow>
+      <div className="bg-surface-50 border border-ash-line rounded-[--radius]">
+        {SUBJECTS.map(s => (
+          <div key={s.id} className="flex items-center gap-3 py-3 px-1 border-b border-ash-line last:border-b-0">
+            <div className="text-[13px] font-semibold text-surface-900 w-[104px] shrink-0">{s.icon} {s.name}</div>
+            <div className="flex-1 h-[6px] rounded-full bg-ash-line overflow-hidden">
+              <div className="h-full rounded-full bg-brand-600 transition-all" style={{ width: `${s.masteryScore}%` }} />
+            </div>
+            <div className="font-mono text-[11px] text-ash w-[30px] text-right shrink-0">{s.masteryScore}%</div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

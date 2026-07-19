@@ -1,21 +1,29 @@
+'use client'
+
 import Link from 'next/link'
 import { SUBJECTS } from '@/lib/data'
+import { Eyebrow, PageTitle } from '@/components/ui/shared'
 
 export default function SubjectsPage() {
   return (
     <div>
-      <h1 className="text-3xl font-bold text-surface-900">Subjects</h1>
-      <p className="mt-2 text-surface-500">Pick a subject to browse its topic tree.</p>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <Eyebrow>Your library</Eyebrow>
+      <PageTitle title="Subjects" sub="Every subject, grounded in your syllabus — no board attached to learning." />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {SUBJECTS.map(s => (
-          <Link key={s.id} href={`/subjects/${s.id}`} className="group rounded-xl border bg-surface-50 p-5 shadow-sm hover:shadow-md hover:border-brand-300 transition">
-            <div className="w-11 h-11 rounded-lg flex items-center justify-center text-2xl mb-3" style={{ backgroundColor: `${s.colorHex}18` }}>{s.icon}</div>
-            <h3 className="text-lg font-semibold text-surface-900">{s.name}</h3>
-            <p className="text-sm text-surface-400 mt-1">{s.topicCount} topics · {s.questionCount} questions</p>
-            <div className="mt-3 h-1 bg-surface-100 rounded-full overflow-hidden">
-              <div className="h-full rounded-full bg-brand-600 transition-all" style={{ width: `${s.masteryScore}%` }} />
+          <Link key={s.id} href={`/subjects/${s.id}`}
+            className="flex items-center gap-3.5 bg-surface-50 border border-ash-line rounded-[--radius] p-3.5 cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(20,23,43,0.08)] transition-all">
+            <div className="w-[44px] h-[44px] rounded-[12px] flex items-center justify-center text-[22px] shrink-0" style={{ backgroundColor: `${s.colorHex}18` }}>
+              {s.icon}
             </div>
-            <p className="text-xs text-brand-600 mt-1 font-medium">{s.masteryScore}% mastery</p>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-[15.5px] text-surface-900">{s.name}</div>
+              <div className="text-[12.5px] text-ash">{s.topicCount} topics · {s.questionCount} questions</div>
+            </div>
+            <svg className="text-ash shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
           </Link>
         ))}
       </div>

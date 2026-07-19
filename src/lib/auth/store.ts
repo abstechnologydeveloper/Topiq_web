@@ -10,6 +10,14 @@ interface User {
   age?: number
   grade?: string
   board?: string
+  role?: string
+  username?: string
+  dob?: string
+  phone?: string
+  curriculum?: string
+  gender?: string
+  track?: string
+  schoolCode?: string
 }
 
 interface AuthState {
@@ -18,7 +26,7 @@ interface AuthState {
   isLoading: boolean
   login: (email: string, password: string) => Promise<void>
   logout: () => void
-  updateOnboarding: (data: { firstName: string; lastName: string; age: number; grade: string; board: string }) => void
+  updateOnboarding: (data: Partial<Omit<User, 'id' | 'email'>>) => void
 }
 
 export const useAuthStore = create<AuthState>()(
