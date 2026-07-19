@@ -77,7 +77,7 @@ export default function LoginPage() {
                       {a}
                     </PillButton>
                   ))}
-                  {!showAllAges && (
+                  {!showAllAges ? (
                     <button
                       type="button"
                       onClick={() => setShowAllAges(true)}
@@ -85,18 +85,19 @@ export default function LoginPage() {
                     >
                       25+
                     </button>
+                  ) : (
+                    AGES.slice(INITIAL_AGE_LIMIT).map((a, i) => (
+                      <div
+                        key={a}
+                        className="animate-fadeIn"
+                        style={{ animationDelay: `${i * 30}ms`, animationFillMode: 'backwards' }}
+                      >
+                        <PillButton selected={age === a} onClick={() => selectAge(a)}>
+                          {a}
+                        </PillButton>
+                      </div>
+                    ))
                   )}
-                  <div
-                    className={`flex flex-wrap gap-1.5 overflow-hidden transition-all duration-300 ease-out ${
-                      showAllAges ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                    }`}
-                  >
-                    {AGES.slice(INITIAL_AGE_LIMIT).map((a) => (
-                      <PillButton key={a} selected={age === a} onClick={() => selectAge(a)}>
-                        {a}
-                      </PillButton>
-                    ))}
-                  </div>
                 </div>
               </div>
 
