@@ -17,11 +17,11 @@ export default function Home() {
       </div>
 
       <div className="flex gap-2 mb-6">
-        <div className="flex-1 rounded-xl border bg-white px-3 py-2.5 flex items-center gap-2">
+        <div className="flex-1 rounded-xl border bg-surface-50 px-3 py-2.5 flex items-center gap-2">
           <span className="text-lg font-extrabold text-surface-900">{STATS.answered}</span>
           <span className="text-xs text-surface-400">questions</span>
         </div>
-        <div className="flex-1 rounded-xl border bg-white px-3 py-2.5 flex items-center gap-2">
+        <div className="flex-1 rounded-xl border bg-surface-50 px-3 py-2.5 flex items-center gap-2">
           <span className="text-lg font-extrabold text-surface-900">{avgMastery}%</span>
           <span className="text-xs text-surface-400">avg. mastery</span>
         </div>
@@ -37,7 +37,7 @@ export default function Home() {
         <input
           type="text"
           placeholder='Search &quot;photosynthesis&quot;, &quot;simultaneous equations&quot;...'
-          className="w-full rounded-xl border bg-white px-4 py-2.5 text-sm outline-none focus:border-brand-400"
+          className="w-full rounded-xl border bg-surface-50 px-4 py-2.5 text-sm outline-none focus:border-brand-400"
           onKeyDown={e => {
             if (e.key === 'Enter') {
               const v = (e.target as HTMLInputElement).value.toLowerCase()
@@ -48,7 +48,7 @@ export default function Home() {
         />
         <div className="flex flex-wrap gap-1.5 mt-3">
           {['Photosynthesis', 'Simultaneous equations', "Newton's laws", 'Supply & demand', 'Mole concept'].map(c => (
-            <Link key={c} href="/subjects" className="px-2.5 py-1 rounded-full bg-white border text-xs font-medium text-surface-600 hover:border-brand-300 hover:text-brand-600">{c}</Link>
+            <Link key={c} href="/subjects" className="px-2.5 py-1 rounded-full bg-surface-50 border text-xs font-medium text-surface-600 hover:border-brand-300 hover:text-brand-600">{c}</Link>
           ))}
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function Home() {
           {weak.map((t) => {
             const subj = SUBJECTS.find(s => s.id === t.subjectId)
             return (
-              <Link key={t.id} href={`/subjects/${t.subjectId}`} className="flex items-center gap-3 rounded-xl border bg-white p-3 hover:border-brand-300 transition">
+              <Link key={t.id} href={`/subjects/${t.subjectId}`} className="flex items-center gap-3 rounded-xl border bg-surface-50 p-3 hover:border-brand-300 transition">
                 <span className="text-lg">{subj?.icon}</span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-surface-900">{t.name}</p>
@@ -77,7 +77,7 @@ export default function Home() {
 
       <section className="mb-6">
         <h2 className="text-base font-bold text-surface-900 mb-2">Continue where you left off</h2>
-        <Link href={`/subjects/${SUBJECTS[0].id}`} className="flex items-center gap-3 rounded-xl border bg-white p-3.5 hover:border-brand-300 transition">
+        <Link href={`/subjects/${SUBJECTS[0].id}`} className="flex items-center gap-3 rounded-xl border bg-surface-50 p-3.5 hover:border-brand-300 transition">
           <svg className="w-5 h-5 text-surface-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span className="flex-1 text-sm font-semibold text-surface-900">{SUBJECTS[0].icon} {SUBJECTS[0].name} — Photosynthesis</span>
           <span className="text-sm font-semibold text-brand-600">Resume</span>
@@ -92,7 +92,7 @@ export default function Home() {
             { s: SUBJECTS.find(s => s.id === 'physics'), topic: "Newton's laws of motion", meta: 'WAEC · 2,880 students' },
             { s: SUBJECTS.find(s => s.id === 'chemistry'), topic: 'The mole concept', meta: 'NECO · 2,410 students' },
           ].map((t, i) => (
-            <Link key={i} href={`/subjects/${t.s!.id}`} className="flex items-center gap-3 rounded-xl border bg-white p-3 hover:border-brand-300 transition">
+            <Link key={i} href={`/subjects/${t.s!.id}`} className="flex items-center gap-3 rounded-xl border bg-surface-50 p-3 hover:border-brand-300 transition">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg" style={{ backgroundColor: t.s!.colorHex + '18' }}>{t.s!.icon}</div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-surface-900">{t.topic}</p>

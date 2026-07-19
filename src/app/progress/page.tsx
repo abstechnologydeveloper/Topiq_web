@@ -9,9 +9,9 @@ export default function ProgressPage() {
       <p className="mt-2 text-surface-500">Keep it up — every day counts toward mastery.</p>
 
       <div className="grid grid-cols-3 gap-3 mt-6">
-        <div className="rounded-lg border bg-white p-4"><p className="text-xs text-surface-400">Answered</p><p className="text-2xl font-bold text-surface-900">{STATS.answered}</p></div>
-        <div className="rounded-lg border bg-white p-4"><p className="text-xs text-surface-400">Mastered</p><p className="text-2xl font-bold text-surface-900">{STATS.mastered}</p></div>
-        <div className="rounded-lg border bg-white p-4"><p className="text-xs text-surface-400">Streak</p><p className="text-2xl font-bold text-surface-900">{STATS.streak}d</p></div>
+        <div className="rounded-lg border bg-surface-50 p-4"><p className="text-xs text-surface-400">Answered</p><p className="text-2xl font-bold text-surface-900">{STATS.answered}</p></div>
+        <div className="rounded-lg border bg-surface-50 p-4"><p className="text-xs text-surface-400">Mastered</p><p className="text-2xl font-bold text-surface-900">{STATS.mastered}</p></div>
+        <div className="rounded-lg border bg-surface-50 p-4"><p className="text-xs text-surface-400">Streak</p><p className="text-2xl font-bold text-surface-900">{STATS.streak}d</p></div>
       </div>
 
       <section className="mt-6">
@@ -31,7 +31,7 @@ export default function ProgressPage() {
           {SUBJECTS.map(s => {
             const tops = TOPICS.filter(t => t.subjectId === s.id)
             return (
-              <div key={s.id} className="rounded-xl border bg-white p-4">
+              <div key={s.id} className="rounded-xl border bg-surface-50 p-4">
                 <div className="flex justify-between items-center">
                   <h3 className="font-semibold text-surface-900">{s.icon} {s.name}</h3>
                   <span className="text-sm font-bold text-brand-600">{s.masteryScore}%</span>

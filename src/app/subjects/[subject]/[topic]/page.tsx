@@ -15,7 +15,7 @@ export default async function TopicPage({ params }: { params: Promise<{ subject:
         <p className="mt-2 text-surface-500">Concept explainer and practice questions go here.</p>
       </div>
 
-      <section className="mt-8 rounded-xl border bg-white p-6 shadow-sm">
+      <section className="mt-8 rounded-xl border bg-surface-50 p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-surface-900">Concept Explainer</h2>
         <p className="mt-2 text-surface-600">A short, clear explanation of this topic — video, text, and voice narration available.</p>
         <div className="mt-4 h-40 rounded-lg bg-surface-100 flex items-center justify-center text-surface-400 text-sm">
@@ -26,7 +26,7 @@ export default async function TopicPage({ params }: { params: Promise<{ subject:
       <section className="mt-8">
         <h2 className="text-lg font-semibold text-surface-900">Practice Questions</h2>
         <p className="mt-1 text-sm text-surface-500">Questions move from foundational to advanced inside this topic.</p>
-        <div className="mt-4 rounded-xl border bg-white p-6 shadow-sm">
+        <div className="mt-4 rounded-xl border bg-surface-50 p-6 shadow-sm">
           <p className="text-sm text-surface-400">Question 1 of 150 — foundational difficulty</p>
           <p className="mt-2 text-surface-900 font-medium">What is the primary function of this concept in the broader subject?</p>
           <div className="mt-4 flex gap-3">

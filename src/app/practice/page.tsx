@@ -73,7 +73,7 @@ export default function PracticePage() {
           </div>
           <span className="text-xs font-semibold text-brand-600">Score: {score}</span>
         </div>
-        <div className="rounded-xl border bg-white p-6">
+        <div className="rounded-xl border bg-surface-50 p-6">
           <p className="text-lg font-semibold text-surface-900 mb-4">{q.text}</p>
           <div className="space-y-2">
             {q.options.map((o: string, i: number) => {
@@ -123,7 +123,7 @@ export default function PracticePage() {
             { flag: '📗', name: 'NECO', sub: 'Nigeria · 3 subjects' },
             { flag: '📘', name: 'GCE', sub: 'Nigeria & West Africa · 3 subjects' },
           ].map(b => (
-            <div key={b.name} onClick={() => startSubject(SUBJECTS[0].id)} className="flex items-center gap-3 rounded-lg border bg-white p-3 cursor-pointer hover:border-brand-300 transition">
+            <div key={b.name} onClick={() => startSubject(SUBJECTS[0].id)} className="flex items-center gap-3 rounded-lg border bg-surface-50 p-3 cursor-pointer hover:border-brand-300 transition">
               <span className="text-xl">{b.flag}</span>
               <div className="flex-1"><p className="font-semibold text-sm text-surface-900">{b.name}</p><p className="text-xs text-surface-400">{b.sub}</p></div>
               <span className="text-brand-600 font-semibold text-sm">Start →</span>
@@ -139,7 +139,7 @@ export default function PracticePage() {
             { flag: '🌍', name: 'IGCSE', sub: 'International · 4 subjects' },
             { flag: '🇬🇧', name: 'GCSE / A-Levels', sub: 'UK · 4 subjects' },
           ].map(b => (
-            <div key={b.name} onClick={() => startSubject(SUBJECTS[0].id)} className="flex items-center gap-3 rounded-lg border bg-white p-3 cursor-pointer hover:border-brand-300 transition">
+            <div key={b.name} onClick={() => startSubject(SUBJECTS[0].id)} className="flex items-center gap-3 rounded-lg border bg-surface-50 p-3 cursor-pointer hover:border-brand-300 transition">
               <span className="text-xl">{b.flag}</span>
               <div className="flex-1"><p className="font-semibold text-sm text-surface-900">{b.name}</p><p className="text-xs text-surface-400">{b.sub}</p></div>
               <span className="text-brand-600 font-semibold text-sm">Start →</span>
@@ -153,7 +153,7 @@ export default function PracticePage() {
         <p className="text-sm text-surface-500 mb-3">No exam board — just practise.</p>
         <div className="space-y-2">
           {SUBJECTS.map(s => (
-            <div key={s.id} onClick={() => startSubject(s.id)} className="flex items-center gap-3 rounded-lg border bg-white p-3 cursor-pointer hover:border-brand-300 transition">
+            <div key={s.id} onClick={() => startSubject(s.id)} className="flex items-center gap-3 rounded-lg border bg-surface-50 p-3 cursor-pointer hover:border-brand-300 transition">
               <span className="text-xl">{s.icon}</span>
               <div className="flex-1"><p className="font-semibold text-sm text-surface-900">{s.name}</p><p className="text-xs text-surface-400">{s.questionCount} questions</p></div>
               <span className="text-brand-600 font-semibold text-sm">Start →</span>

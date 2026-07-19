@@ -8,7 +8,7 @@ export default function SubjectsPage() {
       <p className="mt-2 text-surface-500">Pick a subject to browse its topic tree.</p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {SUBJECTS.map(s => (
-          <Link key={s.id} href={`/subjects/${s.id}`} className="group rounded-xl border bg-white p-5 shadow-sm hover:shadow-md hover:border-brand-300 transition">
+          <Link key={s.id} href={`/subjects/${s.id}`} className="group rounded-xl border bg-surface-50 p-5 shadow-sm hover:shadow-md hover:border-brand-300 transition">
             <div className="w-11 h-11 rounded-lg flex items-center justify-center text-2xl mb-3" style={{ backgroundColor: `${s.colorHex}18` }}>{s.icon}</div>
             <h3 className="text-lg font-semibold text-surface-900">{s.name}</h3>
             <p className="text-sm text-surface-400 mt-1">{s.topicCount} topics · {s.questionCount} questions</p>

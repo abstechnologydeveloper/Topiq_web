@@ -87,7 +87,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
         {tab === 'Overview' && (
           <div className="space-y-3">
             {topics.map(t => (
-              <Link key={t.id} href={`/subjects/${slug}/${t.id}`} className="block rounded-xl border bg-white p-4 hover:border-brand-300 transition">
+              <Link key={t.id} href={`/subjects/${slug}/${t.id}`} className="block rounded-xl border bg-surface-50 p-4 hover:border-brand-300 transition">
                 <div className="flex justify-between items-center">
                   <h3 className="font-semibold text-surface-900">{t.name}</h3>
                   <span className="text-sm font-semibold text-brand-600">{t.masteryScore}%</span>
@@ -108,7 +108,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
         {tab === 'Learn' && (
           <div className="space-y-3">
             {topics.map(t => (
-              <Link key={t.id} href={`/subjects/${slug}/${t.id}`} className="block rounded-xl border bg-white p-4 hover:border-brand-300 transition">
+              <Link key={t.id} href={`/subjects/${slug}/${t.id}`} className="block rounded-xl border bg-surface-50 p-4 hover:border-brand-300 transition">
                 <h3 className="font-semibold text-surface-900">{t.name}</h3>
                 <p className="text-xs text-surface-400 mt-1">Mastery: {t.masteryScore}% · {t.questions.length} practice Qs</p>
                 <div className="mt-2 p-3 rounded-lg text-sm leading-relaxed text-surface-600" style={{ backgroundColor: `${color}14` }}>
@@ -140,7 +140,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
             ) : allCards.length > 0 && fcAgain.length > 0 ? (
               <>
                 <p className="text-xs text-surface-400 mb-3">Card {fcIdx + 1}/{allCards.length}</p>
-                <div onClick={() => setFlipped(!flipped)} className="rounded-xl border bg-white p-8 min-h-[120px] flex items-center justify-center cursor-pointer hover:border-brand-300 transition select-none">
+                <div onClick={() => setFlipped(!flipped)} className="rounded-xl border bg-surface-50 p-8 min-h-[120px] flex items-center justify-center cursor-pointer hover:border-brand-300 transition select-none">
                   <p className={`text-lg font-semibold ${flipped ? 'text-brand-600' : 'text-surface-900'}`}>
                     {flipped ? allCards[fcAgain[fcIdx % fcAgain.length]]?.answer : allCards[fcAgain[fcIdx % fcAgain.length]]?.question}
                   </p>
@@ -164,7 +164,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
             {papers.length === 0 ? (
               <p className="text-surface-400 py-8 text-center">No past papers available yet.</p>
             ) : papers.map((p, i) => (
-              <div key={i} className="rounded-xl border bg-white p-4 cursor-pointer hover:border-brand-300 transition" onClick={() => { setTab('Ask'); setAskA(p.answer); setAskRef(p.reference); setAskQ('') }}>
+              <div key={i} className="rounded-xl border bg-surface-50 p-4 cursor-pointer hover:border-brand-300 transition" onClick={() => { setTab('Ask'); setAskA(p.answer); setAskRef(p.reference); setAskQ('') }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}18` }}>
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>

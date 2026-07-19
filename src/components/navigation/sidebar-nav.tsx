@@ -56,7 +56,7 @@ export function MobileNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="lg:hidden sticky bottom-0 bg-white border-t z-50 flex">
+    <nav className="lg:hidden sticky bottom-0 bg-surface-50 border-t z-50 flex">
       {MOBILE_LINKS.map(({ href, label, icon }) => {
         const active = isActive(href, pathname)
         return (
@@ -71,7 +71,7 @@ export function MobileNav() {
             {label}
           </Link>
         )
-      })}/
+      })}
     </nav>
   )
 }

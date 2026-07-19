@@ -27,7 +27,7 @@ export default function LoginPage() {
   if (step === 'onboarding') {
     return (
       <div className="flex min-h-[80vh] items-center justify-center">
-        <div className="w-full max-w-md rounded-2xl border bg-white p-8 shadow-sm">
+        <div className="w-full max-w-md rounded-2xl border bg-surface-50 p-8 shadow-sm">
           <div className="mb-6">
             <div className="text-sm text-surface-400 mb-4">Step 2/2</div>
             <h1 className="text-2xl font-bold text-surface-900">Tell us about yourself</h1>
@@ -77,7 +77,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-[80vh] items-center justify-center">
-      <div className="w-full max-w-md rounded-2xl border bg-white p-8 shadow-sm text-center">
+      <div className="w-full max-w-md rounded-2xl border bg-surface-50 p-8 shadow-sm text-center">
         <div className="mb-8">
           <div className="w-16 h-16 bg-brand-600 text-white rounded-2xl flex items-center justify-center text-2xl font-extrabold mx-auto mb-4">T</div>
           <h1 className="text-2xl font-bold text-surface-900">Welcome to Topiq</h1>

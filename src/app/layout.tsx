@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AuthButton } from '@/components/auth/auth-button'
 import { DesktopUserMenu } from '@/components/auth/user-menu'
+import { ThemeToggle } from '@/components/theme/theme-toggle'
 import { DesktopNav, MobileNav } from '@/components/navigation/sidebar-nav'
 import './globals.css'
 
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="font-sans min-h-screen bg-surface-50" suppressHydrationWarning>
         {/* Desktop Sidebar - fixed */}
-        <aside className="hidden lg:flex flex-col fixed left-0 top-0 w-56 bg-white border-r border-surface-200 min-h-screen">
+        <aside className="hidden lg:flex flex-col fixed left-0 top-0 w-56 bg-surface-50 border-r border-surface-200 min-h-screen">
           <div className="p-5">
             <Link href="/" className="flex items-center gap-2 text-lg font-bold text-brand-600">
               <span className="w-8 h-8 bg-brand-600 text-white rounded-lg flex items-center justify-center text-sm font-extrabold">T</span>
@@ -26,15 +27,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
           <DesktopNav />
-          <DesktopUserMenu />
+          <div className="mt-auto">
+            <div className="px-3 py-2 flex items-center justify-end">
+              <ThemeToggle />
+            </div>
+            <DesktopUserMenu />
+          </div>
         </aside>
 
         {/* Main */}
         <div className="lg:ml-56 flex flex-col min-w-0 min-h-screen">
-          <header className="lg:hidden sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
+          <header className="lg:hidden sticky top-0 z-50 border-b bg-surface-50/95 backdrop-blur">
             <div className="flex h-14 items-center justify-between px-4">
               <Link href="/" className="text-lg font-bold text-brand-600">Topiq</Link>
-              <AuthButton />
+              <div className="flex items-center gap-1">
+                <ThemeToggle />
+                <AuthButton />
+              </div>
             </div>
           </header>
           <main className="flex-1 px-4 py-6 lg:px-8 lg:py-8 max-w-5xl mx-auto w-full">{children}</main>

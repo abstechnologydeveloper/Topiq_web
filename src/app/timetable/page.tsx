@@ -95,7 +95,7 @@ export default function TimetablePage() {
             { icon: '📖', title: 'English essay: write draft', due: 'Friday', color: '#F59E0B' },
             { icon: '📐', title: 'Mathematics algebra revision set B', due: 'Next Monday', color: '#E91E63' },
           ].map((t, i) => (
-            <div key={i} className="flex items-center gap-3 rounded-xl border bg-white p-3">
+            <div key={i} className="flex items-center gap-3 rounded-xl border bg-surface-50 p-3">
               <div className="w-9 h-9 rounded-full flex items-center justify-center text-base" style={{ backgroundColor: t.color + '20' }}>{t.icon}</div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-surface-900">{t.title}</p>
@@ -111,7 +111,7 @@ export default function TimetablePage() {
         <div>
           <div className="space-y-3">
             {DEADLINES.map((d, i) => (
-              <div key={i} className="flex items-center gap-4 rounded-xl border bg-white p-4">
+              <div key={i} className="flex items-center gap-4 rounded-xl border bg-surface-50 p-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ backgroundColor: d.colorHex + '20' }}>{d.icon}</div>
                 <div className="flex-1">
                   <p className="font-semibold text-sm text-surface-900">{d.title}</p>
