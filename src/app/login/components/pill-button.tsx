@@ -11,7 +11,7 @@ export function PillButton({
     <button
       type="button"
       onClick={onClick}
-      className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition ${
+      className={`w-full px-3.5 py-1.5 rounded-full text-xs font-medium border transition ${
         selected
           ? 'bg-brand-50 border-brand-300 text-brand-700'
           : 'border-surface-200 text-surface-600 hover:border-brand-200 hover:text-surface-700'

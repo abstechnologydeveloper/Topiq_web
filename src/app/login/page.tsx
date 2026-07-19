@@ -71,7 +71,7 @@ export default function LoginPage() {
 
               <div>
                 <label className="block text-sm font-medium text-surface-700 mb-2">Age</label>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="grid grid-cols-7 gap-1.5">
                   {AGES.slice(0, INITIAL_AGE_LIMIT).map((a) => (
                     <PillButton key={a} selected={age === a} onClick={() => selectAge(a)}>
                       {a}
@@ -81,7 +81,7 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowAllAges(true)}
-                      className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-dashed border-surface-300 text-surface-500 hover:border-brand-300 hover:text-brand-600 transition"
+                      className="w-full px-3.5 py-1.5 rounded-full text-xs font-medium border border-dashed border-surface-300 text-surface-500 hover:border-brand-300 hover:text-brand-600 transition text-center"
                     >
                       25+
                     </button>
@@ -89,7 +89,7 @@ export default function LoginPage() {
                     AGES.slice(INITIAL_AGE_LIMIT).map((a, i) => (
                       <div
                         key={a}
-                        className="animate-fadeIn"
+                        className="animate-fadeIn w-full"
                         style={{ animationDelay: `${i * 30}ms`, animationFillMode: 'backwards' }}
                       >
                         <PillButton selected={age === a} onClick={() => selectAge(a)}>
