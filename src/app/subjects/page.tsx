@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { SUBJECTS } from '@/lib/data'
 import { Eyebrow, PageTitle } from '@/components/ui/shared'
+import { ChevronRight } from 'lucide-react'
 
 export default function SubjectsPage() {
   return (
@@ -21,9 +22,7 @@ export default function SubjectsPage() {
               <div className="font-bold text-[15.5px] text-surface-900">{s.name}</div>
               <div className="text-[12.5px] text-ash">{s.topicCount} topics · {s.questionCount} questions</div>
             </div>
-            <svg className="text-ash shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
+            <ChevronRight size={18} className="text-ash shrink-0" />
           </Link>
         ))}
       </div>

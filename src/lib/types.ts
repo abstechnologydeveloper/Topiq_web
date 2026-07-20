@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react'
+
 export interface Subject {
   id: string
   name: string
-  icon: string
+  icon: ReactNode
   topicCount: number
   questionCount: number
   masteryScore: number
@@ -55,6 +57,6 @@ export interface Deadline {
   title: string
   date: string
   daysLeft: number
-  icon: string
+  icon: ReactNode
   colorHex: string
 }

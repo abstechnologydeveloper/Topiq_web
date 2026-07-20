@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react'
+
 export function StepIndicator({ current, total }: { current: number; total: number }) {
   return (
     <div className="flex items-center gap-2 mb-8">
@@ -12,7 +14,7 @@ export function StepIndicator({ current, total }: { current: number; total: numb
                   : 'bg-surface-100 text-surface-400'
             }`}
           >
-            {i < current ? '✓' : i + 1}
+            {i < current ? <Check size={14} /> : i + 1}
           </div>
           {i < total - 1 && (
             <div

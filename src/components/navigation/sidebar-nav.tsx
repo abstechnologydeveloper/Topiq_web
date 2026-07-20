@@ -42,7 +42,6 @@ const DRAWER_LINKS = [
 const DRAWER_BOTTOM_LINKS = [
   { href: '/challenges', label: 'Challenges', icon: 'M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z' },
   { href: '/competitions', label: 'Competitions', icon: 'M8 21h8 M12 17v4 M7 4h10v5a5 5 0 0 1-10 0V4z M7 6H4a1 1 0 0 0-1 1 4 4 0 0 0 4 4 M17 6h3a1 1 0 0 1 1 1 4 4 0 0 1-4 4' },
-  { href: '/settings', label: 'Settings', icon: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' },
 ]
 
 function isActive(href: string, pathname: string) {
@@ -138,7 +137,7 @@ export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => 
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-0.5">
+            <div className="flex-1 overflow-y-auto space-y-0.5 no-scrollbar">
               {DRAWER_LINKS.map(({ href, label, icon }) => {
                 const active = isActive(href, pathname)
                 return (

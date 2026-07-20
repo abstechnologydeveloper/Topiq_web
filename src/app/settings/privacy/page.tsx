@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { Eyebrow, PageTitle } from '@/components/ui/shared'
+import { ArrowLeft } from 'lucide-react'
 
 export default function PrivacyPage() {
   return (
     <div>
       <Link href="/settings" className="flex items-center gap-2 text-ash text-[13px] font-semibold mb-3.5 w-fit">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+        <ArrowLeft size={16} />
         Settings
       </Link>
       <Eyebrow>Last updated July 2026</Eyebrow>

@@ -44,6 +44,7 @@
   --color-ash: #8A8A8A;
   --color-ash-line: #E7E3F2;
   --color-paper-dim: #F7F5FC;
+  --color-ink: #333333;
   --color-ink-soft: #666666;
   --color-ember-soft: #FFF6DC;
 }
@@ -84,6 +85,7 @@
   --color-ash: #8A8A8A;
   --color-ash-line: #2D2D42;
   --color-paper-dim: #12121E;
+  --color-ink: #333333;
   --color-ink-soft: #A8A8BE;
   --color-ember-soft: #3A2E10;
 }

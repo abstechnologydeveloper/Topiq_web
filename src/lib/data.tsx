@@ -1,11 +1,12 @@
+import { Dna, FlaskConical, Zap, Ruler, BookOpen, FileText } from 'lucide-react'
 import type { Subject, Topic, PastPaper, TimetableSlot, Deadline } from './types'
 
 export const SUBJECTS: Subject[] = [
-  { id: 'biology',     name: 'Biology',     icon: '🧬', topicCount: 5,  questionCount: 180, masteryScore: 74, colorHex: '#4CAF50' },
-  { id: 'chemistry',   name: 'Chemistry',   icon: '⚗️', topicCount: 3,  questionCount: 150, masteryScore: 62, colorHex: '#FF9800' },
-  { id: 'physics',     name: 'Physics',     icon: '⚡', topicCount: 2,  questionCount: 140, masteryScore: 58, colorHex: '#2196F3' },
-  { id: 'mathematics', name: 'Mathematics', icon: '📐', topicCount: 2,  questionCount: 200, masteryScore: 70, colorHex: '#E91E63' },
-  { id: 'english',     name: 'English',     icon: '📖', topicCount: 2,  questionCount: 120, masteryScore: 66, colorHex: '#FFC107' },
+  { id: 'biology',     name: 'Biology',     icon: <Dna size={20} />, topicCount: 5,  questionCount: 180, masteryScore: 74, colorHex: '#4CAF50' },
+  { id: 'chemistry',   name: 'Chemistry',   icon: <FlaskConical size={20} />, topicCount: 3,  questionCount: 150, masteryScore: 62, colorHex: '#FF9800' },
+  { id: 'physics',     name: 'Physics',     icon: <Zap size={20} />, topicCount: 2,  questionCount: 140, masteryScore: 58, colorHex: '#2196F3' },
+  { id: 'mathematics', name: 'Mathematics', icon: <Ruler size={20} />, topicCount: 2,  questionCount: 200, masteryScore: 70, colorHex: '#E91E63' },
+  { id: 'english',     name: 'English',     icon: <BookOpen size={20} />, topicCount: 2,  questionCount: 120, masteryScore: 66, colorHex: '#FFC107' },
 ]
 
 export const TOPICS: Topic[] = [
@@ -199,9 +200,9 @@ export const TIMETABLE_SLOTS: TimetableSlot[] = [
 ]
 
 export const DEADLINES: Deadline[] = [
-  { title: 'WAEC Biology Practical', date: '15 June', daysLeft: 6, icon: '🧬', colorHex: '#16A34A' },
-  { title: 'Chemistry Assignment Due', date: '12 June', daysLeft: 3, icon: '⚗️', colorHex: '#D97706' },
-  { title: 'Full Mock Exam', date: '20 June', daysLeft: 11, icon: '📝', colorHex: '#EF4444' },
+  { title: 'WAEC Biology Practical', date: '15 June', daysLeft: 6, icon: <Dna size={16} />, colorHex: '#16A34A' },
+  { title: 'Chemistry Assignment Due', date: '12 June', daysLeft: 3, icon: <FlaskConical size={16} />, colorHex: '#D97706' },
+  { title: 'Full Mock Exam', date: '20 June', daysLeft: 11, icon: <FileText size={16} />, colorHex: '#EF4444' },
 ]
 
 export function topicsForSubject(subjectId: string): Topic[] {
