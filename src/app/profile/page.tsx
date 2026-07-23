@@ -108,7 +108,7 @@ export default function ProfilePage() {
       {/* edit profile modal */}
       {editing && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40">
-          <div className="w-full sm:max-w-[480px] bg-surface-50 rounded-[20px] sm:rounded-[20px] max-h-[90vh] flex flex-col">
+          <div className="w-full sm:max-w-[480px] bg-surface-50 rounded-t-[20px] sm:rounded-[20px] max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between p-5 sm:p-6 pb-0 shrink-0">
               <h2 className="text-base font-bold text-surface-900">Edit profile</h2>
               <button onClick={() => setEditing(false)} className="w-8 h-8 rounded-full flex items-center justify-center bg-paper-dim text-ash cursor-pointer">
@@ -116,7 +116,7 @@ export default function ProfilePage() {
               </button>
             </div>
 
-            <div className="overflow-y-auto no-scrollbar p-5 sm:p-6 pt-0 flex-1">
+            <div className="overflow-y-auto no-scrollbar p-5 sm:p-6 pt-0 flex-1 min-h-0">
               {/* avatar picker */}
             <div className="flex flex-col items-center mb-[22px] cursor-pointer" onClick={() => avatarInputRef.current?.click()}>
               <div className="w-[84px] h-[84px] rounded-full bg-paper-dim border-[1.5px] border-dashed border-ash-line flex items-center justify-center overflow-hidden mb-2">
@@ -240,18 +240,17 @@ export default function ProfilePage() {
               </div>
             )}
 
-            </div>
-
-            {/* save + cancel */}
-            <div className="shrink-0 p-5 sm:p-6 pt-0">
-              <button onClick={saveEdit}
-                className="w-full py-[11px] px-5 rounded-[22px] bg-brand-600 text-white font-bold text-[13px] cursor-pointer border-none hover:bg-brand-700 transition">
-                Save changes
-              </button>
-              <button onClick={() => setEditing(false)}
-                className="w-full bg-none border border-dashed border-ash-line text-ash rounded-[14px] py-3 font-bold text-[13px] cursor-pointer mt-2.5 hover:border-brand-600 hover:text-brand-600 transition">
-                Cancel
-              </button>
+              {/* save + cancel */}
+              <div className="sticky bottom-0 bg-surface-50 pb-1 pt-4">
+                <button onClick={saveEdit}
+                  className="w-full py-[11px] px-5 rounded-[22px] bg-brand-600 text-white font-bold text-[13px] cursor-pointer border-none hover:bg-brand-700 transition">
+                  Save changes
+                </button>
+                <button onClick={() => setEditing(false)}
+                  className="w-full bg-none border border-dashed border-ash-line text-ash rounded-[14px] py-3 font-bold text-[13px] cursor-pointer mt-2.5 hover:border-brand-600 hover:text-brand-600 transition">
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
