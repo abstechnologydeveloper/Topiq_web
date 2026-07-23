@@ -45,8 +45,9 @@ export default function LiveClassPage() {
             <button onClick={endSession}
               className="ml-auto bg-white text-coral border-none px-3.5 py-1.5 rounded-[16px] font-bold text-[11px] cursor-pointer shrink-0">End session</button>
           </div>
-          <div className="font-mono text-[11px] font-bold text-[#FFD9E0] uppercase tracking-[.06em] mt-2">{liveSession.slug}</div>
-          <div className="font-bold text-[15px] mt-0.5">{liveSession.subject} · {GRADE_LEVEL}</div>
+          <div className="font-bold text-[17px] mt-1">{liveSession.topic}</div>
+          <div className="font-mono text-[11px] font-bold text-[#FFD9E0] uppercase tracking-[.06em] mt-1.5">{liveSession.slug}</div>
+          <div className="font-bold text-[14px] mt-0.5">{liveSession.subject} · {GRADE_LEVEL}</div>
         </div>
 
         <div className="flex gap-1 mb-4 border-b border-ash-line">
