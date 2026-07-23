@@ -44,11 +44,13 @@ export function FlashcardsTab({ flipped, fcIdx, fcCards, fcDone, allCards, onFli
         </div>
       </div>
       <div className="font-mono text-[12px] text-ash mb-2.5">Card {fcIdx + 1} of {allCards.length} · tap to flip</div>
-      <div className="flex gap-2 w-full max-w-[420px]">
-        <button onClick={() => onRate('again')} className="flex-1 border border-ash-line bg-surface-50 rounded-[12px] py-2.5 font-bold text-[12px] text-coral cursor-pointer hover:bg-coral-soft transition">Again</button>
-        <button onClick={() => onRate('good')} className="flex-1 border border-ash-line bg-surface-50 rounded-[12px] py-2.5 font-bold text-[12px] text-secondary-500 cursor-pointer hover:bg-ember-soft transition">Good</button>
-        <button onClick={() => onRate('easy')} className="flex-1 border border-ash-line bg-surface-50 rounded-[12px] py-2.5 font-bold text-[12px] text-brand-600 cursor-pointer hover:bg-brand-50 transition">Easy</button>
-      </div>
+      {flipped && (
+        <div className="flex gap-2 w-full max-w-[420px]">
+          <button onClick={() => onRate('again')} className="flex-1 border border-ash-line bg-surface-50 rounded-[12px] py-2.5 font-bold text-[12px] text-coral cursor-pointer hover:bg-coral-soft transition">Again</button>
+          <button onClick={() => onRate('good')} className="flex-1 border border-ash-line bg-surface-50 rounded-[12px] py-2.5 font-bold text-[12px] text-secondary-500 cursor-pointer hover:bg-ember-soft transition">Good</button>
+          <button onClick={() => onRate('easy')} className="flex-1 border border-ash-line bg-surface-50 rounded-[12px] py-2.5 font-bold text-[12px] text-brand-600 cursor-pointer hover:bg-brand-50 transition">Easy</button>
+        </div>
+      )}
     </div>
   )
 }
