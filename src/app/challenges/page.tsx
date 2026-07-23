@@ -18,7 +18,9 @@ const challenges = [
 ]
 
 export default function ChallengesPage() {
-  const [inProgress, setInProgress] = useState<string[]>([])
+  const [inProgress, setInProgress] = useState<string[]>(
+    challenges.filter(c => c.progress > 0).map(c => c.id)
+  )
 
   const startChallenge = (id: string) => {
     if (!inProgress.includes(id)) setInProgress([...inProgress, id])
