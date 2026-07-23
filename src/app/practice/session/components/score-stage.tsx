@@ -119,7 +119,7 @@ export function ScoreStage({ score, total, results, onRetry, onClose, onPractice
       </button>
       <br />
       <button onClick={onClose} className="bg-none text-surface-900 underline mt-2.5 text-[13px] font-bold cursor-pointer">
-        Back to assignments
+        Back to Practice
       </button>
     </div>
   )

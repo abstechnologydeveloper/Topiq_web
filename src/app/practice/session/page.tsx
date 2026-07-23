@@ -99,7 +99,7 @@ function PracticeSessionInner() {
     if (i >= 0 && i < questions.length) setQIndex(i)
   }
 
-  const exit = () => router.push('/assignments')
+  const exit = () => router.back()
 
   if (!s || questions.length === 0) return null
 
