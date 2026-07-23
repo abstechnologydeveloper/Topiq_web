@@ -9,7 +9,7 @@ interface BrowseTypeButtonsProps {
 
 export function BrowseTypeButtons({ bookType, onSelect }: BrowseTypeButtonsProps) {
   return (
-    <div className="flex gap-2 mb-4">
+    <div className="flex gap-2 flex-1">
       <button
         onClick={() => onSelect('textbooks')}
         className={`flex flex-col items-center gap-1 flex-1 px-3 py-3 rounded-[14px] border-2 font-bold text-[12.5px] cursor-pointer transition ${
