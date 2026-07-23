@@ -10,7 +10,7 @@ export default function TermsPage() {
         Settings
       </Link>
       <Eyebrow>Last updated July 2026</Eyebrow>
-      <PageTitle title="Terms of service" sub="The basic rules for using AbSTopiq." />
+      <PageTitle title="Terms of service" sub="The basic rules for using AbSTopiq. Placeholder copy for this mockup — final legal text goes here." />
       <div className="bg-surface-50 border border-ash-line rounded-[--radius] p-4">
         <p className="text-[13px] text-ash leading-[1.7]">By using AbSTopiq you agree to use the platform for personal learning, keep your login details private, and follow your school's code of conduct where applicable. Subscriptions renew automatically unless cancelled before the renewal date.</p>
       </div>
