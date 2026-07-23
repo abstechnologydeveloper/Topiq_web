@@ -73,7 +73,7 @@ export default function BooksPage() {
       <GenreGrid genres={genres} onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
 
       <div className="border-t border-ash-line pt-4 mt-4">
-        <SpotlightSection bookType={bookType} genreId={selectedGenre} />
+        {bookType === 'books' && <SpotlightSection bookType={bookType} genreId={selectedGenre} />}
 
         {selectedGenre !== 'all' && <h2 className="font-bold text-[15px] text-surface-900 mb-3 mt-5">{GENRE_LABELS[selectedGenre]}</h2>}
         <BookLibraryList bookType={bookType} genreId={selectedGenre} />

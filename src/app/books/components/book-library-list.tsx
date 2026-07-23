@@ -265,26 +265,23 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   if (genreId === 'all') {
     return (
       <div>
-        {TEXTBOOK_GENRE_ORDER.map((gid) => {
-          const subjectIds = TEXTBOOK_SUBJECTS[gid] || []
-          const items = SUBJECTS.filter((s) => subjectIds.includes(s.id))
-          if (items.length === 0) return null
-          return (
-            <div key={gid} className="mb-5">
-              <h3 className="font-bold text-[14px] text-ash mb-3">{TEXTBOOK_GENRE_LABELS[gid]}</h3>
-              <SwipeRow>
-                {items.map((s) => (
-                  <BookItem
-                    key={s.id}
-                    icon={<span className="text-2xl">{s.icon}</span>}
-                    title={s.name}
-                    hexColor={s.colorHex}
-                  />
-                ))}
-              </SwipeRow>
+        <h2 className="font-bold text-[15px] text-surface-900 mb-3">Subjects</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {SUBJECTS.map((s) => (
+            <div
+              key={s.id}
+              className="flex flex-col items-center gap-2 bg-surface-50 border border-ash-line rounded-[14px] p-4 cursor-pointer hover:border-brand-600 transition"
+            >
+              <div
+                className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
+                style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
+              >
+                {s.icon}
+              </div>
+              <div className="font-bold text-[12.5px] text-surface-900 text-center leading-tight">{s.name}</div>
             </div>
-          )
-        })}
+          ))}
+        </div>
       </div>
     )
   }
@@ -301,15 +298,24 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   }
 
   return (
-    <SwipeRow>
-      {items.map((s) => (
-        <BookItem
-          key={s.id}
-          icon={<span className="text-2xl">{s.icon}</span>}
-          title={s.name}
-          hexColor={s.colorHex}
-        />
-      ))}
-    </SwipeRow>
+    <div>
+      <h2 className="font-bold text-[15px] text-surface-900 mb-3">Subjects</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {items.map((s) => (
+          <div
+            key={s.id}
+            className="flex flex-col items-center gap-2 bg-surface-50 border border-ash-line rounded-[14px] p-4 cursor-pointer hover:border-brand-600 transition"
+          >
+            <div
+              className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
+              style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
+            >
+              {s.icon}
+            </div>
+            <div className="font-bold text-[12.5px] text-surface-900 text-center leading-tight">{s.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
