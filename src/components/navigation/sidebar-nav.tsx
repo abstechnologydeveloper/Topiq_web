@@ -134,7 +134,7 @@ export function MobileDrawer({ open, onClose, onSwitchOpen }: { open: boolean; o
           <div className="absolute top-0 left-0 bottom-0 w-[78%] max-w-[300px] bg-surface-50 flex flex-col shadow-[8px_0_30px_rgba(0,0,0,0.25)] p-4">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-0.5">
-                <img src="/icon-192.png" alt="Topiq" className="w-[38px] h-[38px] object-contain" />
+                <img src="/icon-192.png" alt="Topiq" className="w-[44px] h-[44px] object-contain" />
                 <button onClick={(e) => { e.stopPropagation(); onSwitchOpen?.() }}
                   className="flex items-center justify-center w-6 h-6 rounded-[8px] border-none bg-none text-ash cursor-pointer shrink-0 hover:bg-paper-dim hover:text-surface-700 transition"
                   title="Switch account">
