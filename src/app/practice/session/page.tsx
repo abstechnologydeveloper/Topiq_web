@@ -267,7 +267,7 @@ function PracticeSessionInner() {
                 <button onClick={() => {
                   const id = subjId
                   setPracticeTopicId(null)
-                  router.push(`/practice/session?subject=${id}&dur=${practiceDuration}&count=${practiceCount}`)
+                  window.location.href = `/practice/session?subject=${id}&dur=${practiceDuration}&count=${practiceCount}`
                 }}
                   className="w-full mt-6 h-11 rounded-[22px] bg-brand-600 text-white font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer hover:bg-brand-700 transition">
                   Start practice <ArrowRight size={15} />
