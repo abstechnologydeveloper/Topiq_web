@@ -17,27 +17,23 @@ interface GenreGridProps {
 
 export function GenreGrid({ onSelectGenre }: GenreGridProps) {
   return (
-    <div className="flex gap-2.5 overflow-x-auto pb-1 snap-x snap-mandatory no-scrollbar md:grid md:grid-cols-2 md:overflow-visible">
-      <div
+    <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+      <button
         onClick={() => onSelectGenre('all')}
-        className="snap-start shrink-0 w-[160px] md:w-auto border border-ash-line rounded-[--radius] p-4 cursor-pointer hover:border-brand-600 transition"
+        className="flex items-center gap-2 shrink-0 px-4 py-2.5 rounded-full border border-ash-line bg-surface-50 text-surface-900 font-bold text-[12.5px] cursor-pointer hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 transition whitespace-nowrap"
       >
-        <div className="font-mono text-[10.5px] font-bold text-brand-600 uppercase tracking-[.04em] mb-1">
-          {genres.reduce((a, g) => a + parseInt(g.count.replace(',','')), 0).toLocaleString()} titles
-        </div>
-        <h3 className="font-display text-[17px] font-semibold text-surface-900">All Genres</h3>
-      </div>
+        <span className="font-mono text-[10.5px] font-semibold text-ash">{genres.reduce((a, g) => a + parseInt(g.count.replace(',','')), 0).toLocaleString()}</span>
+        All Genres
+      </button>
       {genres.map((g) => (
-        <div
+        <button
           key={g.id}
           onClick={() => onSelectGenre(g.id)}
-          className="snap-start shrink-0 w-[160px] md:w-auto border border-ash-line rounded-[--radius] p-4 cursor-pointer hover:border-brand-600 transition"
+          className="flex items-center gap-2 shrink-0 px-4 py-2.5 rounded-full border border-ash-line bg-surface-50 text-surface-900 font-bold text-[12.5px] cursor-pointer hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 transition whitespace-nowrap"
         >
-          <div className="font-mono text-[10.5px] font-bold text-brand-600 uppercase tracking-[.04em] mb-1">
-            {g.count} titles
-          </div>
-          <h3 className="font-display text-[17px] font-semibold text-surface-900">{g.label}</h3>
-        </div>
+          <span className="font-mono text-[10.5px] font-semibold text-ash">{g.count}</span>
+          {g.label}
+        </button>
       ))}
     </div>
   )
