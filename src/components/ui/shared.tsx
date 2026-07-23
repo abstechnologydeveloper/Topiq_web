@@ -76,11 +76,11 @@ export function ChipRow({ chips }: { chips: { label: string; active?: boolean; o
   )
 }
 
-export function SearchBar({ placeholder = 'Search…' }: { placeholder?: string }) {
+export function SearchBar({ placeholder = 'Search…', value, onChange }: { placeholder?: string; value?: string; onChange?: (v: string) => void }) {
   return (
     <div className="flex items-center gap-2.5 bg-surface-50 border border-ash-line rounded-[26px] px-4 py-3 mb-3.5">
       <Search size={17} className="text-ash shrink-0" />
-      <input type="text" placeholder={placeholder}
+      <input type="text" placeholder={placeholder} value={value} onChange={e => onChange?.(e.target.value)}
         className="flex-1 border-none outline-none text-[14.5px] font-sans bg-transparent text-surface-900 placeholder:text-ash" />
     </div>
   )

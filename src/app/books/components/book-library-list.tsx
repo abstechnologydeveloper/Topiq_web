@@ -8,6 +8,7 @@ import type { ReactNode } from 'react'
 interface BookLibraryListProps {
   bookType: 'books' | 'textbooks'
   genreId: string
+  search?: string
 }
 
 const BOOK_GENRE_ORDER = ['self-dev', 'finance', 'business', 'history', 'fiction', 'health', 'religion', 'tech']
@@ -159,13 +160,15 @@ function SwipeRow({ children }: { children: ReactNode }) {
   )
 }
 
-export function SpotlightSection({ bookType, genreId }: { bookType: 'books' | 'textbooks'; genreId: string }) {
+export function SpotlightSection({ bookType, genreId, search = '' }: { bookType: 'books' | 'textbooks'; genreId: string; search?: string }) {
   if (bookType === 'books') {
-    const spotlight = BOOK_SPOTLIGHT[genreId] || BOOK_SPOTLIGHT['all']
+    const spotlight = (BOOK_SPOTLIGHT[genreId] || BOOK_SPOTLIGHT['all']).filter(b =>
+      b.title.toLowerCase().includes(search.toLowerCase())
+    )
     if (!spotlight || spotlight.length === 0) {
       return (
         <div className="text-center py-6 text-ash text-[13px]">
-          There is no spotlight available for the selected genre.
+          {search ? 'No spotlight results match your search.' : 'There is no spotlight available for the selected genre.'}
         </div>
       )
     }
@@ -186,33 +189,10 @@ export function SpotlightSection({ bookType, genreId }: { bookType: 'books' | 't
     )
   }
 
-  const subjectIds = TEXTBOOK_SPOTLIGHT[genreId] || TEXTBOOK_SPOTLIGHT['all']
-  const items = SUBJECTS.filter((s) => subjectIds.includes(s.id))
-  if (items.length === 0) {
-    return (
-      <div className="text-center py-6 text-ash text-[13px]">
-        There is no spotlight available for the selected genre.
-      </div>
-    )
-  }
-  return (
-    <div className="mb-2">
-      <h3 className="font-bold text-[15px] text-surface-900 mb-3">Spotlight</h3>
-      <SwipeRow>
-        {items.map((s) => (
-          <BookItem
-            key={s.id}
-            icon={<span className="text-2xl">{s.icon}</span>}
-            title={s.name}
-            hexColor={s.colorHex}
-          />
-        ))}
-      </SwipeRow>
-    </div>
-  )
+  return null
 }
 
-export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
+export function BookLibraryList({ bookType, genreId, search = '' }: BookLibraryListProps) {
   const router = useRouter()
 
   if (bookType === 'books') {
@@ -220,8 +200,10 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
       return (
         <div>
           {BOOK_GENRE_ORDER.map((gid) => {
-            const books = BOOKS_DATA[gid]
-            if (!books || books.length === 0) return null
+            const books = (BOOKS_DATA[gid] || []).filter(b =>
+              b.title.toLowerCase().includes(search.toLowerCase())
+            )
+            if (books.length === 0) return null
             return (
               <div key={gid} className="mb-5">
                 <h3 className="font-bold text-[14px] text-ash mb-3">{BOOK_GENRE_LABELS[gid]}</h3>
@@ -242,11 +224,13 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
       )
     }
 
-    const books = BOOKS_DATA[genreId] || []
+    const books = (BOOKS_DATA[genreId] || []).filter(b =>
+      b.title.toLowerCase().includes(search.toLowerCase())
+    )
     if (books.length === 0) {
       return (
         <div className="text-center py-10 text-ash text-[13px]">
-          No books available in this genre yet.
+          {search ? 'No books match your search in this genre.' : 'No books available in this genre yet.'}
         </div>
       )
     }
@@ -265,12 +249,22 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
     )
   }
 
+  const q = search.toLowerCase()
+
   if (genreId === 'all') {
+    const items = SUBJECTS.filter(s => s.name.toLowerCase().includes(q))
+    if (items.length === 0) {
+      return (
+        <div className="text-center py-10 text-ash text-[13px]">
+          {search ? 'No subjects match your search.' : 'No textbooks available.'}
+        </div>
+      )
+    }
     return (
       <div>
         <h2 className="font-bold text-[15px] text-surface-900 mb-3">Subjects</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {SUBJECTS.map((s) => (
+          {items.map((s) => (
             <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
               <div className="aspect-square flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
                 <div
@@ -291,7 +285,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   }
 
   const subjectIds = TEXTBOOK_SUBJECTS[genreId] || []
-  const items = SUBJECTS.filter((s) => subjectIds.includes(s.id))
+  const items = SUBJECTS.filter((s) => subjectIds.includes(s.id) && s.name.toLowerCase().includes(q))
 
   if (items.length === 0) {
     return (

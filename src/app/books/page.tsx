@@ -51,6 +51,7 @@ const GENRE_LABELS: Record<string, string> = {
 export default function BooksPage() {
   const [bookType, setBookType] = useState<'books' | 'textbooks'>('books')
   const [selectedGenre, setSelectedGenre] = useState<string>('all')
+  const [search, setSearch] = useState('')
 
   const genres = bookType === 'books' ? BOOK_GENRES : TEXTBOOK_GENRES
 
@@ -64,19 +65,19 @@ export default function BooksPage() {
         <div className="text-[12.5px] text-ash opacity-85">textbooks &amp; past questions across every subject</div>
       </div>
 
-      <SearchBar placeholder="Search titles, topics or authors…" />
+      <SearchBar placeholder="Search titles, topics or authors…" value={search} onChange={setSearch} />
 
       <Eyebrow>Browse by type</Eyebrow>
-      <BrowseTypeButtons bookType={bookType} onSelect={(t) => { setBookType(t); setSelectedGenre('all') }} />
+      <BrowseTypeButtons bookType={bookType} onSelect={(t) => { setBookType(t); setSelectedGenre('all'); setSearch('') }} />
 
       <Eyebrow>Browse by genre</Eyebrow>
       <GenreGrid genres={genres} onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
 
       <div className="border-t border-ash-line pt-4 mt-4">
-        {bookType === 'books' && <SpotlightSection bookType={bookType} genreId={selectedGenre} />}
+        {bookType === 'books' && <SpotlightSection bookType={bookType} genreId={selectedGenre} search={search} />}
 
         {selectedGenre !== 'all' && bookType === 'books' && <h2 className="font-bold text-[15px] text-surface-900 mb-3 mt-5">{GENRE_LABELS[selectedGenre]}</h2>}
-        <BookLibraryList bookType={bookType} genreId={selectedGenre} />
+        <BookLibraryList bookType={bookType} genreId={selectedGenre} search={search} />
       </div>
     </div>
   )
