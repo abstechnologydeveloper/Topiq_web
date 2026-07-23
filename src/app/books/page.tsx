@@ -75,7 +75,7 @@ export default function BooksPage() {
       <div className="border-t border-ash-line pt-4 mt-4">
         <SpotlightSection bookType={bookType} genreId={selectedGenre} />
 
-        <h2 className="font-bold text-[15px] text-surface-900 mb-3 mt-5">{GENRE_LABELS[selectedGenre]}</h2>
+        {selectedGenre !== 'all' && <h2 className="font-bold text-[15px] text-surface-900 mb-3 mt-5">{GENRE_LABELS[selectedGenre]}</h2>}
         <BookLibraryList bookType={bookType} genreId={selectedGenre} />
       </div>
     </div>
