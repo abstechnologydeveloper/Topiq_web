@@ -2,37 +2,27 @@
 
 import { Book } from 'lucide-react'
 import { SUBJECTS } from '@/lib/data'
+import type { ReactNode } from 'react'
 
 interface BookLibraryListProps {
   bookType: 'books' | 'textbooks'
   genreId: string
 }
 
+const BOOK_GENRE_ORDER = ['self-dev', 'finance', 'business', 'history', 'fiction', 'health', 'religion', 'tech']
+
+const BOOK_GENRE_LABELS: Record<string, string> = {
+  'self-dev': 'Self-Development & Motivation',
+  finance: 'Finance & Investment',
+  business: 'Business & Entrepreneurship',
+  history: 'History & Biography',
+  fiction: 'Fiction & Literature',
+  health: 'Health & Wellness',
+  religion: 'Religion & Spirituality',
+  tech: 'Technology & Computing',
+}
+
 const BOOKS_DATA: Record<string, { title: string; author: string }[]> = {
-  all: [
-    { title: 'Atomic Habits', author: 'James Clear' },
-    { title: 'The 7 Habits of Highly Effective People', author: 'Stephen Covey' },
-    { title: 'Think and Grow Rich', author: 'Napoleon Hill' },
-    { title: 'The Psychology of Money', author: 'Morgan Housel' },
-    { title: 'Rich Dad Poor Dad', author: 'Robert Kiyosaki' },
-    { title: 'The Intelligent Investor', author: 'Benjamin Graham' },
-    { title: 'Zero to One', author: 'Peter Thiel' },
-    { title: 'The Lean Startup', author: 'Eric Ries' },
-    { title: 'Good to Great', author: 'Jim Collins' },
-    { title: 'Sapiens', author: 'Yuval Noah Harari' },
-    { title: 'A People\'s History', author: 'Howard Zinn' },
-    { title: 'The Diary of a Young Girl', author: 'Anne Frank' },
-    { title: 'The Alchemist', author: 'Paulo Coelho' },
-    { title: 'Things Fall Apart', author: 'Chinua Achebe' },
-    { title: 'Half of a Yellow Sun', author: 'Chimamanda Adichie' },
-    { title: 'Why We Sleep', author: 'Matthew Walker' },
-    { title: 'How Not to Die', author: 'Michael Greger' },
-    { title: 'The Purpose Driven Life', author: 'Rick Warren' },
-    { title: 'Mere Christianity', author: 'C.S. Lewis' },
-    { title: 'The Pragmatic Programmer', author: 'Andrew Hunt' },
-    { title: 'Clean Code', author: 'Robert Martin' },
-    { title: 'Designing Data-Intensive Applications', author: 'Martin Kleppmann' },
-  ],
   'self-dev': [
     { title: 'Atomic Habits', author: 'James Clear' },
     { title: 'The 7 Habits of Highly Effective People', author: 'Stephen Covey' },
@@ -73,8 +63,20 @@ const BOOKS_DATA: Record<string, { title: string; author: string }[]> = {
   ],
 }
 
+const TEXTBOOK_GENRE_ORDER = ['literature', 'science', 'math', 'social', 'language', 'reference', 'religious', 'arts']
+
+const TEXTBOOK_GENRE_LABELS: Record<string, string> = {
+  literature: 'Literature & Set Texts',
+  science: 'Science & Technology',
+  math: 'Mathematics & Further Maths',
+  social: 'Social Studies & Geography',
+  language: 'Language & Composition',
+  reference: 'Reference & Dictionaries',
+  religious: 'Religious & Moral Studies',
+  arts: 'Arts & Humanities',
+}
+
 const TEXTBOOK_SUBJECTS: Record<string, string[]> = {
-  all: ['biology', 'chemistry', 'physics', 'mathematics', 'english'],
   literature: ['english'],
   science: ['biology', 'chemistry', 'physics'],
   math: ['mathematics'],
@@ -96,10 +98,148 @@ const BOOK_COLORS = [
   'bg-pink-50 text-pink-600',
 ]
 
+const BOOK_SPOTLIGHT: Record<string, { title: string; author: string }[]> = {
+  all: [
+    { title: 'Atomic Habits', author: 'James Clear' },
+    { title: 'Sapiens', author: 'Yuval Noah Harari' },
+    { title: 'Zero to One', author: 'Peter Thiel' },
+    { title: 'The Alchemist', author: 'Paulo Coelho' },
+  ],
+  'self-dev': [
+    { title: 'Atomic Habits', author: 'James Clear' },
+    { title: 'The 7 Habits of Highly Effective People', author: 'Stephen Covey' },
+  ],
+  finance: [
+    { title: 'Rich Dad Poor Dad', author: 'Robert Kiyosaki' },
+    { title: 'The Psychology of Money', author: 'Morgan Housel' },
+  ],
+  business: [
+    { title: 'Zero to One', author: 'Peter Thiel' },
+    { title: 'The Lean Startup', author: 'Eric Ries' },
+  ],
+  history: [
+    { title: 'Sapiens', author: 'Yuval Noah Harari' },
+  ],
+  fiction: [
+    { title: 'The Alchemist', author: 'Paulo Coelho' },
+  ],
+}
+
+const TEXTBOOK_SPOTLIGHT: Record<string, string[]> = {
+  all: ['biology', 'chemistry', 'mathematics'],
+  science: ['biology', 'chemistry'],
+  math: ['mathematics'],
+  literature: ['english'],
+}
+
+function BookItem({ icon, title, colorCls, hexColor }: { icon: ReactNode; title: string; colorCls?: string; hexColor?: string }) {
+  return (
+    <div className="snap-start shrink-0 w-[130px]">
+      <div className="h-[170px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+        <div
+          className={`w-[72px] h-[72px] rounded-2xl flex items-center justify-center ${colorCls || ''}`}
+          style={hexColor && !colorCls ? { backgroundColor: hexColor + '20', color: hexColor } : {}}
+        >
+          {icon}
+        </div>
+      </div>
+      <div className="mt-2 text-center">
+        <div className="font-bold text-[12.5px] text-ash leading-tight">{title}</div>
+      </div>
+    </div>
+  )
+}
+
+function SwipeRow({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory no-scrollbar">
+      {children}
+    </div>
+  )
+}
+
+export function SpotlightSection({ bookType, genreId }: { bookType: 'books' | 'textbooks'; genreId: string }) {
+  if (bookType === 'books') {
+    const spotlight = BOOK_SPOTLIGHT[genreId] || BOOK_SPOTLIGHT['all']
+    if (!spotlight || spotlight.length === 0) {
+      return (
+        <div className="text-center py-6 text-ash text-[13px]">
+          There is no spotlight available for the selected genre.
+        </div>
+      )
+    }
+    return (
+      <div className="mb-2">
+        <h3 className="font-bold text-[15px] text-surface-900 mb-3">Spotlight</h3>
+        <SwipeRow>
+          {spotlight.map((b, i) => (
+            <BookItem
+              key={i}
+              icon={<Book size={32} />}
+              title={b.title}
+              colorCls={BOOK_COLORS[i % BOOK_COLORS.length]}
+            />
+          ))}
+        </SwipeRow>
+      </div>
+    )
+  }
+
+  const subjectIds = TEXTBOOK_SPOTLIGHT[genreId] || TEXTBOOK_SPOTLIGHT['all']
+  const items = SUBJECTS.filter((s) => subjectIds.includes(s.id))
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-6 text-ash text-[13px]">
+        There is no spotlight available for the selected genre.
+      </div>
+    )
+  }
+  return (
+    <div className="mb-2">
+      <h3 className="font-bold text-[15px] text-surface-900 mb-3">Spotlight</h3>
+      <SwipeRow>
+        {items.map((s) => (
+          <BookItem
+            key={s.id}
+            icon={<span className="text-2xl">{s.icon}</span>}
+            title={s.name}
+            hexColor={s.colorHex}
+          />
+        ))}
+      </SwipeRow>
+    </div>
+  )
+}
+
 export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   if (bookType === 'books') {
-    const books = BOOKS_DATA[genreId] || []
+    if (genreId === 'all') {
+      return (
+        <div>
+          {BOOK_GENRE_ORDER.map((gid) => {
+            const books = BOOKS_DATA[gid]
+            if (!books || books.length === 0) return null
+            return (
+              <div key={gid} className="mb-5">
+                <h3 className="font-bold text-[14px] text-surface-900 mb-3">{BOOK_GENRE_LABELS[gid]}</h3>
+                <SwipeRow>
+                  {books.map((b, i) => (
+                    <BookItem
+                      key={i}
+                      icon={<Book size={32} />}
+                      title={b.title}
+                      colorCls={BOOK_COLORS[i % BOOK_COLORS.length]}
+                    />
+                  ))}
+                </SwipeRow>
+              </div>
+            )
+          })}
+        </div>
+      )
+    }
 
+    const books = BOOKS_DATA[genreId] || []
     if (books.length === 0) {
       return (
         <div className="text-center py-10 text-ash text-[13px]">
@@ -109,25 +249,48 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
     }
 
     return (
-      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory no-scrollbar">
+      <SwipeRow>
         {books.map((b, i) => (
-          <div key={i} className="snap-start shrink-0 w-[130px]">
-            <div className="h-[170px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
-              <div className={`w-[72px] h-[72px] rounded-2xl flex items-center justify-center ${BOOK_COLORS[i % BOOK_COLORS.length]}`}>
-                <Book size={32} />
-              </div>
-            </div>
-            <div className="mt-2 text-center">
-              <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{b.title}</div>
-            </div>
-          </div>
+          <BookItem
+            key={i}
+            icon={<Book size={32} />}
+            title={b.title}
+            colorCls={BOOK_COLORS[i % BOOK_COLORS.length]}
+          />
         ))}
+      </SwipeRow>
+    )
+  }
+
+  if (genreId === 'all') {
+    return (
+      <div>
+        {TEXTBOOK_GENRE_ORDER.map((gid) => {
+          const subjectIds = TEXTBOOK_SUBJECTS[gid] || []
+          const items = SUBJECTS.filter((s) => subjectIds.includes(s.id))
+          if (items.length === 0) return null
+          return (
+            <div key={gid} className="mb-5">
+              <h3 className="font-bold text-[14px] text-surface-900 mb-3">{TEXTBOOK_GENRE_LABELS[gid]}</h3>
+              <SwipeRow>
+                {items.map((s) => (
+                  <BookItem
+                    key={s.id}
+                    icon={<span className="text-2xl">{s.icon}</span>}
+                    title={s.name}
+                    hexColor={s.colorHex}
+                  />
+                ))}
+              </SwipeRow>
+            </div>
+          )
+        })}
       </div>
     )
   }
 
   const subjectIds = TEXTBOOK_SUBJECTS[genreId] || []
-  const items = genreId === 'all' ? SUBJECTS : SUBJECTS.filter((s) => subjectIds.includes(s.id))
+  const items = SUBJECTS.filter((s) => subjectIds.includes(s.id))
 
   if (items.length === 0) {
     return (
@@ -138,22 +301,15 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   }
 
   return (
-    <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory no-scrollbar">
-      {items.map((s, i) => (
-        <div key={s.id} className="snap-start shrink-0 w-[130px]">
-          <div className="h-[170px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
-            <div
-              className="w-[72px] h-[72px] rounded-2xl flex items-center justify-center text-3xl"
-              style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
-            >
-              {s.icon}
-            </div>
-          </div>
-          <div className="mt-2 text-center">
-            <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{s.name}</div>
-          </div>
-        </div>
+    <SwipeRow>
+      {items.map((s) => (
+        <BookItem
+          key={s.id}
+          icon={<span className="text-2xl">{s.icon}</span>}
+          title={s.name}
+          hexColor={s.colorHex}
+        />
       ))}
-    </div>
+    </SwipeRow>
   )
 }

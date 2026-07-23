@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Eyebrow, PageTitle, SearchBar } from '@/components/ui/shared'
 import { BrowseTypeButtons } from './components/browse-type-buttons'
 import { GenreGrid } from './components/genre-grid'
-import { BookLibraryList } from './components/book-library-list'
+import { BookLibraryList, SpotlightSection } from './components/book-library-list'
 
 const BOOK_GENRES = [
   { id: 'self-dev', label: 'Self-Development & Motivation' },
@@ -29,7 +29,7 @@ const TEXTBOOK_GENRES = [
 ]
 
 const GENRE_LABELS: Record<string, string> = {
-  all: 'All',
+  all: 'Spotlight',
   'self-dev': 'Self-Development & Motivation',
   finance: 'Finance & Investment',
   business: 'Business & Entrepreneurship',
@@ -73,7 +73,9 @@ export default function BooksPage() {
       <GenreGrid genres={genres} onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
 
       <div className="border-t border-ash-line pt-4 mt-4">
-        <h2 className="font-bold text-[15px] text-surface-900 mb-3">{GENRE_LABELS[selectedGenre]}</h2>
+        <SpotlightSection bookType={bookType} genreId={selectedGenre} />
+
+        <h2 className="font-bold text-[15px] text-surface-900 mb-3 mt-5">{GENRE_LABELS[selectedGenre]}</h2>
         <BookLibraryList bookType={bookType} genreId={selectedGenre} />
       </div>
     </div>
