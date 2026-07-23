@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eyebrow, Subnav } from '@/components/ui/shared'
-import { GraduationCap, BookOpen, Book, Globe, Flag, ArrowLeft, ChevronRight, X } from 'lucide-react'
+import { GraduationCap, BookOpen, Book, Globe, Flag, ArrowLeft, ChevronRight, X, Minus, Plus, ArrowRight } from 'lucide-react'
 import { MockExamCard } from './components/mock-exam-card'
 import { SubjectCardList } from './components/subject-card-list'
 import { SUBJECTS } from '@/lib/data'
@@ -144,7 +144,7 @@ export default function PracticePage() {
         </div>
       )}
 
-      {pane === 'By Subject' && <SubjectCardList />}
+      {pane === 'By Subject' && <SubjectCardList onSubjectClick={openSetup} />}
 
       {/* Practice setup modal */}
       {setupSubject && setupMeta && (
@@ -152,67 +152,69 @@ export default function PracticePage() {
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40"
           onClick={(e) => { if (e.target === e.currentTarget) closeSetup() }}
         >
-          <div className="bg-surface-50 w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5 max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:w-0">
+          <div className="w-full sm:max-w-[400px] bg-surface-50 rounded-[20px] sm:rounded-[20px] p-5 sm:p-6 animate-in slide-in-from-bottom-4">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-[17px] text-surface-900 flex items-center gap-2">{setupMeta.icon} {setupMeta.name} practice</h2>
-              <button onClick={closeSetup} className="text-ash text-lg cursor-pointer">&times;</button>
+              <h2 className="text-base font-bold text-surface-900 flex items-center gap-2">{setupMeta.icon} {setupMeta.name} practice</h2>
+              <button onClick={closeSetup} className="w-8 h-8 rounded-full flex items-center justify-center bg-paper-dim text-ash cursor-pointer">
+                <X size={15} />
+              </button>
             </div>
-            <p className="text-[13px] text-ash mb-4">
+            <p className="text-[13px] text-ash mb-5">
               {setupBoard
                 ? `${setupBoard} — pick a year, duration and number of questions.`
                 : 'Pick a duration and number of questions to begin.'}
             </p>
 
-            {setupBoard && (
-              <div className="mb-4">
-                <span className="font-mono text-[10.5px] font-bold text-ash uppercase tracking-[.05em] block mb-2">Exam year</span>
-                <select
-                  value={setupYear}
-                  onChange={e => setSetupYear(e.target.value)}
-                  className="w-full border border-ash-line rounded-[12px] px-3.5 py-2.5 text-[14px] bg-surface-50 text-surface-900 outline-none"
-                >
-                  {['2025', '2024', '2023', '2022'].map(y => (
-                    <option key={y} value={y}>{y}</option>
-                  ))}
-                </select>
-              </div>
-            )}
+            <div className="space-y-5">
+              {setupBoard && (
+                <div>
+                  <span className="text-[13px] font-semibold text-surface-900 block mb-2.5 uppercase tracking-wide">Exam year</span>
+                  <select
+                    value={setupYear}
+                    onChange={e => setSetupYear(e.target.value)}
+                    className="w-full border border-ash-line rounded-[12px] px-3.5 py-2.5 text-[14px] bg-surface-50 text-surface-900 outline-none"
+                  >
+                    {['2025', '2024', '2023', '2022'].map(y => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
-            <div className="mb-4">
-              <span className="font-mono text-[10.5px] font-bold text-ash uppercase tracking-[.05em] block mb-2">Duration</span>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setSetupDuration(Math.max(10, setupDuration - 5))}
-                  className="w-9 h-9 rounded-full border border-ash-line flex items-center justify-center text-lg font-bold text-ash cursor-pointer hover:border-brand-600 transition"
-                >−</button>
-                <span className="font-bold text-[16px] text-surface-900 w-16 text-center">{setupDuration} min</span>
-                <button
-                  onClick={() => setSetupDuration(Math.min(60, setupDuration + 5))}
-                  className="w-9 h-9 rounded-full border border-ash-line flex items-center justify-center text-lg font-bold text-ash cursor-pointer hover:border-brand-600 transition"
-                >+</button>
+              <div>
+                <span className="text-[13px] font-semibold text-surface-900 block mb-2.5 uppercase tracking-wide">Duration</span>
+                <div className="flex items-center justify-between bg-paper-dim rounded-[12px] px-2.5 py-1.5 w-full">
+                  <button onClick={() => setSetupDuration(Math.max(10, setupDuration - 5))}
+                    className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                    <Minus size={15} />
+                  </button>
+                  <span className="font-mono font-bold text-[14px] text-surface-900 w-[52px] text-center">{setupDuration} min</span>
+                  <button onClick={() => setSetupDuration(Math.min(60, setupDuration + 5))}
+                    className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                    <Plus size={15} />
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <span className="text-[13px] font-semibold text-surface-900 block mb-2.5 uppercase tracking-wide">Number of questions</span>
+                <div className="flex items-center justify-between bg-paper-dim rounded-[12px] px-2.5 py-1.5 w-full">
+                  <button onClick={() => setSetupCount(Math.max(5, setupCount - 5))}
+                    className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                    <Minus size={15} />
+                  </button>
+                  <span className="font-mono font-bold text-[14px] text-surface-900 w-[52px] text-center">{setupCount}</span>
+                  <button onClick={() => setSetupCount(Math.min(40, setupCount + 5))}
+                    className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                    <Plus size={15} />
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="mb-5">
-              <span className="font-mono text-[10.5px] font-bold text-ash uppercase tracking-[.05em] block mb-2">Number of questions</span>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setSetupCount(Math.max(5, setupCount - 5))}
-                  className="w-9 h-9 rounded-full border border-ash-line flex items-center justify-center text-lg font-bold text-ash cursor-pointer hover:border-brand-600 transition"
-                >−</button>
-                <span className="font-bold text-[16px] text-surface-900 w-16 text-center">{setupCount}</span>
-                <button
-                  onClick={() => setSetupCount(Math.min(40, setupCount + 5))}
-                  className="w-9 h-9 rounded-full border border-ash-line flex items-center justify-center text-lg font-bold text-ash cursor-pointer hover:border-brand-600 transition"
-                >+</button>
-              </div>
-            </div>
-
-            <button
-              onClick={startPractice}
-              className="w-full bg-surface-900 text-surface-50 border-none rounded-[14px] py-3 font-bold text-[13px] cursor-pointer"
-            >
-              Start practice &rarr;
+            <button onClick={startPractice}
+              className="w-full mt-6 h-11 rounded-[22px] bg-brand-600 text-white font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer hover:bg-brand-700 transition">
+              Start practice <ArrowRight size={15} />
             </button>
           </div>
         </div>

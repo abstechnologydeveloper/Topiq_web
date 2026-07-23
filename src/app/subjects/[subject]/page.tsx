@@ -21,10 +21,14 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
   const [flipped, setFlipped] = useState(false)
   const [fcCards, setFcCards] = useState<number[]>([])
   const [fcDone, setFcDone] = useState(false)
+  const [search, setSearch] = useState('')
 
   if (!subj) return <div className="text-center py-20 text-ash">Subject not found</div>
 
   const topics = TOPICS.filter(t => t.subjectId === slug)
+  const filtered = search.trim()
+    ? topics.filter(t => t.name.toLowerCase().includes(search.toLowerCase()))
+    : topics
   const allCards = topics.flatMap(t => t.flashcards)
   const papers = PAPERS[slug] || []
 
@@ -63,12 +67,15 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
         <h1 className="font-display text-[25px] font-semibold tracking-[-0.01em] text-surface-900">{subj.name}</h1>
       </div>
 
-      <SearchBar placeholder={`Search a topic in ${subj.name}…`} />
+      <SearchBar placeholder={`Search a topic in ${subj.name}…`} value={search} onChange={setSearch} />
 
       <Subnav tabs={TABS} active={tab} onChange={(t) => { setTab(t); if (t === 'Flashcards') startFc() }} />
 
-      {tab === 'Overview' && <OverviewTab subj={subj} slug={slug} topics={topics} />}
-      {tab === 'Learn' && <LearnTab subj={subj} slug={slug} topics={topics} />}
+      {search && filtered.length === 0 && (
+        <p className="text-[13px] text-ash text-center py-10">No topics match &ldquo;{search}&rdquo;</p>
+      )}
+      {tab === 'Overview' && (search && filtered.length === 0 ? null : <OverviewTab subj={subj} slug={slug} topics={filtered} />)}
+      {tab === 'Learn' && (search && filtered.length === 0 ? null : <LearnTab subj={subj} slug={slug} topics={filtered} />)}
       {tab === 'Flashcards' && (
         <FlashcardsTab
           flipped={flipped}
