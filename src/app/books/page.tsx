@@ -6,8 +6,38 @@ import { BrowseTypeButtons } from './components/browse-type-buttons'
 import { GenreGrid } from './components/genre-grid'
 import { BookLibraryList } from './components/book-library-list'
 
+const BOOK_GENRES = [
+  { id: 'self-dev', label: 'Self-Development & Motivation' },
+  { id: 'finance', label: 'Finance & Investment' },
+  { id: 'business', label: 'Business & Entrepreneurship' },
+  { id: 'history', label: 'History & Biography' },
+  { id: 'fiction', label: 'Fiction & Literature' },
+  { id: 'health', label: 'Health & Wellness' },
+  { id: 'religion', label: 'Religion & Spirituality' },
+  { id: 'tech', label: 'Technology & Computing' },
+]
+
+const TEXTBOOK_GENRES = [
+  { id: 'literature', label: 'Literature & Set Texts' },
+  { id: 'science', label: 'Science & Technology' },
+  { id: 'math', label: 'Mathematics & Further Maths' },
+  { id: 'social', label: 'Social Studies & Geography' },
+  { id: 'language', label: 'Language & Composition' },
+  { id: 'reference', label: 'Reference & Dictionaries' },
+  { id: 'religious', label: 'Religious & Moral Studies' },
+  { id: 'arts', label: 'Arts & Humanities' },
+]
+
 const GENRE_LABELS: Record<string, string> = {
-  all: 'All Genres',
+  all: 'All',
+  'self-dev': 'Self-Development & Motivation',
+  finance: 'Finance & Investment',
+  business: 'Business & Entrepreneurship',
+  history: 'History & Biography',
+  fiction: 'Fiction & Literature',
+  health: 'Health & Wellness',
+  religion: 'Religion & Spirituality',
+  tech: 'Technology & Computing',
   literature: 'Literature & Set Texts',
   science: 'Science & Technology',
   math: 'Mathematics & Further Maths',
@@ -19,8 +49,10 @@ const GENRE_LABELS: Record<string, string> = {
 }
 
 export default function BooksPage() {
-  const [bookType, setBookType] = useState<'textbooks' | 'pastquestions'>('textbooks')
+  const [bookType, setBookType] = useState<'books' | 'textbooks'>('books')
   const [selectedGenre, setSelectedGenre] = useState<string>('all')
+
+  const genres = bookType === 'books' ? BOOK_GENRES : TEXTBOOK_GENRES
 
   return (
     <div>
@@ -35,10 +67,10 @@ export default function BooksPage() {
       <SearchBar placeholder="Search titles, topics or authors…" />
 
       <Eyebrow>Browse by type</Eyebrow>
-      <BrowseTypeButtons bookType={bookType} onSelect={setBookType} />
+      <BrowseTypeButtons bookType={bookType} onSelect={(t) => { setBookType(t); setSelectedGenre('all') }} />
 
       <Eyebrow>Browse by genre</Eyebrow>
-      <GenreGrid onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
+      <GenreGrid genres={genres} onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
 
       <div className="border-t border-ash-line pt-4 mt-4">
         <h2 className="font-bold text-[15px] text-surface-900 mb-3">{GENRE_LABELS[selectedGenre]}</h2>
