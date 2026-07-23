@@ -226,7 +226,7 @@ export default function TopicPage({ params }: { params: Promise<{ subject: strin
         </div>
 
         <Link href={`/subjects/${slug}`}
-          className="mt-6 w-full h-11 rounded-[22px] bg-brand-600 text-white font-bold text-[13px] flex items-center justify-center gap-2 no-underline cursor-pointer hover:bg-brand-700 transition">
+          className="mt-6 w-full h-11 rounded-[22px] bg-surface-900 text-surface-50 font-bold text-[13px] flex items-center justify-center gap-2 no-underline cursor-pointer hover:opacity-90 transition">
           Finish lesson <ChevronRight size={15} />
         </Link>
 
