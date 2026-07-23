@@ -136,10 +136,10 @@ const TEXTBOOK_SPOTLIGHT: Record<string, string[]> = {
 
 function BookItem({ icon, title, colorCls, hexColor }: { icon: ReactNode; title: string; colorCls?: string; hexColor?: string }) {
   return (
-    <div className="snap-start shrink-0 w-[130px]">
-      <div className="h-[170px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+    <div className="snap-start shrink-0 w-32.5">
+      <div className="h-42.5 flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
         <div
-          className={`w-[72px] h-[72px] rounded-2xl flex items-center justify-center ${colorCls || ''}`}
+          className={`w-18 h-18 rounded-2xl flex items-center justify-center ${colorCls || ''}`}
           style={hexColor && !colorCls ? { backgroundColor: hexColor + '20', color: hexColor } : {}}
         >
           {icon}
@@ -268,7 +268,7 @@ export function BookLibraryList({ bookType, genreId, search = '' }: BookLibraryL
             <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
               <div className="aspect-square flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
                 <div
-                  className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
+                  className="w-13 h-13 rounded-xl flex items-center justify-center text-xl"
                   style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
                 >
                   {s.icon}
@@ -290,7 +290,7 @@ export function BookLibraryList({ bookType, genreId, search = '' }: BookLibraryL
   if (items.length === 0) {
     return (
       <div className="text-center py-10 text-ash text-[13px]">
-        No textbooks available in this genre yet.
+        {search ? 'No textbooks match your search in this genre.' : 'No textbooks available in this genre yet.'}
       </div>
     )
   }
@@ -303,7 +303,7 @@ export function BookLibraryList({ bookType, genreId, search = '' }: BookLibraryL
           <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
             <div className="aspect-square flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
               <div
-                className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
+                className="w-13 h-13 rounded-xl flex items-center justify-center text-xl"
                 style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
               >
                 {s.icon}

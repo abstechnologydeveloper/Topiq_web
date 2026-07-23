@@ -68,7 +68,7 @@ export default function BooksPage() {
       <SearchBar placeholder="Search titles, topics or authors…" value={search} onChange={setSearch} />
 
       <Eyebrow>Browse by type</Eyebrow>
-      <BrowseTypeButtons bookType={bookType} onSelect={(t) => { setBookType(t); setSelectedGenre('all'); setSearch('') }} />
+      <BrowseTypeButtons bookType={bookType} onSelect={(t) => { setBookType(t); setSelectedGenre('all') }} />
 
       <Eyebrow>Browse by genre</Eyebrow>
       <GenreGrid genres={genres} onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
