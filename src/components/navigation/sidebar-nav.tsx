@@ -10,6 +10,7 @@ const DESKTOP_PRIMARY = [
   { href: '/subjects', label: 'Subjects', icon: 'M4 5a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z M14 3v6h6' },
   { href: '/practice', label: 'Practice', icon: 'M9 11l3 3L22 4 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' },
   { href: '/assignments', label: 'Assignments', icon: 'M5 3h14v18H5z M9 7h6 M9 11h6 M9 15h4' },
+  { href: '/live-class', label: 'Live Class', icon: 'M12 9.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4z M8.5 8.5a5 5 0 0 0 0 7 M15.5 8.5a5 5 0 0 0 0 7 M5.2 5.2a10 10 0 0 0 0 13.6 M18.8 5.2a10 10 0 0 0 0 13.6' },
   { href: '/ask', label: 'Sabi AI', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
   { href: '/timetable', label: 'Plan', icon: 'M3 4h18v18H3z M3 10h18 M16 2v4 M8 2v4' },
   { href: '/progress', label: 'Progress', icon: 'M3 3v18h18 M7 15l4-6 4 4 5-8' },
@@ -25,6 +26,7 @@ const TABBAR_LINKS = [
   { href: '/', label: 'Discover', icon: 'M21 21l-4.3-4.3 M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z' },
   { href: '/subjects', label: 'Subjects', icon: 'M4 5a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z M14 3v6h6' },
   { href: '/practice', label: 'Practice', icon: 'M9 11l3 3L22 4 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' },
+  { href: '/live-class', label: 'Live Class', icon: 'M12 9.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4z M8.5 8.5a5 5 0 0 0 0 7 M15.5 8.5a5 5 0 0 0 0 7 M5.2 5.2a10 10 0 0 0 0 13.6 M18.8 5.2a10 10 0 0 0 0 13.6' },
   { href: '/ask', label: 'Sabi AI', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
   { href: '/timetable', label: 'Plan', icon: 'M3 4h18v18H3z M3 10h18 M16 2v4 M8 2v4' },
 ]
@@ -34,6 +36,7 @@ const DRAWER_LINKS = [
   { href: '/subjects', label: 'Subjects', icon: 'M4 5a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z M14 3v6h6' },
   { href: '/practice', label: 'Practice', icon: 'M9 11l3 3L22 4 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' },
   { href: '/assignments', label: 'Assignments', icon: 'M5 3h14v18H5z M9 7h6 M9 11h6 M9 15h4' },
+  { href: '/live-class', label: 'Live Class', icon: 'M12 9.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4z M8.5 8.5a5 5 0 0 0 0 7 M15.5 8.5a5 5 0 0 0 0 7 M5.2 5.2a10 10 0 0 0 0 13.6 M18.8 5.2a10 10 0 0 0 0 13.6' },
   { href: '/ask', label: 'Sabi AI', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
   { href: '/timetable', label: 'Plan', icon: 'M3 4h18v18H3z M3 10h18 M16 2v4 M8 2v4' },
   { href: '/progress', label: 'Progress', icon: 'M3 3v18h18 M7 15l4-6 4 4 5-8' },
