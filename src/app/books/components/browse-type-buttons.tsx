@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpen, FileText } from 'lucide-react'
+import { Book, BookOpen } from 'lucide-react'
 
 interface BrowseTypeButtonsProps {
   bookType: 'textbooks' | 'pastquestions'
@@ -18,8 +18,8 @@ export function BrowseTypeButtons({ bookType, onSelect }: BrowseTypeButtonsProps
             : 'bg-surface-50 border-ash-line text-ash hover:border-brand-600'
         }`}
       >
-        <BookOpen size={16} />
-        <span className="flex-1">Textbooks</span>
+        <Book size={16} />
+        <span className="flex-1">Books</span>
         <span className="font-mono text-[10.5px] font-semibold">42.3k</span>
       </button>
       <button
@@ -30,8 +30,8 @@ export function BrowseTypeButtons({ bookType, onSelect }: BrowseTypeButtonsProps
             : 'bg-surface-50 border-ash-line text-ash hover:border-brand-600'
         }`}
       >
-        <FileText size={16} />
-        <span className="flex-1">Past questions</span>
+        <BookOpen size={16} />
+        <span className="flex-1">Textbooks</span>
         <span className="font-mono text-[10.5px] font-semibold">31.8k</span>
       </button>
     </div>
