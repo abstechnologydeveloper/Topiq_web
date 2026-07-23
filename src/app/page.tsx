@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { SUBJECTS, TOPICS } from '@/lib/data'
 import { useAuthStore } from '@/lib/auth/store'
-import { Eyebrow, PromoBanner, PromoteCard } from '@/components/ui/shared'
+import { Eyebrow, PromoBanner, PromoteCard, HomeSearch } from '@/components/ui/shared'
 import { ArrowRight, Pencil, GraduationCap } from 'lucide-react'
 import { UserGreeting } from '@/app/components/user-greeting'
 import { QuickLinks } from '@/app/components/quick-links'
@@ -31,10 +31,12 @@ export default function Home() {
     <div>
       <UserGreeting name={user.name} grade={user.grade} />
 
-      <QuickLinks />
+      <HomeSearch />
 
       <Eyebrow>Today's plan</Eyebrow>
       {subj && topWeak && <UpNextCard subject={subj} topic={topWeak} />}
+
+      <QuickLinks />
 
       <div className="flex items-baseline justify-between mb-2.5">
         <Eyebrow className="mb-0">Your subjects</Eyebrow>

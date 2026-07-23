@@ -76,6 +76,7 @@ const config: Config = {
         950: '#15064A',
       },
       ink: {
+        DEFAULT: '#333333',
         soft: '#666666',
       },
       ember: {

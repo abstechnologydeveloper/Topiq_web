@@ -25,11 +25,12 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <aside className="hidden lg:flex flex-col fixed left-0 top-0 w-56 bg-surface-50 border-r border-surface-200 min-h-screen">
-        <div className="p-5">
+        <div className="p-5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold text-brand-600">
             <span className="w-8 h-8 bg-brand-600 text-white rounded-lg flex items-center justify-center text-sm font-extrabold">T</span>
             Topiq
           </Link>
+          <ThemeToggle />
         </div>
         <DesktopNav />
         <div className="mt-auto space-y-0.5 px-2">
@@ -47,9 +48,6 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             </svg>
             Upgrade
           </Link>
-          <div className="flex items-center justify-end px-3 py-1">
-            <ThemeToggle />
-          </div>
           <DesktopUserMenu />
         </div>
       </aside>

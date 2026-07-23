@@ -1,7 +1,10 @@
 'use client'
 
+import { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { ChevronRight, Sparkles, ArrowLeft, Search, Crosshair } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { TOPICS, SUBJECTS } from '@/lib/data'
 
 export function Eyebrow({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
@@ -186,12 +189,58 @@ export function Toggle({ labels, active, onChange }: { labels: string[]; active:
 }
 
 export function HomeSearch() {
+  const [query, setQuery] = useState('')
+  const [show, setShow] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+
+  const results = query.trim()
+    ? TOPICS.filter(t => t.name.toLowerCase().includes(query.trim().toLowerCase()))
+        .map(t => ({ topic: t, subject: SUBJECTS.find(s => s.id === t.subjectId)! }))
+        .filter(r => r.subject)
+    : []
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setShow(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
   return (
-    <div className="flex items-center gap-2.5 bg-surface-50 border border-ash-line rounded-[26px] px-4 py-3 mb-3.5">
-      <Search size={17} className="text-ash shrink-0" />
-      <input type="text" placeholder="Search any topic, e.g. osmosis…"
-        className="flex-1 border-none outline-none text-[14.5px] font-sans bg-transparent text-surface-900 placeholder:text-ash" />
-      <Sparkles size={16} className="text-ash shrink-0" />
+    <div className="search-wrap relative mb-[22px]" ref={ref}>
+      <div className="flex items-center gap-2.5 bg-paper-dim border border-ash-line rounded-[16px] px-3.5 py-3">
+        <Search size={17} className="text-ash shrink-0" />
+        <input type="text" placeholder="Search any topic, e.g. osmosis…"
+          className="flex-1 border-none outline-none text-[14px] font-sans bg-transparent text-surface-900 placeholder:text-ash"
+          value={query}
+          onChange={e => { setQuery(e.target.value); setShow(true) }}
+          onFocus={e => { if (e.target.value.trim()) setShow(true) }} />
+        <span className="w-6 h-6 rounded-[8px] bg-brand-50 flex items-center justify-center shrink-0">
+          <Sparkles size={14} className="text-brand-600" />
+        </span>
+      </div>
+
+      {show && query.trim() && (
+        <div className="absolute top-[calc(100%-6px)] left-0 right-0 z-15 bg-surface-50 border border-ash-line rounded-[16px] py-1 max-h-[340px] overflow-y-auto no-scrollbar shadow-[0_16px_36px_rgba(0,0,0,0.10)]">
+          {results.length > 0 ? results.map(r => (
+            <div key={r.topic.id} onClick={() => { router.push(`/subjects/${r.subject.id}`); setShow(false) }}
+              className="flex items-center gap-3 py-3 px-4 cursor-pointer border-b border-ash-line last:border-b-0 hover:bg-paper-dim/50 transition">
+              <div className="w-[34px] h-[34px] rounded-[9px] bg-paper-dim flex items-center justify-center shrink-0 text-[15px]">
+                {r.subject.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[14px] font-bold text-surface-900">{r.topic.name}</div>
+                <div className="text-[12px] text-ash">{r.subject.name}</div>
+              </div>
+              <ChevronRight size={18} className="text-ash shrink-0" />
+            </div>
+          )) : (
+            <p className="px-4 py-3.5 text-ash text-[13px]">No matches — try another topic or subject.</p>
+          )}
+        </div>
+      )}
     </div>
   )
 }
