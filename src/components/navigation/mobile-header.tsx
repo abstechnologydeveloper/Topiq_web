@@ -48,7 +48,7 @@ export function MobileHeader() {
           </div>
         </div>
       </header>
-      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} onSwitchOpen={() => setSwitchOpen(true)} />
 
       {switchOpen && (
         <div className="fixed inset-0 bg-[rgba(20,23,43,0.55)] z-100 flex items-start justify-center pt-[70px] px-4"

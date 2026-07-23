@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/lib/auth/store'
@@ -115,10 +114,9 @@ export function MobileNav() {
   )
 }
 
-export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function MobileDrawer({ open, onClose, onSwitchOpen }: { open: boolean; onClose: () => void; onSwitchOpen?: () => void }) {
   const pathname = usePathname()
   const user = useAuthStore(s => s.user)
-  const [switchOpen, setSwitchOpen] = useState(false)
 
   const initials = user
     ? (user.firstName?.[0] ?? user.email[0]).toUpperCase()
@@ -137,7 +135,7 @@ export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => 
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-0.5">
                 <img src="/icon-192.png" alt="Topiq" className="w-[38px] h-[38px] object-contain" />
-                <button onClick={() => setSwitchOpen(true)}
+                <button onClick={(e) => { e.stopPropagation(); onSwitchOpen?.() }}
                   className="flex items-center justify-center w-6 h-6 rounded-[8px] border-none bg-none text-ash cursor-pointer shrink-0 hover:bg-paper-dim hover:text-surface-700 transition"
                   title="Switch account">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -207,37 +205,6 @@ export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => 
                 Upgrade
               </Link>
             </div>
-          </div>
-        </div>
-      )}
-
-      {switchOpen && (
-        <div className="fixed inset-0 bg-[rgba(20,23,43,0.55)] z-300 flex items-start justify-center pt-[70px] px-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setSwitchOpen(false) }}>
-          <div className="w-full max-w-[340px] max-h-[70vh] bg-surface-50 rounded-[20px] p-5 overflow-y-auto mx-auto animate-fadeIn">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-[20px] font-semibold text-surface-900">Switch account</h2>
-              <button onClick={() => setSwitchOpen(false)}
-                className="bg-paper-dim border-none w-[30px] h-[30px] rounded-full cursor-pointer text-sm flex items-center justify-center text-surface-500 hover:text-surface-700 shrink-0">
-                ✕
-              </button>
-            </div>
-            <p className="text-[12px] text-ash mb-4 leading-[1.5]">Jump between your linked AbSTopiq accounts.</p>
-
-            <div className="flex items-center gap-3 py-2.5 px-1 border-b border-ash-line">
-              <div className="w-[32px] h-[32px] rounded-full bg-brand-600 text-surface-50 flex items-center justify-center text-xs font-bold shrink-0">
-                {initials}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-[13.5px] font-semibold text-surface-900">{displayName}</div>
-                <div className="text-[11px] text-ash font-semibold">{grade} · current</div>
-              </div>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-600, #7C3AED)" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
-            </div>
-
-            <button className="w-full bg-none border border-dashed border-ash-line text-ash rounded-[14px] py-3 font-bold text-[13px] cursor-pointer mt-2.5 hover:border-brand-600 hover:text-brand-600 transition">
-              + Add another account
-            </button>
           </div>
         </div>
       )}
