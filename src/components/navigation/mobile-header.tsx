@@ -48,10 +48,10 @@ export function MobileHeader() {
           </div>
         </div>
       </header>
-      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} onSwitchOpen={() => setSwitchOpen(true)} />
+      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} onSwitchOpen={() => { setDrawerOpen(false); setSwitchOpen(true) }} />
 
       {switchOpen && (
-        <div className="fixed inset-0 bg-[rgba(20,23,43,0.55)] z-100 flex items-start justify-center pt-[70px] px-4"
+        <div className="fixed inset-0 bg-[rgba(20,23,43,0.55)] z-300 flex items-start justify-center pt-[70px] px-4"
           onClick={(e) => { if (e.target === e.currentTarget) setSwitchOpen(false) }}>
           <div className="w-full max-w-[340px] max-h-[70vh] bg-surface-50 rounded-[20px] p-5 overflow-y-auto mx-auto animate-fadeIn">
             <div className="flex items-center justify-between mb-4">
