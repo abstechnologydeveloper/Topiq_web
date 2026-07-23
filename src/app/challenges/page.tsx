@@ -15,6 +15,7 @@ const challenges = [
   { id: 'mental', icon: <Brain size={17} />, title: 'Mental math', desc: 'Solve 30 math questions in a row', progress: 0, total: 30, xp: 350 },
   { id: 'target', icon: <Target size={17} />, title: 'Perfect score', desc: 'Score 100% on any practice session', progress: 0, total: 1, xp: 600 },
   { id: 'global', icon: <Globe size={17} />, title: 'Global learner', desc: 'Practise in 3 different subjects', progress: 2, total: 3, xp: 250 },
+  { id: 'firststeps', icon: <Award size={17} />, title: 'First steps', desc: 'Complete your first practice session', progress: 1, total: 1, xp: 100 },
 ]
 
 export default function ChallengesPage() {
