@@ -8,10 +8,33 @@ interface BookLibraryListProps {
   genreId: string
 }
 
+const GENRE_SUBJECTS: Record<string, string[]> = {
+  all: ['biology', 'chemistry', 'physics', 'mathematics', 'english'],
+  literature: ['english'],
+  science: ['biology', 'chemistry', 'physics'],
+  math: ['mathematics'],
+  social: [],
+  language: ['english'],
+  reference: [],
+  religious: [],
+  arts: [],
+}
+
 export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
+  const subjectIds = GENRE_SUBJECTS[genreId] || []
+  const items = genreId === 'all' ? SUBJECTS : SUBJECTS.filter((s) => subjectIds.includes(s.id))
+
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-10 text-ash text-[13px]">
+        No {bookType === 'textbooks' ? 'textbooks' : 'question banks'} available in this genre yet.
+      </div>
+    )
+  }
+
   return (
-    <div className="space-y-2.5 mt-4">
-      {SUBJECTS.map((s) => (
+    <div className="space-y-2.5">
+      {items.map((s) => (
         <div
           key={s.id}
           className="flex items-center gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3 cursor-pointer hover:border-brand-600 transition"
