@@ -40,6 +40,7 @@ const DRAWER_LINKS = [
   { href: '/ask', label: 'Sabi AI', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
   { href: '/timetable', label: 'Plan', icon: 'M3 4h18v18H3z M3 10h18 M16 2v4 M8 2v4' },
   { href: '/progress', label: 'Progress', icon: 'M3 3v18h18 M7 15l4-6 4 4 5-8' },
+  { href: '/books', label: 'Books', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z' },
 ]
 
 const DRAWER_BOTTOM_LINKS = [
