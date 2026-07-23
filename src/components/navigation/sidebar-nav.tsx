@@ -154,6 +154,7 @@ export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => 
                       <path d={icon} />
                     </svg>
                     {label}
+                    {href === '/books' && <span className="ml-auto font-mono text-[10px] font-bold text-ash bg-ash-line px-1.5 py-0.5 rounded">100k</span>}
                   </Link>
                 )
               })}
