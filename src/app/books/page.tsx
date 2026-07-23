@@ -23,10 +23,8 @@ export default function BooksPage() {
 
       <SearchBar placeholder="Search titles, topics or authors…" />
 
-      <div className="flex items-center gap-3 mb-4">
-        <Eyebrow className="!mb-0">Browse by type</Eyebrow>
-        <BrowseTypeButtons bookType={bookType} onSelect={setBookType} />
-      </div>
+      <Eyebrow>Browse by type</Eyebrow>
+      <BrowseTypeButtons bookType={bookType} onSelect={setBookType} />
 
       {selectedGenre === null ? (
         <>
