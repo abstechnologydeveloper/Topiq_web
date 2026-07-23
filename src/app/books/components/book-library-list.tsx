@@ -272,7 +272,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {SUBJECTS.map((s) => (
             <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
-              <div className="h-[130px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+              <div className="aspect-square flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
                 <div
                   className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
                   style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
@@ -280,7 +280,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
                   {s.icon}
                 </div>
               </div>
-              <div className="mt-2 text-center">
+              <div className="mt-2 text-left">
                 <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{s.name}</div>
               </div>
             </div>
@@ -307,7 +307,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {items.map((s) => (
           <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
-            <div className="h-[130px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+            <div className="aspect-square flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
               <div
                 className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
                 style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
@@ -315,7 +315,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
                 {s.icon}
               </div>
             </div>
-            <div className="mt-2 text-center">
+            <div className="mt-2 text-left">
               <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{s.name}</div>
             </div>
           </div>
