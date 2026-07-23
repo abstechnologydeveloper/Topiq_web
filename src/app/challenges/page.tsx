@@ -19,7 +19,10 @@ const challenges = [
 
 export default function ChallengesPage() {
   const [inProgress, setInProgress] = useState<string[]>(
-    challenges.filter(c => c.progress > 0).map(c => c.id)
+    challenges.filter(c => c.progress > 0 && c.progress < c.total).map(c => c.id)
+  )
+  const [completed, setCompleted] = useState<string[]>(
+    challenges.filter(c => c.progress >= c.total).map(c => c.id)
   )
 
   const startChallenge = (id: string) => {
@@ -30,8 +33,9 @@ export default function ChallengesPage() {
     setInProgress(inProgress.filter(i => i !== id))
   }
 
-  const available = challenges.filter(c => !inProgress.includes(c.id))
+  const available = challenges.filter(c => !inProgress.includes(c.id) && !completed.includes(c.id))
   const active = challenges.filter(c => inProgress.includes(c.id))
+  const done = challenges.filter(c => completed.includes(c.id))
 
   return (
     <div>
@@ -60,7 +64,21 @@ export default function ChallengesPage() {
         {available.map(c => (
           <ChallengeCard key={c.id} {...c} status="available" onStart={() => startChallenge(c.id)} />
         ))}
+        {available.length === 0 && (
+          <p className="text-center py-6 text-ash text-[13px]">No challenges available — you&#39;ve started or completed them all!</p>
+        )}
       </div>
+
+      {done.length > 0 && (
+        <>
+          <Eyebrow>Completed</Eyebrow>
+          <div className="space-y-3 mb-5">
+            {done.map(c => (
+              <ChallengeCard key={c.id} {...c} status="completed" />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
