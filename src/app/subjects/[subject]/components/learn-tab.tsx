@@ -1,6 +1,6 @@
 import type { Topic, Subject } from '@/lib/types'
-import { Eyebrow, GroundingChip } from '@/components/ui/shared'
-import { ArrowRight, Camera, Mic, Send } from 'lucide-react'
+import { Eyebrow } from '@/components/ui/shared'
+import { ArrowRight, Book, Camera, Mic, Play, Send } from 'lucide-react'
 
 interface Props {
   subj: Subject
@@ -14,7 +14,9 @@ export function LearnTab({ subj, slug, topics }: Props) {
       <div className="pb-4">
         <Eyebrow>Watch, read & understand</Eyebrow>
         <div className="space-y-2.5">
-          {topics.map(t => (
+          {topics.map((t, i) => {
+            const isVideo = i % 2 === 0
+            return (
             <div key={t.id}
               onClick={() => window.location.href = `/subjects/${slug}/${t.id}`}
               className="flex gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3 cursor-pointer hover:border-brand-600 hover:-translate-y-[1px] transition-all">
@@ -24,12 +26,13 @@ export function LearnTab({ subj, slug, topics }: Props) {
               <div className="flex-1 min-w-0 pt-0.5">
                 <div className="text-[14px] font-bold text-surface-900 mb-1 leading-[1.3]">{t.name}</div>
                 <div className="text-[11.5px] text-ash flex items-center gap-2 mb-1.5">
-                  <span className="font-mono font-semibold">{t.questions.length} questions</span>
+                  {isVideo ? <><Play size={13} /> Watch <span className="font-mono">· 9 min</span></> : <><Book size={13} /> Read</>}
                 </div>
                 <p className="text-[12.5px] text-ink-soft line-clamp-2 leading-[1.5]">{t.tutorial.split('\n')[0]}</p>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
