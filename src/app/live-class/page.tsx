@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Eyebrow, PageTitle } from '@/components/ui/shared'
-import { ArrowLeft, ChevronRight, Play } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 
 const SCHEDULE = [
   { time: '8:00 AM – 9:30 AM', subject: 'Biology', topic: 'Cell Structure & Function', status: 'completed' as const },
