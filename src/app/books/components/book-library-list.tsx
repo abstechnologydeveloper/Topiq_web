@@ -2,6 +2,7 @@
 
 import { Book } from 'lucide-react'
 import { SUBJECTS } from '@/lib/data'
+import { useRouter } from 'next/navigation'
 import type { ReactNode } from 'react'
 
 interface BookLibraryListProps {
@@ -212,6 +213,8 @@ export function SpotlightSection({ bookType, genreId }: { bookType: 'books' | 't
 }
 
 export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
+  const router = useRouter()
+
   if (bookType === 'books') {
     if (genreId === 'all') {
       return (
@@ -268,17 +271,18 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
         <h2 className="font-bold text-[15px] text-surface-900 mb-3">Subjects</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {SUBJECTS.map((s) => (
-            <div
-              key={s.id}
-              className="flex flex-col items-center gap-2 bg-surface-50 border border-ash-line rounded-[14px] p-4 cursor-pointer hover:border-brand-600 transition"
-            >
-              <div
-                className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
-                style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
-              >
-                {s.icon}
+            <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
+              <div className="h-[130px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+                <div
+                  className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
+                  style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
+                >
+                  {s.icon}
+                </div>
               </div>
-              <div className="font-bold text-[12.5px] text-surface-900 text-center leading-tight">{s.name}</div>
+              <div className="mt-2 text-center">
+                <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{s.name}</div>
+              </div>
             </div>
           ))}
         </div>
@@ -302,17 +306,18 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
       <h2 className="font-bold text-[15px] text-surface-900 mb-3">Subjects</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {items.map((s) => (
-          <div
-            key={s.id}
-            className="flex flex-col items-center gap-2 bg-surface-50 border border-ash-line rounded-[14px] p-4 cursor-pointer hover:border-brand-600 transition"
-          >
-            <div
-              className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
-              style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
-            >
-              {s.icon}
+          <div key={s.id} onClick={() => router.push('/subjects/' + s.id)}>
+            <div className="h-[130px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+              <div
+                className="w-[52px] h-[52px] rounded-xl flex items-center justify-center text-xl"
+                style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
+              >
+                {s.icon}
+              </div>
             </div>
-            <div className="font-bold text-[12.5px] text-surface-900 text-center leading-tight">{s.name}</div>
+            <div className="mt-2 text-center">
+              <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{s.name}</div>
+            </div>
           </div>
         ))}
       </div>
