@@ -26,7 +26,7 @@ export function LearnTab({ subj, slug, topics }: Props) {
               <div className="flex-1 min-w-0 pt-0.5">
                 <div className="text-[14px] font-bold text-surface-900 mb-1 leading-[1.3]">{t.name}</div>
                 <div className="text-[11.5px] text-ash flex items-center gap-2 mb-1.5">
-                  {isVideo ? <><Play size={13} /> Watch <span className="font-mono">· 9 min</span></> : <><Book size={13} /> Read</>}
+                  {isVideo ? <><Play size={13} /> Watch <span className="font-mono">· 9 min</span></> : <><Book size={13} /> Read <span className="font-mono">· 9 min</span></>}
                 </div>
                 <p className="text-[12.5px] text-ink-soft line-clamp-2 leading-[1.5]">{t.tutorial.split('\n')[0]}</p>
               </div>
