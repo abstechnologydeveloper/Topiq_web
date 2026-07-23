@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useEffect, useCallback, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { X } from 'lucide-react'
+import { X, Minus, Plus, ArrowRight } from 'lucide-react'
 import type React from 'react'
 import { SUBJECTS, TOPICS } from '@/lib/data'
 import { QuizStage } from './components/quiz-stage'
@@ -67,6 +67,9 @@ function PracticeSessionInner() {
   const [score, setScore] = useState(0)
   const [results, setResults] = useState<{ q: any; chosen: number; correct: number }[]>([])
   const [subjectScores, setSubjectScores] = useState<{ id: string; name: string; icon: React.ReactNode; score: number; total: number }[]>([])
+  const [practiceTopicId, setPracticeTopicId] = useState<string | null>(null)
+  const [practiceDuration, setPracticeDuration] = useState(20)
+  const [practiceCount, setPracticeCount] = useState(10)
 
   const computeScoreAndResults = useCallback((answers: Record<number, number>, qs: any[]) => {
     let s = 0
@@ -175,42 +178,105 @@ function PracticeSessionInner() {
 
   if (stage === 'score') {
     return (
-      <ScoreStage
-        score={score}
-        total={totalQuestionsAll}
-        results={results}
-        onRetry={() => {
-          const qMap: Record<string, any[]> = {}
-          subjectIds.forEach(id => {
-            let pool = TOPICS.flatMap(t => t.questions)
-              .filter(q => TOPICS.find(t => t.id === q.topicId)?.subjectId === id)
-            pool = pool.sort(() => Math.random() - 0.5)
-            const count = isMock ? perSubjectCount : totalCount
-            const qs: any[] = []
-            for (let i = 0; i < count; i++) {
-              qs.push({ ...pool[i % pool.length], _id: i })
-            }
-            qMap[id] = qs
-          })
-          setSubjectQuestions(qMap)
-          setActiveSubject(subjectIds[0])
-          setSubjectAnswered({})
-          setSubjectQIndex(Object.fromEntries(subjectIds.map(id => [id, 0])))
-          setReadPassage({})
-          setScore(0)
-          setResults([])
-          setSubjectScores([])
-          setSecondsLeft(durationMin * 60)
-          setStage('quiz')
-        }}
-        onClose={exit}
+      <>
+        <ScoreStage
+          score={score}
+          total={totalQuestionsAll}
+          results={results}
+          onRetry={() => {
+            const qMap: Record<string, any[]> = {}
+            subjectIds.forEach(id => {
+              let pool = TOPICS.flatMap(t => t.questions)
+                .filter(q => TOPICS.find(t => t.id === q.topicId)?.subjectId === id)
+              pool = pool.sort(() => Math.random() - 0.5)
+              const count = isMock ? perSubjectCount : totalCount
+              const qs: any[] = []
+              for (let i = 0; i < count; i++) {
+                qs.push({ ...pool[i % pool.length], _id: i })
+              }
+              qMap[id] = qs
+            })
+            setSubjectQuestions(qMap)
+            setActiveSubject(subjectIds[0])
+            setSubjectAnswered({})
+            setSubjectQIndex(Object.fromEntries(subjectIds.map(id => [id, 0])))
+            setReadPassage({})
+            setScore(0)
+            setResults([])
+            setSubjectScores([])
+            setSecondsLeft(durationMin * 60)
+            setStage('quiz')
+          }}
+          onClose={exit}
           onPractice={(topicId) => {
-          const subj = TOPICS.find(t => t.id === topicId)?.subjectId || subjectIds[0]
-          router.push(`/assignments?practice=${subj}`)
-        }}
-        isMock={isMock}
-        subjectScores={subjectScores}
-      />
+            setPracticeTopicId(topicId)
+            setPracticeDuration(20)
+            setPracticeCount(10)
+          }}
+          isMock={isMock}
+          subjectScores={subjectScores}
+        />
+
+        {practiceTopicId && (() => {
+          const subjId = TOPICS.find(t => t.id === practiceTopicId)?.subjectId || subjectIds[0]
+          const subjMeta = SUBJECTS.find(s => s.id === subjId)
+          return (
+            <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40"
+              onClick={(e) => { if (e.target === e.currentTarget) setPracticeTopicId(null) }}>
+              <div className="w-full sm:max-w-[400px] bg-surface-50 rounded-t-[20px] sm:rounded-[20px] p-5 sm:p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-base font-bold text-surface-900 flex items-center gap-2">{subjMeta?.icon} {subjMeta?.name} practice</h2>
+                  <button onClick={() => setPracticeTopicId(null)} className="w-8 h-8 rounded-full flex items-center justify-center bg-paper-dim text-ash cursor-pointer">
+                    <X size={15} />
+                  </button>
+                </div>
+                <p className="text-[13px] text-ash mb-5">Pick a duration and number of questions to begin.</p>
+
+                <div className="space-y-5">
+                  <div>
+                    <span className="text-[13px] font-semibold text-surface-900 block mb-2.5 uppercase tracking-wide">Duration</span>
+                    <div className="flex items-center justify-between bg-paper-dim rounded-[12px] px-2.5 py-1.5 w-full">
+                      <button onClick={() => setPracticeDuration(Math.max(10, practiceDuration - 5))}
+                        className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                        <Minus size={15} />
+                      </button>
+                      <span className="font-mono font-bold text-[14px] text-surface-900 w-[52px] text-center">{practiceDuration} min</span>
+                      <button onClick={() => setPracticeDuration(Math.min(60, practiceDuration + 5))}
+                        className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                        <Plus size={15} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-[13px] font-semibold text-surface-900 block mb-2.5 uppercase tracking-wide">Number of questions</span>
+                    <div className="flex items-center justify-between bg-paper-dim rounded-[12px] px-2.5 py-1.5 w-full">
+                      <button onClick={() => setPracticeCount(Math.max(5, practiceCount - 5))}
+                        className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                        <Minus size={15} />
+                      </button>
+                      <span className="font-mono font-bold text-[14px] text-surface-900 w-[52px] text-center">{practiceCount}</span>
+                      <button onClick={() => setPracticeCount(Math.min(40, practiceCount + 5))}
+                        className="w-8.5 h-8.5 rounded-[9px] border border-ash-line bg-surface-50 flex items-center justify-center cursor-pointer hover:border-brand-600 transition">
+                        <Plus size={15} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <button onClick={() => {
+                  const id = subjId
+                  setPracticeTopicId(null)
+                  router.push(`/practice/session?subject=${id}&dur=${practiceDuration}&count=${practiceCount}`)
+                }}
+                  className="w-full mt-6 h-11 rounded-[22px] bg-brand-600 text-white font-bold text-[13px] flex items-center justify-center gap-2 cursor-pointer hover:bg-brand-700 transition">
+                  Start practice <ArrowRight size={15} />
+                </button>
+              </div>
+            </div>
+          )
+        })()}
+      </>
     )
   }
 
