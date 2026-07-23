@@ -2,13 +2,15 @@
 
 import { useState } from 'react'
 import { Eyebrow, PageTitle } from '@/components/ui/shared'
-import { ChevronRight } from 'lucide-react'
+import { ArrowLeft, ChevronRight, Lightbulb } from 'lucide-react'
+
+const GRADE_LEVEL = 'SS2'
 
 const SCHEDULE = [
-  { time: '8:00 AM – 9:30 AM', subject: 'Biology', topic: 'Cell Structure & Function', status: 'completed' as const },
-  { time: '10:00 AM – 11:30 AM', subject: 'Chemistry', topic: 'Atomic Structure', status: 'live' as const },
-  { time: '12:00 PM – 1:30 PM', subject: 'Physics', topic: 'Motion & Forces', status: 'upcoming' as const },
-  { time: '2:00 PM – 3:30 PM', subject: 'Mathematics', topic: 'Algebra', status: 'upcoming' as const },
+  { time: '8:00 AM – 9:30 AM', subject: 'Biology', topic: 'Cell Structure & Function', status: 'completed' as const, slug: 'biology' },
+  { time: '10:00 AM – 11:30 AM', subject: 'Chemistry', topic: 'Atomic Structure', status: 'live' as const, slug: 'chemistry' },
+  { time: '12:00 PM – 1:30 PM', subject: 'Physics', topic: 'Motion & Forces', status: 'upcoming' as const, slug: 'physics' },
+  { time: '2:00 PM – 3:30 PM', subject: 'Mathematics', topic: 'Algebra', status: 'upcoming' as const, slug: 'mathematics' },
 ]
 
 export default function LiveClassPage() {
@@ -30,14 +32,21 @@ export default function LiveClassPage() {
   if (activeView === 'live' && liveSession) {
     return (
       <div>
-        <div className="bg-gradient-to-r from-coral to-[#C23350] text-white rounded-[14px] p-3.5 mb-4 flex items-center gap-3">
-          <span className="w-[9px] h-[9px] rounded-full bg-white shrink-0 animate-pulse" />
-          <div className="flex-1 min-w-0">
+        <button onClick={() => setActiveView('hub')}
+          className="flex items-center gap-1.5 text-[13px] font-semibold text-ash mb-3 cursor-pointer bg-transparent border-none">
+          <ArrowLeft size={15} />
+          Back to schedule
+        </button>
+
+        <div className="bg-gradient-to-r from-coral to-[#C23350] text-white rounded-[14px] p-3.5 mb-4">
+          <div className="flex items-center gap-3">
+            <span className="w-[9px] h-[9px] rounded-full bg-white shrink-0 animate-pulse" />
             <div className="font-mono text-[10px] font-bold text-[#FFD9E0] uppercase tracking-[.04em]">Live now</div>
-            <div className="font-bold text-[14px]">{liveSession.subject} — {liveSession.topic}</div>
+            <button onClick={endSession}
+              className="ml-auto bg-white text-coral border-none px-3.5 py-1.5 rounded-[16px] font-bold text-[11px] cursor-pointer shrink-0">End session</button>
           </div>
-          <button onClick={endSession}
-            className="bg-white text-coral border-none px-3.5 py-2 rounded-[16px] font-bold text-[12px] cursor-pointer shrink-0">End session</button>
+          <div className="font-mono text-[11px] font-bold text-[#FFD9E0] uppercase tracking-[.06em] mt-2">{liveSession.slug}</div>
+          <div className="font-bold text-[15px] mt-0.5">{liveSession.subject} · {GRADE_LEVEL}</div>
         </div>
 
         <div className="flex gap-1 mb-4 border-b border-ash-line">
@@ -88,6 +97,18 @@ export default function LiveClassPage() {
             </div>
           </div>
         )}
+
+        <div className="mt-6 bg-surface-900 text-surface-50 rounded-[14px] p-4 flex gap-3 items-start">
+          <Lightbulb size={20} className="text-ember-soft shrink-0 mt-0.5" />
+          <div>
+            <span className="font-mono text-[10px] font-bold text-ember-soft uppercase tracking-[.05em] block mb-2">Key takeaway</span>
+            <ul className="space-y-1.5">
+              <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Follow your teacher&apos;s explanations and examples carefully.</span></li>
+              <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Use the Practice tab to test your understanding of this topic.</span></li>
+              <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Answer polls in the Interactive tab to see how your classmates compare.</span></li>
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }
@@ -118,7 +139,7 @@ export default function LiveClassPage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-bold text-[13.5px] text-surface-900">{s.topic}</div>
-              <div className="text-[11.5px] text-ash">{s.subject}</div>
+              <div className="text-[11.5px] text-ash">{s.subject} · SS2</div>
             </div>
             <div className="flex items-center gap-1.5">
               {s.status === 'live' && (
@@ -135,9 +156,6 @@ export default function LiveClassPage() {
         ))}
       </div>
 
-      <button className="w-full mt-4 bg-transparent border border-dashed border-ash-line rounded-[14px] py-3 font-bold text-[13px] text-ash cursor-pointer hover:border-brand-600 hover:text-brand-600 transition">
-        + Add a class to today
-      </button>
     </div>
   )
 }
