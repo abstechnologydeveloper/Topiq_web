@@ -81,7 +81,7 @@ export default function SettingsPage() {
               </button>
             </div>
             <p className="text-[13px] text-ash mb-4">Choose what you want to be notified about — push to your device, email, or both.</p>
-            <div className="divide-y divide-ash-line">
+            <div className="divide-y divide-ash-line mb-5">
               {NOTIFICATION_ITEMS.map(item => (
                 <ToggleRow key={item.key}
                   label={item.label}
@@ -90,6 +90,10 @@ export default function SettingsPage() {
                   onChange={v => setPref(item.key, v)} />
               ))}
             </div>
+            <button onClick={() => setShowNotifs(false)}
+              className="w-full py-[11px] px-5 rounded-[22px] bg-surface-900 text-surface-50 font-bold text-[13px] cursor-pointer border-none hover:opacity-85 transition">
+              Done
+            </button>
           </div>
         </div>
       )}
