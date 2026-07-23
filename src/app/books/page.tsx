@@ -1,10 +1,16 @@
 'use client'
 
+import { useState } from 'react'
+import { ArrowLeft } from 'lucide-react'
 import { Eyebrow, PageTitle, SearchBar } from '@/components/ui/shared'
 import { BrowseTypeButtons } from './components/browse-type-buttons'
 import { GenreGrid } from './components/genre-grid'
+import { BookLibraryList } from './components/book-library-list'
 
 export default function BooksPage() {
+  const [bookType, setBookType] = useState<'textbooks' | 'pastquestions'>('textbooks')
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null)
+
   return (
     <div>
       <Eyebrow>100,000+ resources</Eyebrow>
@@ -18,10 +24,25 @@ export default function BooksPage() {
       <SearchBar placeholder="Search titles, topics or authors…" />
 
       <Eyebrow>Browse by type</Eyebrow>
-      <BrowseTypeButtons />
+      <BrowseTypeButtons bookType={bookType} onSelect={setBookType} />
 
-      <Eyebrow>Browse by genre</Eyebrow>
-      <GenreGrid />
+      {selectedGenre === null ? (
+        <>
+          <Eyebrow>Browse by genre</Eyebrow>
+          <GenreGrid onSelectGenre={(id) => setSelectedGenre(id)} />
+        </>
+      ) : (
+        <div className="mt-4">
+          <button
+            onClick={() => setSelectedGenre(null)}
+            className="flex items-center gap-1.5 text-[12.5px] font-semibold text-brand-600 mb-3 cursor-pointer"
+          >
+            <ArrowLeft size={16} />
+            All genres
+          </button>
+          <BookLibraryList bookType={bookType} genreId={selectedGenre} />
+        </div>
+      )}
     </div>
   )
 }
