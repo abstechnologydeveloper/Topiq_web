@@ -13,25 +13,24 @@ const genres = [
 
 interface GenreGridProps {
   onSelectGenre: (id: string) => void
+  selectedGenre: string | null
 }
 
-export function GenreGrid({ onSelectGenre }: GenreGridProps) {
+export function GenreGrid({ onSelectGenre, selectedGenre }: GenreGridProps) {
+  const btnCls = (id: string) =>
+    `shrink-0 px-4 py-2.5 rounded-full border-2 font-bold text-[12.5px] cursor-pointer transition whitespace-nowrap ${
+      selectedGenre === id
+        ? 'bg-brand-50 border-brand-600 text-brand-600'
+        : 'bg-surface-50 border-ash-line text-surface-900 hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600'
+    }`
+
   return (
     <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-      <button
-        onClick={() => onSelectGenre('all')}
-        className="flex items-center gap-2 shrink-0 px-4 py-2.5 rounded-full border border-ash-line bg-surface-50 text-surface-900 font-bold text-[12.5px] cursor-pointer hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 transition whitespace-nowrap"
-      >
-        <span className="font-mono text-[10.5px] font-semibold text-ash">{genres.reduce((a, g) => a + parseInt(g.count.replace(',','')), 0).toLocaleString()}</span>
+      <button onClick={() => onSelectGenre('all')} className={btnCls('all')}>
         All Genres
       </button>
       {genres.map((g) => (
-        <button
-          key={g.id}
-          onClick={() => onSelectGenre(g.id)}
-          className="flex items-center gap-2 shrink-0 px-4 py-2.5 rounded-full border border-ash-line bg-surface-50 text-surface-900 font-bold text-[12.5px] cursor-pointer hover:border-brand-600 hover:bg-brand-50 hover:text-brand-600 transition whitespace-nowrap"
-        >
-          <span className="font-mono text-[10.5px] font-semibold text-ash">{g.count}</span>
+        <button key={g.id} onClick={() => onSelectGenre(g.id)} className={btnCls(g.id)}>
           {g.label}
         </button>
       ))}

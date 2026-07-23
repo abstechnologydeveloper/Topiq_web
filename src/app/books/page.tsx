@@ -1,11 +1,22 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowLeft } from 'lucide-react'
 import { Eyebrow, PageTitle, SearchBar } from '@/components/ui/shared'
 import { BrowseTypeButtons } from './components/browse-type-buttons'
 import { GenreGrid } from './components/genre-grid'
 import { BookLibraryList } from './components/book-library-list'
+
+const GENRE_LABELS: Record<string, string> = {
+  all: 'All Genres',
+  literature: 'Literature & Set Texts',
+  science: 'Science & Technology',
+  math: 'Mathematics & Further Maths',
+  social: 'Social Studies & Geography',
+  language: 'Language & Composition',
+  reference: 'Reference & Dictionaries',
+  religious: 'Religious & Moral Studies',
+  arts: 'Arts & Humanities',
+}
 
 export default function BooksPage() {
   const [bookType, setBookType] = useState<'textbooks' | 'pastquestions'>('textbooks')
@@ -26,20 +37,12 @@ export default function BooksPage() {
       <Eyebrow>Browse by type</Eyebrow>
       <BrowseTypeButtons bookType={bookType} onSelect={setBookType} />
 
-      {selectedGenre === null ? (
-        <>
-          <Eyebrow>Browse by genre</Eyebrow>
-          <GenreGrid onSelectGenre={(id) => setSelectedGenre(id)} />
-        </>
-      ) : (
-        <div className="mt-4">
-          <button
-            onClick={() => setSelectedGenre(null)}
-            className="flex items-center gap-1.5 text-[12.5px] font-semibold text-brand-600 mb-3 cursor-pointer"
-          >
-            <ArrowLeft size={16} />
-            All genres
-          </button>
+      <Eyebrow>Browse by genre</Eyebrow>
+      <GenreGrid onSelectGenre={(id) => setSelectedGenre(id)} selectedGenre={selectedGenre} />
+
+      {selectedGenre && (
+        <div className="border-t border-ash-line pt-4 mt-4">
+          <h2 className="font-bold text-[15px] text-surface-900 mb-3">{GENRE_LABELS[selectedGenre]}</h2>
           <BookLibraryList bookType={bookType} genreId={selectedGenre} />
         </div>
       )}
