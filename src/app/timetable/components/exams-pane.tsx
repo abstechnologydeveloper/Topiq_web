@@ -1,13 +1,37 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { DEADLINES } from '@/lib/data'
 import { Eyebrow } from '@/components/ui/shared'
 
+function subjectFromTitle(title: string): string {
+  const t = title.toLowerCase()
+  if (t.includes('biology')) return 'biology'
+  if (t.includes('chemistry')) return 'chemistry'
+  if (t.includes('physics')) return 'physics'
+  if (t.includes('math')) return 'mathematics'
+  if (t.includes('english') || t.includes('comprehension')) return 'english'
+  return 'biology'
+}
+
 export function ExamsPane() {
+  const router = useRouter()
+
+  const startPractice = (title: string) => {
+    const subject = subjectFromTitle(title)
+    router.push(`/practice/session?subject=${subject}&dur=20&count=10`)
+  }
+
   return (
     <div>
       <Eyebrow>Countdown</Eyebrow>
       <div className="space-y-2">
         {DEADLINES.map((d, i) => (
-          <div key={i} className="flex items-center gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3.5 cursor-pointer hover:translate-x-0.5 hover:border-brand-600 transition-all">
+          <div
+            key={i}
+            onClick={() => startPractice(d.title)}
+            className="flex items-center gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3.5 cursor-pointer hover:translate-x-0.5 hover:border-brand-600 transition-all"
+          >
             <div className="w-[32px] h-[32px] rounded-[9px] flex items-center justify-center text-[14px] shrink-0 text-surface-900" style={{ background: `${d.colorHex}18` }}>
               {d.icon}
             </div>
