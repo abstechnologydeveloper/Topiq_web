@@ -36,9 +36,8 @@ export function LearnTab({ subj, slug, topics }: Props) {
       <div className="fixed bottom-0 left-0 right-0 lg:left-56 bg-gradient-to-t from-surface-50 via-surface-50 to-transparent pt-6 pb-4">
         <div className="max-w-5xl mx-auto px-4 lg:px-8">
           <Eyebrow className="block mb-3">Still stuck? Ask Sabi AI right here</Eyebrow>
-          <div className="flex items-center justify-between bg-paper-dim rounded-[12px] px-3.5 py-2.5 mb-3 text-[12px]">
+          <div className="flex items-center bg-paper-dim rounded-[12px] px-3.5 py-2.5 mb-3 text-[12px]">
             <span className="font-bold">3 questions left today (free plan)</span>
-            <span className="font-mono font-bold text-brand-600 underline cursor-pointer flex items-center gap-1">Get unlimited <ArrowRight size={12} /></span>
           </div>
           <div className="flex items-center gap-1.5 border border-ash-line rounded-[26px] px-2 py-1.5 bg-surface-50">
             <button className="w-[36px] h-[36px] rounded-full bg-paper-dim flex items-center justify-center cursor-pointer shrink-0 hover:bg-ash-line transition">
