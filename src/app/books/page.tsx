@@ -29,7 +29,7 @@ const TEXTBOOK_GENRES = [
 ]
 
 const GENRE_LABELS: Record<string, string> = {
-  all: 'Spotlight',
+  all: 'All',
   'self-dev': 'Self-Development & Motivation',
   finance: 'Finance & Investment',
   business: 'Business & Entrepreneurship',

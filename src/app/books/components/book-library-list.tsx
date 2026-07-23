@@ -144,7 +144,7 @@ function BookItem({ icon, title, colorCls, hexColor }: { icon: ReactNode; title:
         </div>
       </div>
       <div className="mt-2 text-center">
-        <div className="font-bold text-[12.5px] text-ash leading-tight">{title}</div>
+        <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{title}</div>
       </div>
     </div>
   )
@@ -221,7 +221,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
             if (!books || books.length === 0) return null
             return (
               <div key={gid} className="mb-5">
-                <h3 className="font-bold text-[14px] text-surface-900 mb-3">{BOOK_GENRE_LABELS[gid]}</h3>
+                <h3 className="font-bold text-[14px] text-ash mb-3">{BOOK_GENRE_LABELS[gid]}</h3>
                 <SwipeRow>
                   {books.map((b, i) => (
                     <BookItem
@@ -271,7 +271,7 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
           if (items.length === 0) return null
           return (
             <div key={gid} className="mb-5">
-              <h3 className="font-bold text-[14px] text-surface-900 mb-3">{TEXTBOOK_GENRE_LABELS[gid]}</h3>
+              <h3 className="font-bold text-[14px] text-ash mb-3">{TEXTBOOK_GENRE_LABELS[gid]}</h3>
               <SwipeRow>
                 {items.map((s) => (
                   <BookItem

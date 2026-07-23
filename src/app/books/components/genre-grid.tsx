@@ -22,7 +22,7 @@ export function GenreGrid({ genres, onSelectGenre, selectedGenre }: GenreGridPro
   return (
     <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
       <button onClick={() => onSelectGenre('all')} className={btnCls('all')}>
-        Spotlight
+        All
       </button>
       {genres.map((g) => (
         <button key={g.id} onClick={() => onSelectGenre(g.id)} className={btnCls(g.id)}>
