@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
+import { Book } from 'lucide-react'
 import { SUBJECTS } from '@/lib/data'
 
 interface BookLibraryListProps {
@@ -33,7 +33,7 @@ const BOOKS_DATA: Record<string, { title: string; author: string }[]> = {
   ],
   history: [
     { title: 'Sapiens', author: 'Yuval Noah Harari' },
-    { title: 'A People\'s History', author: 'Howard Zinn' },
+    { title: "A People's History", author: 'Howard Zinn' },
     { title: 'The Diary of a Young Girl', author: 'Anne Frank' },
   ],
   fiction: [
@@ -68,6 +68,17 @@ const TEXTBOOK_SUBJECTS: Record<string, string[]> = {
   arts: [],
 }
 
+const BOOK_COLORS = [
+  'bg-amber-50 text-amber-600',
+  'bg-sky-50 text-sky-600',
+  'bg-rose-50 text-rose-600',
+  'bg-emerald-50 text-emerald-600',
+  'bg-indigo-50 text-indigo-600',
+  'bg-teal-50 text-teal-600',
+  'bg-orange-50 text-orange-600',
+  'bg-pink-50 text-pink-600',
+]
+
 export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   if (bookType === 'books') {
     const books = BOOKS_DATA[genreId] || []
@@ -81,20 +92,17 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
     }
 
     return (
-      <div className="space-y-2.5">
+      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory no-scrollbar">
         {books.map((b, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3 cursor-pointer hover:border-brand-600 transition"
-          >
-            <span className="w-[36px] h-[36px] rounded-[10px] flex items-center justify-center text-sm font-bold text-brand-600 bg-brand-50 shrink-0">
-              {b.title.charAt(0)}
-            </span>
-            <div className="flex-1 min-w-0">
-              <div className="font-bold text-[13.5px] text-surface-900">{b.title}</div>
-              <div className="text-[11px] text-ash">{b.author}</div>
+          <div key={i} className="snap-start shrink-0 w-[130px]">
+            <div className="h-[170px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+              <div className={`w-[72px] h-[72px] rounded-2xl flex items-center justify-center ${BOOK_COLORS[i % BOOK_COLORS.length]}`}>
+                <Book size={32} />
+              </div>
             </div>
-            <ChevronRight size={18} className="text-ash shrink-0" />
+            <div className="mt-2 text-center">
+              <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{b.title}</div>
+            </div>
           </div>
         ))}
       </div>
@@ -113,23 +121,20 @@ export function BookLibraryList({ bookType, genreId }: BookLibraryListProps) {
   }
 
   return (
-    <div className="space-y-2.5">
-      {items.map((s) => (
-        <div
-          key={s.id}
-          className="flex items-center gap-3 bg-surface-50 border border-ash-line rounded-[14px] p-3 cursor-pointer hover:border-brand-600 transition"
-        >
-          <span
-            className="w-[36px] h-[36px] rounded-[10px] flex items-center justify-center text-base shrink-0"
-            style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
-          >
-            {s.icon}
-          </span>
-          <div className="flex-1 min-w-0">
-            <div className="font-bold text-[13.5px] text-surface-900">{s.name}</div>
-            <div className="text-[11px] text-ash">{s.topicCount} textbooks</div>
+    <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory no-scrollbar">
+      {items.map((s, i) => (
+        <div key={s.id} className="snap-start shrink-0 w-[130px]">
+          <div className="h-[170px] flex items-center justify-center bg-surface-50 border border-ash-line rounded-[14px] cursor-pointer hover:border-brand-600 transition">
+            <div
+              className="w-[72px] h-[72px] rounded-2xl flex items-center justify-center text-3xl"
+              style={{ backgroundColor: s.colorHex + '20', color: s.colorHex }}
+            >
+              {s.icon}
+            </div>
           </div>
-          <ChevronRight size={18} className="text-ash shrink-0" />
+          <div className="mt-2 text-center">
+            <div className="font-bold text-[12.5px] text-surface-900 leading-tight">{s.name}</div>
+          </div>
         </div>
       ))}
     </div>
