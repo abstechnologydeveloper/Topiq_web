@@ -2,6 +2,8 @@
 
 import { Suspense, useState, useEffect, useCallback, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { X } from 'lucide-react'
+import type React from 'react'
 import { SUBJECTS, TOPICS } from '@/lib/data'
 import { QuizStage } from './components/quiz-stage'
 import { ScoreStage } from './components/score-stage'
@@ -9,56 +11,97 @@ import { ScoreStage } from './components/score-stage'
 function PracticeSessionInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const subjectId = searchParams.get('subject') || 'biology'
-  const durationMin = parseInt(searchParams.get('dur') || '20', 10)
-  const questionCount = parseInt(searchParams.get('count') || '10', 10)
 
-  const s = SUBJECTS.find(x => x.id === subjectId)
+  const mode = searchParams.get('mode')
+  const subjectsParam = searchParams.get('subjects')
+  const board = searchParams.get('board')
+  const examYear = searchParams.get('year')
+  const examType = searchParams.get('type')
+  const durationMin = parseInt(searchParams.get('dur') || '20', 10)
+  const totalCount = parseInt(searchParams.get('count') || '10', 10)
+
+  const isMock = mode === 'mock' && !!subjectsParam
+  const subjectIds = isMock
+    ? subjectsParam!.split(',')
+    : [searchParams.get('subject') || 'biology']
+
+  const perSubjectCount = isMock ? Math.floor(totalCount / subjectIds.length) : totalCount
 
   const [stage, setStage] = useState<'quiz' | 'score'>('quiz')
-  const [questions, setQuestions] = useState<any[]>([])
-  const [qIndex, setQIndex] = useState(0)
-  const [answeredMap, setAnsweredMap] = useState<Record<number, number>>({})
-  const [score, setScore] = useState(0)
-  const [results, setResults] = useState<{ q: any; chosen: number; correct: number }[]>([])
+  const [subjectQuestions, setSubjectQuestions] = useState<Record<string, any[]>>({})
+  const [activeSubject, setActiveSubject] = useState<string>(subjectIds[0])
+  const [subjectAnswered, setSubjectAnswered] = useState<Record<string, Record<number, number>>>({})
+  const [subjectQIndex, setSubjectQIndex] = useState<Record<string, number>>({})
   const [secondsLeft, setSecondsLeft] = useState(durationMin * 60)
+  const [readPassage, setReadPassage] = useState<Record<string, boolean>>({})
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // build questions on mount
-  useEffect(() => {
-    let pool = TOPICS.flatMap(t => t.questions)
-    if (subjectId) pool = pool.filter(q => TOPICS.find(t => t.id === q.topicId)?.subjectId === subjectId)
-    pool = pool.sort(() => Math.random() - 0.5)
-    const qs: any[] = []
-    for (let i = 0; i < questionCount; i++) {
-      qs.push({ ...pool[i % pool.length], _id: i })
-    }
-    setQuestions(qs)
-    setQIndex(0)
-    setScore(0)
-    setAnsweredMap({})
-    setResults([])
-    setStage('quiz')
-  }, [subjectId, questionCount])
+  const questions = subjectQuestions[activeSubject] || []
+  const answeredMap = subjectAnswered[activeSubject] || {}
+  const qIndex = subjectQIndex[activeSubject] || 0
+  const activeSubjMeta = SUBJECTS.find(s => s.id === activeSubject)
 
-  const computeScoreAndResults = useCallback((answers: Record<number, number>) => {
+  // build question pools on mount
+  useEffect(() => {
+    const qMap: Record<string, any[]> = {}
+    subjectIds.forEach(id => {
+      let pool = TOPICS.flatMap(t => t.questions)
+        .filter(q => TOPICS.find(t => t.id === q.topicId)?.subjectId === id)
+      pool = pool.sort(() => Math.random() - 0.5)
+      const count = isMock ? perSubjectCount : totalCount
+      const qs: any[] = []
+      for (let i = 0; i < count; i++) {
+        qs.push({ ...pool[i % pool.length], _id: i })
+      }
+      qMap[id] = qs
+    })
+    setSubjectQuestions(qMap)
+    setActiveSubject(subjectIds[0])
+    setSubjectAnswered({})
+    setSubjectQIndex(Object.fromEntries(subjectIds.map(id => [id, 0])))
+    setStage('quiz')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Score stage
+  const [score, setScore] = useState(0)
+  const [results, setResults] = useState<{ q: any; chosen: number; correct: number }[]>([])
+  const [subjectScores, setSubjectScores] = useState<{ id: string; name: string; icon: React.ReactNode; score: number; total: number }[]>([])
+
+  const computeScoreAndResults = useCallback((answers: Record<number, number>, qs: any[]) => {
     let s = 0
     const r: { q: any; chosen: number; correct: number }[] = []
-    questions.forEach((q, i) => {
+    qs.forEach((q, i) => {
       const chosen = answers[i] ?? -1
       if (chosen === q.correctIndex) s++
       r.push({ q, chosen, correct: q.correctIndex })
     })
     return { score: s, results: r }
-  }, [questions])
+  }, [])
 
   const finish = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current)
-    const { score: s, results: r } = computeScoreAndResults(answeredMap)
+    const allAnswers: Record<number, number> = {}
+    const allQs: any[] = []
+    const sScores: { id: string; name: string; icon: React.ReactNode; score: number; total: number }[] = []
+    subjectIds.forEach(id => {
+      const subjAns = subjectAnswered[id] || {}
+      const subjQs = subjectQuestions[id] || []
+      let subjScore = 0
+      subjQs.forEach((q, i) => {
+        if ((subjAns[i] ?? -1) === q.correctIndex) subjScore++
+      })
+      const meta = SUBJECTS.find(s => s.id === id)
+      sScores.push({ id, name: meta?.name || id, icon: meta?.icon || null, score: subjScore, total: subjQs.length })
+      Object.entries(subjAns).forEach(([k, v]) => { allAnswers[Number(k)] = v })
+      allQs.push(...subjQs)
+    })
+    const { score: s, results: r } = computeScoreAndResults(allAnswers, allQs)
     setScore(s)
     setResults(r)
+    setSubjectScores(sScores)
     setStage('score')
-  }, [computeScoreAndResults, answeredMap])
+  }, [computeScoreAndResults, subjectAnswered, subjectQuestions, subjectIds])
 
   const finishRef = useRef<() => void>(() => {})
   useEffect(() => { finishRef.current = finish }, [finish])
@@ -80,65 +123,168 @@ function PracticeSessionInner() {
   }, [stage])
 
   const answer = (idx: number) => {
-    setAnsweredMap(prev => {
-      if (prev[qIndex] !== undefined) return prev
-      return { ...prev, [qIndex]: idx }
+    setSubjectAnswered(prev => {
+      const subjAns = prev[activeSubject] || {}
+      if (subjAns[qIndex] !== undefined) return prev
+      return { ...prev, [activeSubject]: { ...subjAns, [qIndex]: idx } }
     })
   }
 
   const next = () => {
     if (qIndex + 1 >= questions.length) finish()
-    else { setQIndex(i => i + 1) }
+    else { setSubjectQIndex(prev => ({ ...prev, [activeSubject]: qIndex + 1 })) }
   }
 
   const prev = () => {
-    if (qIndex > 0) { setQIndex(i => i - 1) }
+    if (qIndex > 0) { setSubjectQIndex(prev => ({ ...prev, [activeSubject]: qIndex - 1 })) }
   }
 
   const jump = (i: number) => {
-    if (i >= 0 && i < questions.length) setQIndex(i)
+    if (i >= 0 && i < questions.length) setSubjectQIndex(prev => ({ ...prev, [activeSubject]: i }))
+  }
+
+  const switchSubject = (id: string) => {
+    setActiveSubject(id)
   }
 
   const exit = () => router.back()
 
-  if (!s || questions.length === 0) return null
+  // aggregate per-subject counts
+  const totalAnsweredAll = Object.values(subjectAnswered).reduce(
+    (sum, m) => sum + Object.keys(m).length, 0
+  )
+  const totalQuestionsAll = Object.values(subjectQuestions).reduce(
+    (sum, qs) => sum + qs.length, 0
+  )
+
+  const subjectCards = isMock ? subjectIds.map(id => {
+    const s = SUBJECTS.find(x => x.id === id)
+    const ans = Object.keys(subjectAnswered[id] || {}).length
+    const total = (subjectQuestions[id] || []).length
+    return {
+      id,
+      name: s?.name || id,
+      icon: s?.icon || null,
+      answeredCount: ans,
+      totalCount: total,
+      isActive: id === activeSubject,
+    }
+  }) : []
+
+  if (Object.keys(subjectQuestions).length === 0 || !activeSubjMeta) return null
 
   if (stage === 'score') {
     return (
       <ScoreStage
         score={score}
-        total={questions.length}
+        total={totalQuestionsAll}
         results={results}
         onRetry={() => {
-          let pool = TOPICS.flatMap(t => t.questions)
-            .filter(q => TOPICS.find(t => t.id === q.topicId)?.subjectId === subjectId)
-            .sort(() => Math.random() - 0.5)
-          const qs: any[] = []
-          for (let i = 0; i < questionCount; i++) {
-            qs.push({ ...pool[i % pool.length], _id: i })
-          }
-          setQuestions(qs)
-          setQIndex(0)
+          const qMap: Record<string, any[]> = {}
+          subjectIds.forEach(id => {
+            let pool = TOPICS.flatMap(t => t.questions)
+              .filter(q => TOPICS.find(t => t.id === q.topicId)?.subjectId === id)
+            pool = pool.sort(() => Math.random() - 0.5)
+            const count = isMock ? perSubjectCount : totalCount
+            const qs: any[] = []
+            for (let i = 0; i < count; i++) {
+              qs.push({ ...pool[i % pool.length], _id: i })
+            }
+            qMap[id] = qs
+          })
+          setSubjectQuestions(qMap)
+          setActiveSubject(subjectIds[0])
+          setSubjectAnswered({})
+          setSubjectQIndex(Object.fromEntries(subjectIds.map(id => [id, 0])))
+          setReadPassage({})
           setScore(0)
-          setAnsweredMap({})
           setResults([])
+          setSubjectScores([])
           setSecondsLeft(durationMin * 60)
           setStage('quiz')
         }}
         onClose={exit}
-        onPractice={(topicId) => {
-          const subj = TOPICS.find(t => t.id === topicId)?.subjectId || subjectId
+          onPractice={(topicId) => {
+          const subj = TOPICS.find(t => t.id === topicId)?.subjectId || subjectIds[0]
           router.push(`/assignments?practice=${subj}`)
         }}
+        isMock={isMock}
+        subjectScores={subjectScores}
       />
+    )
+  }
+
+  // comprehension passage for English subject in mock mode
+  const engTopic = TOPICS.find(t => t.id === 'eng-comp')
+  if (isMock && activeSubject === 'english' && !readPassage['english'] && engTopic) {
+    return (
+      <div className="max-w-[640px] mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <button onClick={exit} className="w-[34px] h-[34px] rounded-full bg-paper-dim flex items-center justify-center cursor-pointer shrink-0">
+            <X size={16} />
+          </button>
+          <div className="flex-1 min-w-0">
+            <div className="font-mono text-[10.5px] font-bold text-coral uppercase tracking-[.05em] flex items-center gap-1.5 flex-wrap">
+              <span>Mock exam</span>
+              {board && <span className="text-ash normal-case font-semibold">· {board}</span>}
+              {examYear && <span className="text-ash normal-case font-semibold">· {examYear}</span>}
+            </div>
+            <div className="flex items-center gap-2 text-[13px] font-semibold text-surface-900 flex-wrap">
+              <span className="flex items-center gap-1">{activeSubjMeta.icon} {activeSubjMeta.name}</span>
+              {examType && <span className="text-ash">· {examType}</span>}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-surface-900 text-surface-50 rounded-[12px] px-3.5 py-2.5 mb-4 flex items-center gap-2 text-[12px] font-semibold">
+          <span className="w-[7px] h-[7px] rounded-full bg-coral shrink-0 animate-pulse" />
+          Timed mock exam — {durationMin} minutes total across {subjectIds.length} subjects, graded instantly
+        </div>
+
+        <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
+          {subjectCards.map(s => (
+            <button
+              key={s.id}
+              onClick={() => switchSubject(s.id)}
+              className={`px-3 py-2 rounded-[12px] border-2 cursor-pointer transition shrink-0 text-left ${
+                s.isActive
+                  ? 'border-brand-600 bg-brand-50 text-brand-600'
+                  : 'border-ash-line bg-surface-50 text-ash hover:border-brand-600'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 text-[12px]">
+                {s.icon}
+                <span className="font-bold">{s.name}</span>
+              </div>
+              <div className="font-mono text-[10px] opacity-70 mt-0.5">{s.answeredCount}/{s.totalCount}</div>
+            </button>
+          ))}
+        </div>
+
+        <div className="bg-surface-50 border border-ash-line rounded-[--radius] p-5 mb-4">
+          <div className="font-mono text-[10.5px] font-bold text-coral uppercase tracking-[.05em] mb-2">Comprehension passage</div>
+          <div className="font-display text-[15px] font-semibold text-surface-900 mb-3">Read the passage below carefully.</div>
+          <div className="text-[14px] text-ink-soft leading-[1.7] whitespace-pre-line bg-paper-dim rounded-[12px] p-4 mb-4">
+            {engTopic.tutorial}
+          </div>
+          <div className="flex justify-center">
+            <button
+              onClick={() => setReadPassage(prev => ({ ...prev, english: true }))}
+              className="bg-surface-900 text-surface-50 border-none rounded-[20px] px-5 py-2.5 font-bold text-[12.5px] cursor-pointer hover:opacity-85 transition"
+            >
+              I&apos;ve read the passage — start questions
+            </button>
+          </div>
+        </div>
+      </div>
     )
   }
 
   return (
     <QuizStage
-      subjectName={s.name}
-      subjectIcon={s.icon}
-      tag="Practice · WAEC"
+      subjectName={activeSubjMeta.name}
+      subjectIcon={activeSubjMeta.icon}
+      tag={isMock ? 'Mock exam' : 'Practice · WAEC'}
       questions={questions}
       qIndex={qIndex}
       total={questions.length}
@@ -150,6 +296,15 @@ function PracticeSessionInner() {
       onJump={jump}
       onSubmit={finish}
       onClose={exit}
+      isMock={isMock}
+      boardName={board || ''}
+      examYear={examYear || ''}
+      examType={examType || ''}
+      subjects={subjectCards}
+      onSubjectClick={switchSubject}
+      totalAnsweredAll={totalAnsweredAll}
+      totalQuestionsAll={totalQuestionsAll}
+      totalMockMinutes={durationMin}
     />
   )
 }

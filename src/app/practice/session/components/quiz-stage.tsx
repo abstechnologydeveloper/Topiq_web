@@ -11,6 +11,15 @@ interface Question {
   topicId: string
 }
 
+interface SubjectCard {
+  id: string
+  name: string
+  icon: React.ReactNode | null
+  answeredCount: number
+  totalCount: number
+  isActive: boolean
+}
+
 interface Props {
   subjectName: string
   subjectIcon: React.ReactNode
@@ -26,11 +35,22 @@ interface Props {
   onJump: (i: number) => void
   onSubmit: () => void
   onClose: () => void
+  isMock?: boolean
+  boardName?: string
+  examYear?: string
+  examType?: string
+  subjects?: SubjectCard[]
+  onSubjectClick?: (id: string) => void
+  totalAnsweredAll?: number
+  totalQuestionsAll?: number
+  totalMockMinutes?: number
 }
 
 export function QuizStage({
   subjectName, subjectIcon, tag, questions, qIndex, total,
   answeredMap, secondsLeft, onAnswer, onNext, onPrev, onJump, onSubmit, onClose,
+  isMock, boardName, examYear, examType, subjects, onSubjectClick,
+  totalAnsweredAll, totalQuestionsAll, totalMockMinutes,
 }: Props) {
   const pct = total > 0 ? (qIndex / total) * 100 : 0
   const mins = Math.floor(secondsLeft / 60)
@@ -53,8 +73,19 @@ export function QuizStage({
           <X size={16} />
         </button>
         <div className="flex-1 min-w-0">
-          <div className="font-mono text-[10.5px] font-bold text-coral uppercase tracking-[.05em]">{tag}</div>
-          <div className="font-display text-[16px] font-semibold text-surface-900 flex items-center gap-1.5">{subjectIcon} {subjectName}</div>
+          <div className="font-mono text-[10.5px] font-bold text-coral uppercase tracking-[.05em] flex items-center gap-1.5 flex-wrap">
+            {isMock ? <span>Mock exam</span> : <span>{tag}</span>}
+            {isMock && boardName && <span className="text-ash normal-case font-semibold">· {boardName}</span>}
+            {isMock && examYear && <span className="text-ash normal-case font-semibold">· {examYear}</span>}
+          </div>
+          {isMock ? (
+            <div className="flex items-center gap-2 text-[13px] font-semibold text-surface-900 flex-wrap">
+              <span className="flex items-center gap-1">{subjectIcon} {subjectName}</span>
+              {examType && <span className="text-ash">· {examType}</span>}
+            </div>
+          ) : (
+            <div className="font-display text-[16px] font-semibold text-surface-900 flex items-center gap-1.5">{subjectIcon} {subjectName}</div>
+          )}
         </div>
         <button onClick={onSubmit}
           className="h-[36px] rounded-[22px] bg-surface-900 text-surface-50 font-bold text-[12px] px-4 flex items-center gap-1.5 cursor-pointer shrink-0 hover:opacity-85 transition">
@@ -65,8 +96,33 @@ export function QuizStage({
       {/* mode banner */}
       <div className="bg-surface-900 text-surface-50 rounded-[12px] px-3.5 py-2.5 mb-4 flex items-center gap-2 text-[12px] font-semibold">
         <span className="w-[7px] h-[7px] rounded-full bg-coral shrink-0 animate-pulse" />
-        Practice mode — answers aren't graded into your lesson progress
+        {isMock
+          ? `Timed mock exam — ${totalMockMinutes} minutes total across ${subjects?.length || 0} subjects, graded instantly`
+          : "Practice mode — answers aren't graded into your lesson progress"}
       </div>
+
+      {/* subject cards for mock exam */}
+      {isMock && subjects && subjects.length > 0 && (
+        <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
+          {subjects.map(s => (
+            <button
+              key={s.id}
+              onClick={() => onSubjectClick?.(s.id)}
+              className={`px-3 py-2 rounded-[12px] border-2 cursor-pointer transition shrink-0 text-left ${
+                s.isActive
+                  ? 'border-brand-600 bg-brand-50 text-brand-600'
+                  : 'border-ash-line bg-surface-50 text-ash hover:border-brand-600'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 text-[12px]">
+                {s.icon}
+                <span className="font-bold">{s.name}</span>
+              </div>
+              <div className="font-mono text-[10px] opacity-70 mt-0.5">{s.answeredCount}/{s.totalCount}</div>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* session head: Question / progress bar / score / timer */}
       <div className="flex items-center justify-between mb-2.5">
@@ -75,7 +131,7 @@ export function QuizStage({
           <div className="h-full rounded-full bg-brand-600 transition-all" style={{ width: `${pct}%` }} />
         </div>
         <span className="font-mono text-[12px] font-bold text-ash shrink-0 mr-2">
-          {Object.keys(answeredMap).length}/{total}
+          {answeredCount}/{total}
         </span>
         <span className="font-mono text-[12px] font-bold text-coral shrink-0 flex items-center gap-1">
           <Clock size={13} /> {timerStr}
@@ -136,7 +192,7 @@ export function QuizStage({
           })}
         </div>
 
-        {/* navigation buttons — always visible */}
+        {/* navigation buttons */}
         <div className="flex items-center justify-between mt-4">
           <button onClick={onPrev}
             disabled={qIndex === 0}
