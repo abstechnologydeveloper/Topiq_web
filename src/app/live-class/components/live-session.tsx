@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { ArrowLeft, Lightbulb, BookOpen, PenTool, Users } from 'lucide-react'
 import { Eyebrow } from '@/components/ui/shared'
 import type { ScheduleItem } from './schedule-card'
@@ -45,20 +46,8 @@ export function LiveSession({ session, onBack, onEnd }: Props) {
       </div>
 
       {liveTab === 'learn' && <LearnTab subject={session.subject} topic={session.topic} />}
-      {liveTab === 'practice' && <PracticeTab subject={session.subject} />}
+      {liveTab === 'practice' && <PracticeTab subject={session.subject} slug={session.slug} />}
       {liveTab === 'interactive' && <InteractiveTab />}
-
-      <div className="mt-6 bg-surface-900 text-surface-50 rounded-[14px] p-4 flex gap-3 items-start">
-        <Lightbulb size={20} className="text-ember-soft shrink-0 mt-0.5" />
-        <div>
-          <span className="font-mono text-[10px] font-bold text-ember-soft uppercase tracking-[.05em] block mb-2">Key takeaway</span>
-          <ul className="space-y-1.5">
-            <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Follow your teacher&apos;s explanations and examples carefully.</span></li>
-            <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Use the Practice tab to test your understanding of this topic.</span></li>
-            <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Answer polls in the Interactive tab to see how your classmates compare.</span></li>
-          </ul>
-        </div>
-      </div>
     </div>
   )
 }
@@ -86,11 +75,25 @@ function LearnTab({ subject, topic }: { subject: string; topic: string }) {
           Recording in progress
         </div>
       </div>
+
+      <div className="mt-6 bg-surface-900 text-surface-50 rounded-[14px] p-4 flex gap-3 items-start">
+        <Lightbulb size={20} className="text-ember-soft shrink-0 mt-0.5" />
+        <div>
+          <span className="font-mono text-[10px] font-bold text-ember-soft uppercase tracking-[.05em] block mb-2">Key takeaway</span>
+          <ul className="space-y-1.5">
+            <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Follow your teacher&apos;s explanations and examples carefully.</span></li>
+            <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Use the Practice tab to test your understanding of this topic.</span></li>
+            <li className="text-[13px] leading-[1.55] flex items-start gap-2"><span className="text-ember mt-1 shrink-0">•</span><span>Answer polls in the Interactive tab to see how your classmates compare.</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }
 
-function PracticeTab({ subject }: { subject: string }) {
+function PracticeTab({ subject, slug }: { subject: string; slug: string }) {
+  const router = useRouter()
+
   return (
     <div>
       <Eyebrow>Try it yourself</Eyebrow>
@@ -107,7 +110,8 @@ function PracticeTab({ subject }: { subject: string }) {
         <p className="text-[13px] text-ink-soft mb-3 leading-[1.6]">
           Practise the topic your teacher is covering right now — your results feed straight back into this class&apos;s mastery.
         </p>
-        <button className="bg-surface-900 text-surface-50 border-none px-5 py-2.5 rounded-[20px] font-bold text-[12.5px] cursor-pointer">Practise this topic →</button>
+        <button onClick={() => router.push(`/practice/session?subject=${slug}&dur=20&count=10`)}
+          className="bg-surface-900 text-surface-50 border-none px-5 py-2.5 rounded-[20px] font-bold text-[12.5px] cursor-pointer">Practise this topic →</button>
       </div>
     </div>
   )
