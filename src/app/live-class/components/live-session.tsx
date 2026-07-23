@@ -117,7 +117,18 @@ function PracticeTab({ subject, slug }: { subject: string; slug: string }) {
   )
 }
 
+const POLL_OPTIONS = ['Protein synthesis', 'ATP production', 'Lipid storage', 'DNA replication']
+const CORRECT_INDEX = 1
+
+// simulated votes across the class (in a real app this would come from the server)
+const MOCK_VOTES = [3, 12, 2, 5]
+
 function InteractiveTab() {
+  const [selected, setSelected] = useState<number | null>(null)
+
+  const total = MOCK_VOTES.reduce((a, b) => a + b, 0)
+  const showResults = selected !== null
+
   return (
     <div>
       <Eyebrow>Answer live, together</Eyebrow>
@@ -134,15 +145,39 @@ function InteractiveTab() {
         <span className="font-mono text-[10.5px] font-bold text-ash uppercase tracking-[.05em] block mb-2">Question from your teacher</span>
         <p className="text-[15px] font-semibold text-surface-900 mb-3">What is the function of the mitochondria?</p>
         <div className="space-y-2">
-          {['Protein synthesis', 'ATP production', 'Lipid storage', 'DNA replication'].map((opt, i) => (
-            <div key={i}
-              className="flex items-center gap-2.5 px-3.5 py-2.5 border border-ash-line rounded-[12px] text-[13.5px] font-medium cursor-pointer hover:border-brand-600 transition">
-              <span className="w-[20px] h-[20px] rounded-full bg-paper-dim flex items-center justify-center font-mono text-[10.5px] font-semibold shrink-0">{String.fromCharCode(65 + i)}</span>
-              {opt}
-            </div>
-          ))}
+          {POLL_OPTIONS.map((opt, i) => {
+            const voteShare = total > 0 ? Math.round((MOCK_VOTES[i] / total) * 100) : 0
+            const isCorrect = i === CORRECT_INDEX
+            const isSelected = selected === i
+            const isWrongSelected = isSelected && !isCorrect
+
+            return (
+              <div key={i} onClick={() => setSelected(i)}
+                className="relative flex items-center gap-2.5 px-3.5 py-2.5 border rounded-[12px] text-[13.5px] font-medium transition cursor-pointer overflow-hidden"
+                style={{ borderColor: showResults ? (isCorrect ? '#16a34a' : isSelected ? '#dc2626' : '#e6e6e6') : '#e6e6e6' }}>
+                <div className="absolute inset-0 rounded-[12px] transition-all" style={{
+                  width: showResults ? `${voteShare}%` : '0%',
+                  background: isCorrect ? '#dcfce7' : '#fee2e2',
+                  opacity: showResults ? 1 : 0,
+                }} />
+                <span className="w-[20px] h-[20px] rounded-full bg-paper-dim flex items-center justify-center font-mono text-[10.5px] font-semibold shrink-0 relative">{String.fromCharCode(65 + i)}</span>
+                <span className="relative flex-1">{opt}</span>
+                {showResults && (
+                  <span className={`relative font-bold text-[12px] font-mono ${isCorrect ? 'text-green-700' : 'text-red-600'}`}>
+                    {voteShare}%
+                  </span>
+                )}
+                {showResults && isCorrect && (
+                  <span className="relative text-[12px]">✅</span>
+                )}
+                {isWrongSelected && (
+                  <span className="relative text-[12px]">✘</span>
+                )}
+              </div>
+            )
+          })}
         </div>
-        <div className="flex items-center gap-2 mt-3 text-[11.5px] text-ash font-mono">12 responses so far</div>
+        <div className="flex items-center gap-2 mt-3 text-[11.5px] text-ash font-mono">{total} responses so far</div>
       </div>
     </div>
   )
