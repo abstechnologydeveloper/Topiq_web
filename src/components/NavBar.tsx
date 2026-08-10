@@ -1,0 +1,54 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { MenuIcon } from "@/components/icons";
+
+const LINKS = [
+  { href: "/teachers", label: "Teachers" },
+  { href: "/schools", label: "Schools" },
+  { href: "/about", label: "About us" },
+  { href: "/contact", label: "Contact us" },
+  { href: "/pricing", label: "Pricing" },
+];
+
+export default function NavBar() {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <nav className="nav">
+      <div className="nav-inner">
+        <Link className="brand" href="/">
+          <Image src="/logo.png" alt="AbSTopiq" width={32} height={32} />
+          <span className="brand-word">AbSTopiq</span>
+        </Link>
+        <div className="nav-links">
+          {LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={pathname === l.href ? "active" : undefined}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+        <div className="nav-cta">
+          <Link className="btn btn-ember" href="/pricing">
+            Start free
+          </Link>
+        </div>
+        <button
+          className="nav-toggle"
+          aria-label="Open menu"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <MenuIcon />
+        </button>
+      </div>
+    </nav>
+  );
+}
