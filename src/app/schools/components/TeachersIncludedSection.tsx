@@ -1,4 +1,5 @@
-import ChromeBar from "./ChromeBar";
+import Image from "next/image";
+import teachersImg from "../../assets/school_6.png";
 
 export default function TeachersIncludedSection() {
   return (
@@ -14,34 +15,16 @@ export default function TeachersIncludedSection() {
             </p>
           </div>
           <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="device-browser">
-              <ChromeBar url="app.abstopiq.com/admin/teachers" />
-              <div className="screen">
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Teacher seats</div>
-                    <div className="meta">28 teachers, included free</div>
-                  </div>
-                  <span className="dash-badge c-thread">Active</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Mrs. Adeyemi</div>
-                    <div className="meta">
-                      SS2/SS3 Biology · Lesson Prep AI enabled
-                    </div>
-                  </div>
-                  <span className="dash-badge c-violet">Active</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Mr. Okonkwo</div>
-                    <div className="meta">SS1/SS2 Mathematics</div>
-                  </div>
-                  <span className="dash-badge c-violet">Active</span>
-                </div>
-              </div>
+            <div className="shot-browser">
+              <Image
+                src={teachersImg.src}
+                alt="AbSTopiq teacher seats overview"
+                width={1128}
+                height={552}
+                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
+              />
             </div>
+            <p className="shot-browser-hint">↔ scroll to see the full screen</p>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import ChromeBar from "./ChromeBar";
+import Image from "next/image";
+import billingImg from "../../assets/billing.png";
 
 export default function SchoolPricingSection() {
   return (
@@ -21,29 +22,16 @@ export default function SchoolPricingSection() {
             </div>
           </div>
           <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="device-browser">
-              <ChromeBar url="app.abstopiq.com/admin/billing" />
-              <div className="screen">
-                <div className="seat-card">
-                  <span className="k">100+ seats plan</span>
-                  <span className="v">₦500 / student / term</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Next invoice</div>
-                    <div className="meta">Due in 18 days · 340 seats</div>
-                  </div>
-                  <span className="dash-badge c-ember">₦170,000</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Teacher seats</div>
-                    <div className="meta">28 teachers, included free</div>
-                  </div>
-                  <span className="dash-badge c-thread">Active</span>
-                </div>
-              </div>
+            <div className="shot-browser">
+              <Image
+                src={billingImg.src}
+                alt="AbSTopiq school billing overview"
+                width={1173}
+                height={592}
+                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
+              />
             </div>
+            <p className="shot-browser-hint">↔ scroll to see the full screen</p>
           </div>
         </div>
       </div>

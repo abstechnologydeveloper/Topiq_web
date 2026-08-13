@@ -1,4 +1,5 @@
-import ChromeBar from "./ChromeBar";
+import Image from "next/image";
+import assignmentsImg from "../../assets/teacher_2.png";
 
 export default function AssignmentsSection() {
   return (
@@ -13,32 +14,16 @@ export default function AssignmentsSection() {
             </p>
           </div>
           <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="device-browser">
-              <ChromeBar url="app.abstopiq.com/teacher/assignments" />
-              <div className="screen">
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Cell Structure — Assignment</div>
-                    <div className="meta">31 of 34 submitted, updating live</div>
-                  </div>
-                  <span className="dash-badge c-thread">On time</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Photosynthesis — quiz</div>
-                    <div className="meta">18 of 34 submitted</div>
-                  </div>
-                  <span className="dash-badge c-ember">In progress</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Respiration — set for Friday</div>
-                    <div className="meta">Scheduled, not yet live</div>
-                  </div>
-                  <span className="dash-badge c-violet">Draft</span>
-                </div>
-              </div>
+            <div className="shot-browser">
+              <Image
+                src={assignmentsImg.src}
+                alt="AbSTopiq assignments overview"
+                width={1173}
+                height={490}
+                style={{ height: 280, objectFit: "contain", objectPosition: "center" }}
+              />
             </div>
+            <p className="shot-browser-hint">↔ scroll to see the full screen</p>
           </div>
         </div>
       </div>

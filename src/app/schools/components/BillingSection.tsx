@@ -1,11 +1,12 @@
 import Image from "next/image";
 import RealBadge from "./RealBadge";
+import billingImg from "../../assets/school_5.png";
 
 export default function BillingSection() {
   return (
     <section>
       <div className="wrap">
-        <div className="split-panel">
+        <div className="split-panel" style={{ gridTemplateColumns: "0.88fr 1.12fr" }}>
           <div className="tour-copy">
             <RealBadge />
             <h3>Billing that makes sense</h3>
@@ -17,10 +18,11 @@ export default function BillingSection() {
           <div className="tour-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
-                src="/schools-billing.png"
+                src={billingImg.src}
                 alt="AbSTopiq school billing screen"
-                width={910}
-                height={500}
+                width={1173}
+                height={588}
+                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

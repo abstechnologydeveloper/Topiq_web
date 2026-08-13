@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import RealBadge from "./RealBadge";
-import DevicePhone from "./DevicePhone";
+import fifthImg from "../assets/fifth.jpeg";
 
 export default function PracticeSection() {
   return (
@@ -23,12 +24,15 @@ export default function PracticeSection() {
             </div>
           </div>
           <div className="tour-visual">
-            <DevicePhone
-              src="/practice.png"
-              alt="AbSTopiq exam practice screen"
-              width={260}
-              height={560}
-            />
+            <div className="shot-phone practice-phone">
+              <div className="notch"></div>
+              <Image
+                src={fifthImg}
+                alt="AbSTopiq exam practice screen"
+                width={692}
+                height={857}
+              />
+            </div>
           </div>
         </div>
       </div>

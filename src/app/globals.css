@@ -142,7 +142,7 @@
 
   /* ---- Persona page header (full-width mini hero for Teachers/Schools) ---- */
   .persona-hero{position:relative; overflow:hidden; padding:64px 0 48px;}
-  .persona-hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  .persona-hero-grid{display:grid; grid-template-columns:1.08fr 0.92fr; gap:48px; align-items:center;}
   .persona-hero-grid.no-visual{grid-template-columns:1fr; max-width:760px;}
   .persona-hero-inner{max-width:680px;}
   .persona-hero-visual{display:flex; justify-content:center;}
@@ -279,7 +279,7 @@
   .shot-phone{width:260px; background:#1C1926; border-radius:34px; padding:10px; box-shadow:var(--shadow-deep); flex-shrink:0; position:relative;}
   .shot-phone-lg{width:280px;}
   .shot-phone .notch{width:74px; height:16px; background:#1C1926; border-radius:0 0 12px 12px; margin:0 auto 2px; position:relative; z-index:2;}
-  .shot-phone img{width:100%; display:block; border-radius:24px; margin-top:-16px;}
+  .shot-phone img{width:100%; height:auto; display:block; border-radius:24px; margin-top:-16px;}
   .shot-browser{background:#fff; border-radius:16px; box-shadow:var(--shadow-deep); border:1px solid var(--ash-line); overflow:hidden;}
   .shot-browser img{width:100%; display:block;}
   .shot-browser-hint{display:none; text-align:center; font-size:11px; color:var(--ash); margin-top:6px; font-family:var(--font-mono),monospace;}
@@ -289,6 +289,27 @@
     padding:4px 10px; border-radius:10px; margin-bottom:10px;
   }
   .real-badge svg{width:11px; height:11px;}
+
+  /* Sabi AI section: tall portrait screenshot in a black phone frame with
+     iPhone-14 Dynamic Island, image fills the frame cleanly. */
+  .sabi-phone{width:270px; height:460px; overflow:hidden;}
+  .sabi-phone .notch{display:block; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:60px; height:18px; border-radius:9px; background:#000; z-index:3; margin:0;}
+  .sabi-phone img{width:100%; height:100%; object-fit:cover; object-position:center top; border-radius:24px; margin:0;}
+  /* Landscape citation screenshot in a black frame with iPhone-14 Dynamic Island */
+  .sabi-mini{width:180px; height:150px; overflow:hidden; flex-shrink:0;}
+  .sabi-mini .notch{display:block; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:60px; height:18px; border-radius:9px; background:#000; z-index:3; margin:0;}
+  .sabi-mini img{width:100%; height:100%; object-fit:cover; object-position:center; border-radius:20px; margin:0;}
+  /* Practice section: portrait screenshot in a black phone frame with iPhone-14 Dynamic Island */
+  .practice-phone{width:280px; height:347px; overflow:hidden;}
+  .practice-phone .notch{display:block; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:60px; height:18px; border-radius:9px; background:#000; z-index:3; margin:0;}
+  .practice-phone img{width:100%; height:100%; object-fit:cover; object-position:center; border-radius:24px; margin:0;}
+
+  /* Progress section screenshot: black phone frame with iPhone-14 Dynamic
+     Island, image fills the frame with a capped height so the section stays
+     compact. */
+  .progress-phone{width:280px; height:272px; overflow:hidden;}
+  .progress-phone .notch{display:block; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:60px; height:18px; border-radius:9px; background:#000; z-index:3; margin:0;}
+  .progress-phone img{width:100%; height:100%; object-fit:cover; object-position:center; border-radius:24px; margin:0;}
 
   .app-header-row{display:flex; align-items:center; justify-content:space-between; padding:16px 16px 8px;}
   .app-header-row .who{font-weight:700; font-size:13.5px;}
@@ -332,6 +353,8 @@
   .tour-list li{display:flex; gap:11px; font-size:13.5px; align-items:flex-start;}
   .tour-list svg{width:17px; height:17px; color:var(--thread); flex-shrink:0; margin-top:2px;}
   .tour-visual{display:flex; gap:18px; align-items:flex-end; justify-content:center; flex-wrap:wrap;}
+  .sabi-visual{flex-wrap:nowrap; align-items:flex-end; gap:12px;}
+  .sabi-visual .shot-phone.sabi-phone{flex:0 0 270px;}
 
   /* ---------- Subjects ---------- */
   .slider-nav{display:flex; justify-content:flex-end; gap:8px; margin-bottom:14px;}
@@ -465,5 +488,14 @@
   }
   @media (min-width: 641px){
     .shot-browser-hint{display:none;}
+  }
+  @media (min-width: 1021px){
+    /* Align the hero phone exactly with the left column: top lines up with the
+       eyebrow row, bottom lines up with the "Practice covers" board-line.
+       The phone is taken out of flow so the left column sets the row height,
+       then the phone stretches to match that height. */
+    .hero-grid > .grounded-wrap{align-self:stretch; width:280px;}
+    .hero-grid > .grounded-wrap .shot-phone{position:absolute; top:4px; bottom:4px; left:0; right:0; height:auto; overflow:hidden; padding:8px 10px 8px;}
+    .hero-grid > .grounded-wrap .shot-phone .notch{display:block; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:60px; height:18px; border-radius:9px; background:#000; z-index:3; margin:0;}
   }
   @media (prefers-reduced-motion: reduce){*{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}}

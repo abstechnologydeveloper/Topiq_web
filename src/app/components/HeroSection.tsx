@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DevicePhone from "./DevicePhone";
+import firstImg from "../assets/first.jpeg";
 
 export default function HeroSection() {
   return (
@@ -66,10 +67,12 @@ export default function HeroSection() {
           <div className="sticky-note sn-1">3 sessions today</div>
           <div className="sticky-note sn-2">64% through Photosynthesis</div>
           <DevicePhone
-            src="/hero-phone.png"
+            src={firstImg.src}
             alt="AbSTopiq app showing syllabus-grounded learning progress"
-            width={280}
-            height={600}
+            width={600}
+            height={1280}
+            frame={{ width: 280 }}
+            imgStyle={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", marginTop: 0, borderRadius: "20px" }}
           />
         </div>
       </div>

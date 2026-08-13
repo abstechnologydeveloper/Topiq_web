@@ -1,4 +1,5 @@
-import ChromeBar from "./ChromeBar";
+import Image from "next/image";
+import lessonPrepImg from "../../assets/teacher-4.png";
 
 export default function LessonPrepSection() {
   return (
@@ -14,34 +15,16 @@ export default function LessonPrepSection() {
             </p>
           </div>
           <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="device-browser">
-              <ChromeBar url="app.abstopiq.com/teacher/lesson-prep" />
-              <div className="screen">
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Respiration — Scheme of work</div>
-                    <div className="meta">Generated, ready to edit</div>
-                  </div>
-                  <span className="dash-badge c-violet">AI draft</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">
-                      Respiration — Quiz questions (10)
-                    </div>
-                    <div className="meta">Grounded in your syllabus</div>
-                  </div>
-                  <span className="dash-badge c-violet">AI draft</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">Cell Structure — Lesson notes</div>
-                    <div className="meta">Edited &amp; saved to class</div>
-                  </div>
-                  <span className="dash-badge c-thread">Saved</span>
-                </div>
-              </div>
+            <div className="shot-browser" style={{ width: "100%" }}>
+              <Image
+                src={lessonPrepImg.src}
+                alt="AbSTopiq lesson prep overview"
+                width={1173}
+                height={811}
+                style={{ height: 360, objectFit: "cover", objectPosition: "center top" }}
+              />
             </div>
+            <p className="shot-browser-hint">↔ scroll to see the full screen</p>
           </div>
         </div>
       </div>

@@ -6,12 +6,14 @@ export default function DevicePhone({
   width,
   height,
   frame,
+  imgStyle,
 }: {
   src: string;
   alt: string;
   width: number;
   height: number;
   frame?: React.CSSProperties;
+  imgStyle?: React.CSSProperties;
 }) {
   return (
     <div className="shot-phone" style={frame}>
@@ -22,6 +24,7 @@ export default function DevicePhone({
         width={width}
         height={height}
         unoptimized
+        style={imgStyle}
       />
     </div>
   );

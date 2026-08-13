@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RealBadge from "./RealBadge";
+import inviteImg from "../../assets/school_3.png";
 
 export default function InviteStudentsSection() {
   return (
@@ -18,10 +19,11 @@ export default function InviteStudentsSection() {
           <div className="tour-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
-                src="/schools-invite.png"
+                src={inviteImg.src}
                 alt="AbSTopiq invite students screen"
-                width={910}
-                height={500}
+                width={1173}
+                height={421}
+                style={{ height: 230, objectFit: "contain", objectPosition: "center" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

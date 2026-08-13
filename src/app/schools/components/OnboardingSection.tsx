@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RealBadge from "./RealBadge";
+import onboardImg from "../../assets/school_2.png";
 
 export default function OnboardingSection() {
   return (
@@ -18,10 +19,11 @@ export default function OnboardingSection() {
           <div className="tour-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
-                src="/schools-onboard.png"
+                src={onboardImg.src}
                 alt="AbSTopiq school onboarding screen"
-                width={910}
-                height={500}
+                width={1173}
+                height={825}
+                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

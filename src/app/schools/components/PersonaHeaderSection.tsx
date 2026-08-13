@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import RealBadge from "./RealBadge";
+import schoolImg from "../../assets/school.png";
 
 export default function PersonaHeaderSection() {
   return (
@@ -44,10 +45,11 @@ export default function PersonaHeaderSection() {
             <div className="shot-browser">
               <RealBadge style={{ margin: "14px 14px 0" }} />
               <Image
-                src="/schools-header.png"
+                src={schoolImg.src}
                 alt="AbSTopiq school admin overview"
-                width={910}
-                height={500}
+                width={1173}
+                height={825}
+                style={{ height: 340, objectFit: "cover", objectPosition: "center top" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

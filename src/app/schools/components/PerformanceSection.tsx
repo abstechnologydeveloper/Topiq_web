@@ -1,4 +1,5 @@
-import ChromeBar from "./ChromeBar";
+import Image from "next/image";
+import performanceImg from "../../assets/school_4.png";
 
 export default function PerformanceSection() {
   return (
@@ -13,32 +14,16 @@ export default function PerformanceSection() {
             </p>
           </div>
           <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="device-browser">
-              <ChromeBar url="app.abstopiq.com/admin/performance" />
-              <div className="screen">
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">SS2 Biology (Set A)</div>
-                    <div className="meta">Average 68% — below target</div>
-                  </div>
-                  <span className="dash-badge c-coral">Review</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">SS3 Chemistry (Set B)</div>
-                    <div className="meta">Average 58% — below target</div>
-                  </div>
-                  <span className="dash-badge c-coral">Review</span>
-                </div>
-                <div className="dash-row">
-                  <div className="main">
-                    <div className="ttl">SS2 Mathematics</div>
-                    <div className="meta">Average 91% — strong</div>
-                  </div>
-                  <span className="dash-badge c-thread">Good</span>
-                </div>
-              </div>
+            <div className="shot-browser">
+              <Image
+                src={performanceImg.src}
+                alt="AbSTopiq cross-class performance overview"
+                width={1137}
+                height={537}
+                style={{ height: 302, objectFit: "contain", objectPosition: "center" }}
+              />
             </div>
+            <p className="shot-browser-hint">↔ scroll to see the full screen</p>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
-import ChromeBar from "./ChromeBar";
+import Image from "next/image";
+import liveImg from "../../assets/teacher_3_new.png";
 
 export default function LiveClassSection() {
   return (
@@ -14,44 +15,16 @@ export default function LiveClassSection() {
             </p>
           </div>
           <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="device-browser">
-              <ChromeBar url="app.abstopiq.com/teacher/live" />
-              <div className="screen">
-                <div className="live-banner">
-                  <span className="live-dot"></span> Live now — SS2 Biology, Poll
-                  2 of 4
-                </div>
-                <div className="poll-mock">
-                  <div className="poll-q">
-                    Which stage of photosynthesis needs light directly?
-                  </div>
-                  <div className="poll-opt">
-                    <div className="poll-opt-label">
-                      <span>Light-dependent reaction</span>
-                      <span>26 of 34</span>
-                    </div>
-                    <div className="poll-track">
-                      <div
-                        className="poll-fill"
-                        style={{ width: "76%", background: "var(--thread)" }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="poll-opt">
-                    <div className="poll-opt-label">
-                      <span>Calvin cycle</span>
-                      <span>8 of 34</span>
-                    </div>
-                    <div className="poll-track">
-                      <div
-                        className="poll-fill"
-                        style={{ width: "24%", background: "var(--coral)" }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="shot-browser" style={{ width: "100%" }}>
+              <Image
+                src={liveImg.src}
+                alt="AbSTopiq live class session"
+                width={1186}
+                height={632}
+                style={{ height: 360, objectFit: "contain", objectPosition: "center" }}
+              />
             </div>
+            <p className="shot-browser-hint">↔ scroll to see the full screen</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import RealBadge from "./RealBadge";
-import DevicePhone from "./DevicePhone";
+import secondImg from "../assets/second.jpeg";
 
 export default function ProgressSection() {
   return (
@@ -23,12 +24,15 @@ export default function ProgressSection() {
             </div>
           </div>
           <div className="tour-visual">
-            <DevicePhone
-              src="/progress.png"
-              alt="AbSTopiq progress tracking screen"
-              width={260}
-              height={560}
-            />
+            <div className="shot-phone progress-phone">
+              <div className="notch"></div>
+              <Image
+                src={secondImg}
+                alt="AbSTopiq progress tracking screen"
+                width={694}
+                height={761}
+              />
+            </div>
           </div>
         </div>
       </div>
