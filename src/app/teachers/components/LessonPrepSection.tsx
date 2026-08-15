@@ -10,18 +10,17 @@ export default function LessonPrepSection() {
             <h3>Lesson planning, done before your coffee&apos;s cold</h3>
             <p>
               Lesson Prep AI drafts lesson notes, schemes of work and quiz
-              questions — grounded in your syllabus, ready to edit and share with
-              your class.
+              questions — grounded in your syllabus, ready to edit and share
+              with your class.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="shot-browser" style={{ width: "100%" }}>
+          <div className="tour-visual lesson-prep-visual" style={{ width: "100%" }}>
+            <div className="shot-browser">
               <Image
-                src={lessonPrepImg.src}
+                src={lessonPrepImg}
                 alt="AbSTopiq lesson prep overview"
                 width={1173}
                 height={811}
-                style={{ height: 360, objectFit: "cover", objectPosition: "center top" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

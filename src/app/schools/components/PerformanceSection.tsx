@@ -13,14 +13,14 @@ export default function PerformanceSection() {
               class — so slipping averages get caught school-wide, early.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual school-screen-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
                 src={performanceImg.src}
                 alt="AbSTopiq cross-class performance overview"
                 width={1137}
                 height={537}
-                style={{ height: 302, objectFit: "contain", objectPosition: "center" }}
+                className="school-performance-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

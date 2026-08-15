@@ -13,14 +13,13 @@ export default function AssignmentsSection() {
               in real time as students submit — no chasing, no spreadsheet.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual assignments-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
-                src={assignmentsImg.src}
+                src={assignmentsImg}
                 alt="AbSTopiq assignments overview"
                 width={1173}
                 height={490}
-                style={{ height: 280, objectFit: "contain", objectPosition: "center" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

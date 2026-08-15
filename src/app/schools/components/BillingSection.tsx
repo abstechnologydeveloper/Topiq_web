@@ -6,7 +6,7 @@ export default function BillingSection() {
   return (
     <section>
       <div className="wrap">
-        <div className="split-panel" style={{ gridTemplateColumns: "0.88fr 1.12fr" }}>
+        <div className="split-panel">
           <div className="tour-copy">
             <RealBadge />
             <h3>Billing that makes sense</h3>
@@ -15,14 +15,14 @@ export default function BillingSection() {
               the whole school — not a separate charge per class or per feature.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual school-screen-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
                 src={billingImg.src}
                 alt="AbSTopiq school billing screen"
                 width={1173}
                 height={588}
-                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
+                className="school-billing-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

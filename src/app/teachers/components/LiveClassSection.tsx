@@ -14,14 +14,13 @@ export default function LiveClassSection() {
               devices.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
-            <div className="shot-browser" style={{ width: "100%" }}>
+          <div className="tour-visual live-class-visual" style={{ width: "100%" }}>
+            <div className="shot-browser">
               <Image
-                src={liveImg.src}
+                src={liveImg}
                 alt="AbSTopiq live class session"
                 width={1186}
                 height={632}
-                style={{ height: 360, objectFit: "contain", objectPosition: "center" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

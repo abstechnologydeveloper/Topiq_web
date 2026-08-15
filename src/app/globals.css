@@ -64,6 +64,7 @@
   .brand-word{font-family:var(--font-fraunces),serif; font-weight:700; font-size:19px;}
   .nav-links{display:flex; align-items:center; gap:26px; font-size:14px; font-weight:600; color:var(--ink-soft);}
   .nav-links a:hover{color:var(--thread);}
+  .mobile-nav-links{display:none;}
   .nav-cta{display:flex; align-items:center; gap:10px; flex-shrink:0;}
   .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:700; font-size:14px; padding:11px 20px; border-radius:10px; border:1.5px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; white-space:nowrap; font-family:var(--font-inter),sans-serif;}
   .btn-primary{background:var(--ink); color:#fff;}
@@ -89,6 +90,8 @@
   .hero h1 .underline svg{position:absolute; left:0; bottom:-8px; width:100%; height:12px;}
   .hero-actions{display:flex; align-items:center; gap:14px; margin-top:28px; flex-wrap:wrap;}
   .hero-note{font-size:12px; color:var(--ash); margin-top:16px; font-family:var(--font-mono),monospace; letter-spacing:.02em;}
+  .hero .eyebrow-row{flex-wrap:nowrap;}
+  .hero .eyebrow{white-space:nowrap; flex-shrink:0;}
 
   .board-line{display:flex; align-items:center; flex-wrap:wrap; gap:0; margin-top:32px; border-top:1px solid var(--ash-line); border-bottom:1px solid var(--ash-line); padding:12px 0;}
   .board-line .bl-label{font-family:var(--font-mono),monospace; font-size:10.5px; color:var(--ash); text-transform:uppercase; letter-spacing:.06em; padding-right:16px; margin-right:16px; border-right:1px solid var(--ash-line);}
@@ -146,6 +149,13 @@
   .persona-hero-grid.no-visual{grid-template-columns:1fr; max-width:760px;}
   .persona-hero-inner{max-width:680px;}
   .persona-hero-visual{display:flex; justify-content:center;}
+  .persona-hero-visual .shot-browser{width:100%;}
+  .live-class-visual .shot-browser{width:100%;}
+  .lesson-prep-visual .shot-browser{width:100%;}
+  .mastery-visual .shot-browser{width:100%;}
+  .school-screen-visual .shot-browser{width:100%;}
+  .pricing-billing-visual .shot-browser{width:100%;}
+  .teacher-dashboard-image{height:300px; object-fit:contain; object-position:center;}
   .persona-hero h1, .persona-hero h2{font-size:clamp(28px,3.6vw,42px); margin-bottom:16px; line-height:1.1;}
   .persona-stats{display:flex; gap:28px; margin-top:30px; flex-wrap:wrap;}
   .persona-stat .n{font-family:var(--font-fraunces),serif; font-size:23px; font-weight:600; color:var(--thread-deep); display:block;}
@@ -429,6 +439,12 @@
   @media (max-width: 1020px){
     .nav-links{display:none;}
     .nav-toggle{display:block;}
+    .mobile-nav-links{
+      display:flex; flex-direction:column; align-items:center; gap:16px; position:absolute; top:62px; left:0; right:0; z-index:51;
+      padding:18px 28px; background:#FBF9F5; border-bottom:1px solid var(--ash-line);
+      color:var(--ink-soft); font-size:14px; font-weight:600;
+    }
+    .mobile-nav-links a:hover, .mobile-nav-links a.active{color:var(--thread-deep);}
     .hero-grid{grid-template-columns:1fr; gap:44px;}
     .hero-watermark{font-size:160px; top:-10px;}
     .grounded-wrap{margin:0 auto;}
@@ -476,17 +492,57 @@
        ~910px-wide renders. Shrinking them to phone width makes the text
        inside the screenshot illegible, so instead let the frame scroll
        horizontally at a readable size and hint that it scrolls. */
-    .shot-browser{overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;}
+    .shot-browser{width:100%; min-width:0; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;}
     .shot-browser img{width:640px; max-width:640px;}
     .shot-browser-hint{display:block;}
 
+    .assignments-visual .shot-browser{overflow:hidden;}
+    .assignments-visual .shot-browser img{width:100%; max-width:100%; height:230px; object-fit:contain; object-position:center;}
+    .assignments-visual .shot-browser-hint{display:none;}
+    .live-class-visual .shot-browser{overflow:hidden;}
+    .live-class-visual .shot-browser img{width:100%; max-width:100%; height:220px; object-fit:contain; object-position:center;}
+    .live-class-visual .shot-browser-hint{display:none;}
+    .lesson-prep-visual .shot-browser{width:100%; overflow:hidden;}
+    .lesson-prep-visual .shot-browser img{width:100%; max-width:100%; height:250px; object-fit:contain; object-position:center;}
+    .lesson-prep-visual .shot-browser-hint{display:none;}
+    .mastery-visual .shot-browser{overflow:hidden;}
+    .mastery-visual .shot-browser img{width:100%; max-width:100%; height:230px; object-fit:contain; object-position:center;}
+    .mastery-visual .shot-browser-hint{display:none;}
+    .school-screen-visual .shot-browser{min-width:0; overflow:hidden;}
+    .school-screen-visual .shot-browser img{width:100%; max-width:100%; height:230px; object-fit:contain; object-position:center;}
+    .school-screen-visual .shot-browser-hint{display:none;}
+    .pricing-billing-visual .shot-browser{min-width:0; overflow:hidden;}
+    .pricing-billing-visual .shot-browser img{width:100%; max-width:100%; height:280px; object-fit:contain; object-position:center;}
+    .pricing-billing-visual .shot-browser-hint{display:none;}
+    .teacher-dashboard-image{width:100% !important; max-width:100% !important; height:auto; object-fit:contain; object-position:center;}
+
+    .sabi-visual{flex-direction:column; align-items:center; gap:14px;}
+    .sabi-visual .shot-phone.sabi-phone{flex:none; width:270px; height:460px;}
+    .sabi-visual .sabi-mini{flex:none; width:180px; height:150px;}
+
     .persona-hero{padding:48px 0 36px;}
     .persona-stats{gap:20px;}
-    .persona-hero-visual{max-width:320px;}
+    .persona-hero-visual{max-width:none; width:100%;}
+.persona-hero-visual .shot-browser{width:100%; overflow:hidden;}
+    .persona-hero-visual .shot-browser-hint{display:none;}
+    .school-screen-visual .shot-browser{min-width:0; overflow:hidden;}
+    .persona-hero-visual.school-screen-visual{width:100%; max-width:none;}
     .nav-inner{padding:12px 20px;}
     .wrap{padding:0 20px;}
   }
   @media (min-width: 641px){
+    .assignments-visual .shot-browser img{height:270px; object-fit:contain; object-position:center;}
+    .live-class-visual .shot-browser img{height:290px; object-fit:cover; object-position:center top;}
+    .lesson-prep-visual .shot-browser img{height:300px; object-fit:cover; object-position:center top;}
+    .mastery-visual .shot-browser img{height:270px; object-fit:contain; object-position:center;}
+    .school-hero-image{height:340px; object-fit:cover; object-position:center top;}
+    .school-onboarding-image{height:320px; object-fit:contain; object-position:center;}
+    .school-invite-image{height:230px; object-fit:contain; object-position:center;}
+    .school-performance-image{height:302px; object-fit:contain; object-position:center;}
+    .school-teachers-image{height:320px; object-fit:contain; object-position:center;}
+    .school-billing-image{height:320px; object-fit:contain; object-position:center;}
+    .pricing-billing-image{height:360px; object-fit:contain; object-position:center;}
+    .teacher-dashboard-image{object-fit:cover; object-position:center top;}
     .shot-browser-hint{display:none;}
   }
   @media (min-width: 1021px){
