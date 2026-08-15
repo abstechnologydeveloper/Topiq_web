@@ -41,7 +41,7 @@ export default function PersonaHeaderSection() {
               </div>
             </div>
           </div>
-          <div className="persona-hero-visual">
+          <div className="persona-hero-visual school-screen-visual">
             <div className="shot-browser">
               <RealBadge style={{ margin: "14px 14px 0" }} />
               <Image
@@ -49,7 +49,7 @@ export default function PersonaHeaderSection() {
                 alt="AbSTopiq school admin overview"
                 width={1173}
                 height={825}
-                style={{ height: 340, objectFit: "cover", objectPosition: "center top" }}
+                className="school-hero-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

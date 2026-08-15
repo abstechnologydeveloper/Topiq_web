@@ -21,14 +21,14 @@ export default function SchoolPricingSection() {
               </Link>
             </div>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual pricing-billing-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
-                src={billingImg.src}
+                src={billingImg}
                 alt="AbSTopiq school billing overview"
                 width={1173}
                 height={592}
-                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
+                className="pricing-billing-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

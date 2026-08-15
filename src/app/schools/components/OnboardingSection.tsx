@@ -16,14 +16,14 @@ export default function OnboardingSection() {
               free, no individual payment, no manual approval queue.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual school-screen-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
                 src={onboardImg.src}
                 alt="AbSTopiq school onboarding screen"
                 width={1173}
                 height={825}
-                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
+                className="school-onboarding-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

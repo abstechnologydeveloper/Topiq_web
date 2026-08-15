@@ -7,7 +7,7 @@ export default function PersonaHeaderSection() {
   return (
     <header className="persona-hero" id="teachers">
       <div className="wrap">
-        <div className="persona-hero-grid" style={{ gridTemplateColumns: "1.2fr 0.8fr" }}>
+        <div className="persona-hero-grid">
           <div className="persona-hero-inner">
             <span className="persona-eyebrow-badge">For teachers</span>
             <h1>Track a class. Set assignments. Free to start.</h1>
@@ -47,7 +47,7 @@ export default function PersonaHeaderSection() {
                 alt="AbSTopiq teacher dashboard"
                 width={1173}
                 height={825}
-                style={{ height: 300, objectFit: "contain", objectPosition: "center" }}
+                className="teacher-dashboard-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

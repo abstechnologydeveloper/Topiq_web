@@ -13,14 +13,13 @@ export default function MasterySection() {
               mastery per student, per topic — not just the class-wide number.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual mastery-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
-                src={masteryImg.src}
+                src={masteryImg}
                 alt="AbSTopiq mastery overview"
                 width={1127}
                 height={381}
-                style={{ height: 260, objectFit: "contain", objectPosition: "center" }}
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

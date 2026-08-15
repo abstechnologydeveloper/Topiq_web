@@ -14,14 +14,14 @@ export default function TeachersIncludedSection() {
               approve it.&quot;
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual school-screen-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
                 src={teachersImg.src}
                 alt="AbSTopiq teacher seats overview"
                 width={1128}
                 height={552}
-                style={{ height: 320, objectFit: "contain", objectPosition: "center" }}
+                className="school-teachers-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>

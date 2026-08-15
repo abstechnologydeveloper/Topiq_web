@@ -16,14 +16,14 @@ export default function InviteStudentsSection() {
               plan the moment they accept.
             </p>
           </div>
-          <div className="tour-visual" style={{ width: "100%" }}>
+          <div className="tour-visual school-screen-visual" style={{ width: "100%" }}>
             <div className="shot-browser">
               <Image
                 src={inviteImg.src}
                 alt="AbSTopiq invite students screen"
                 width={1173}
                 height={421}
-                style={{ height: 230, objectFit: "contain", objectPosition: "center" }}
+                className="school-invite-image"
               />
             </div>
             <p className="shot-browser-hint">↔ scroll to see the full screen</p>
