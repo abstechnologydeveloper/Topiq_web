@@ -4,7 +4,6 @@ import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { NAV, type NavItem } from "./navConfig";
-import { studentProfile } from "../data/student";
 import { useDashboard } from "./DashboardContext";
 
 const ChevronDown = () => (
@@ -59,6 +58,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     closeDrawer,
     goTab,
     activeChallenges,
+    profile,
   } = useDashboard();
 
   useEffect(() => {
@@ -91,6 +91,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     if (item.kind === "account") {
       const cls = surface === "rail" ? "rail-account" : "drawer-account";
       const active = detailActive(item);
+      const avatarId = surface === "rail" ? "railAvatarCircle" : "drawerAvatarCircle";
+      const nameId = surface === "rail" ? "railAvatarName" : "drawerAvatarName";
       return (
         <div
           key={index}
@@ -98,9 +100,23 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           data-tab={item.tab}
           onClick={() => goTab(item.tab)}
         >
-          <div className="rail-avatar-circle" />
+          <div className="rail-avatar-circle" id={avatarId}>
+            {profile.avatar ? (
+              <img src={profile.avatar} alt="Profile picture" />
+            ) : (
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="#fff"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 4-6 8-6s8 2 8 6z" />
+              </svg>
+            )}
+          </div>
           <div className="ra-text">
-            <div className="ra-name">Chidinma</div>
+            <div className="ra-name" id={nameId}>{profile.firstName || "Profile"}</div>
             <div className="ra-role">{item.role}</div>
           </div>
         </div>
@@ -253,7 +269,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
               <div className="cert-ribbon">🎓</div>
               <div className="cert-eyebrow">Certificate of Completion</div>
               <div className="cert-name">
-                {studentProfile.firstName || "Student"} {studentProfile.lastName || ""}
+                {profile.firstName || "Student"} {profile.lastName || ""}
               </div>
               <div className="cert-sub">has completed every topic in</div>
               <div className="cert-subject">

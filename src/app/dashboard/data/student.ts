@@ -15,9 +15,12 @@ export const FREE_AI_DAILY = 3;
 
 export const studentProfile = {firstName:"Chidinma", lastName:"Okafor", age:"16", dob:"2010-03-14", phone:"0803 XXX XX21", grade:"SS2", gender:"Female", track:"Science", username:"chidinma_o", avatar:null, participatedSubjects:[]};
 
-export const earnedBadges = [
+export type EarnedBadge = { subject: string; topic: string; date: string };
+export type EarnedCertificate = { subject: string; date: string };
+
+export const earnedBadges: EarnedBadge[] = [
   {subject:'biology', topic:'Cell Structure and Function', date:'3 days ago'},
   {subject:'mathematics', topic:'Indices and Logarithms', date:'Yesterday'}
 ];
 
-export const earnedCertificates = []; // {subject, date}
+export const earnedCertificates: EarnedCertificate[] = [];

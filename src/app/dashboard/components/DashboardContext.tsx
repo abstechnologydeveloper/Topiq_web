@@ -35,6 +35,20 @@ export type WsTask = {
 };
 export type WsExam = { name: string; board: string; days: number; subject: string };
 
+export type ProfileData = {
+  firstName: string;
+  lastName: string;
+  age: string;
+  dob: string;
+  phone: string;
+  grade: string;
+  gender: string;
+  track: string;
+  username: string;
+  avatar: string | null;
+  participatedSubjects: string[];
+};
+
 export type DashboardCtx = {
   subjects: Record<string, SubjectData>;
   setSubjects: Dispatch<SetStateAction<Record<string, SubjectData>>>;
@@ -71,6 +85,8 @@ export type DashboardCtx = {
   setTasks: Dispatch<SetStateAction<WsTask[]>>;
   exams: WsExam[];
   setExams: Dispatch<SetStateAction<WsExam[]>>;
+  profile: ProfileData;
+  setProfile: Dispatch<SetStateAction<ProfileData>>;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -99,6 +115,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [timetable, setTimetable] = useState<WsDay>(() => JSON.parse(JSON.stringify(TIMETABLE)));
   const [tasks, setTasks] = useState<WsTask[]>(() => JSON.parse(JSON.stringify(TASKS)));
   const [exams, setExams] = useState<WsExam[]>(() => JSON.parse(JSON.stringify(EXAMS)));
+  const [profile, setProfile] = useState<ProfileData>(() =>
+    JSON.parse(JSON.stringify(studentProfile)),
+  );
 
   const challengeStreakDays = 12;
   const [challengeCorrectStreak, setChallengeCorrectStreak] = useState(0);
@@ -287,6 +306,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         setTasks,
         exams,
         setExams,
+        profile,
+        setProfile,
       }}
     >
       {children}

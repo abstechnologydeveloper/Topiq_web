@@ -19,6 +19,7 @@ export const TAB_TO_PATH: Record<string, string> = {
   books: "/dashboard/books",
   competitions: "/dashboard/competitions",
   profile: "/dashboard/profile",
+  badges: "/dashboard/badges",
   settings: "/dashboard/settings",
   subscription: "/dashboard/upgrade",
   progress: "/dashboard/progress",
