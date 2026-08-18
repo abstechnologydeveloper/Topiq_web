@@ -11,13 +11,29 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { SUBJECTS } from "../data/subjects";
+import { CHALLENGE_TEMPLATES } from "../data/challenges";
 import { studentProfile } from "../data/student";
+import { TIMETABLE, TASKS, EXAMS } from "../data/workspace";
 import { TAB_TO_PATH } from "./navConfig";
 import type { SubjectData } from "./screens/DiscoverScreen";
 import type { SessionCfg } from "./screens/practiceTypes";
 
 export type Pane = "overview" | "learn" | "flash";
 export type Student = { grade: string };
+export type ChallengeEntry = { templateId: string; progress: number; baseline?: number };
+
+export type WsSubject = { time: string; subj: string; addedByUser?: boolean };
+export type WsDay = Record<string, WsSubject[]>;
+export type WsTask = {
+  id: number;
+  title: string;
+  due: string;
+  done: boolean;
+  priority: string;
+  recurrence: string;
+  notes: string;
+};
+export type WsExam = { name: string; board: string; days: number; subject: string };
 
 export type DashboardCtx = {
   subjects: Record<string, SubjectData>;
@@ -41,6 +57,20 @@ export type DashboardCtx = {
   handleTopicDone: (subjectId: string) => void;
   assignDone: Record<number, boolean>;
   markAssignDone: (id: number) => void;
+  activeChallenges: ChallengeEntry[];
+  completedChallenges: string[];
+  startChallenge: (templateId: string) => void;
+  cancelChallenge: (templateId: string) => void;
+  registerChallengeProgress: (isCorrect: boolean) => void;
+  isPlusUser: boolean;
+  freeAiUsesLeft: number;
+  activatePlus: () => void;
+  timetable: WsDay;
+  setTimetable: Dispatch<SetStateAction<WsDay>>;
+  tasks: WsTask[];
+  setTasks: Dispatch<SetStateAction<WsTask[]>>;
+  exams: WsExam[];
+  setExams: Dispatch<SetStateAction<WsExam[]>>;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -64,6 +94,92 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [certSubject, setCertSubject] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [assignDone, setAssignDone] = useState<Record<number, boolean>>({});
+  const [activeChallenges, setActiveChallenges] = useState<ChallengeEntry[]>([]);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [timetable, setTimetable] = useState<WsDay>(() => JSON.parse(JSON.stringify(TIMETABLE)));
+  const [tasks, setTasks] = useState<WsTask[]>(() => JSON.parse(JSON.stringify(TASKS)));
+  const [exams, setExams] = useState<WsExam[]>(() => JSON.parse(JSON.stringify(EXAMS)));
+
+  const challengeStreakDays = 12;
+  const [challengeCorrectStreak, setChallengeCorrectStreak] = useState(0);
+
+  const FREE_AI_DAILY = 3;
+  const [isPlusUser, setIsPlusUser] = useState(false);
+  const [freeAiUsesLeft, setFreeAiUsesLeft] = useState(FREE_AI_DAILY);
+
+  const activatePlus = () => {
+    setIsPlusUser(true);
+    setFreeAiUsesLeft(FREE_AI_DAILY);
+  };
+
+  const weakestSubjectId = () =>
+    Object.keys(subjects).sort((a, b) => subjects[a].mastery - subjects[b].mastery)[0];
+
+  const checkChallengeCompletion = (entry: ChallengeEntry) => {
+    const t = CHALLENGE_TEMPLATES.find((x) => x.id === entry.templateId);
+    if (!t) return;
+    let current = entry.progress;
+    if (t.type === "mastery")
+      current = Math.max(0, subjects[weakestSubjectId()].mastery - (entry.baseline || 0));
+    if (current >= t.target && !completedChallenges.includes(entry.templateId)) {
+      setCompletedChallenges((prev) =>
+        prev.includes(entry.templateId) ? prev : [...prev, entry.templateId],
+      );
+      setActiveChallenges((prev) =>
+        prev.filter((c) => c.templateId !== entry.templateId),
+      );
+    }
+  };
+
+  const startChallenge = (templateId: string) => {
+    if (activeChallenges.some((c) => c.templateId === templateId)) return;
+    const t = CHALLENGE_TEMPLATES.find((x) => x.id === templateId);
+    if (!t) return;
+    const entry: ChallengeEntry = { templateId, progress: 0 };
+    if (t.type === "streak") entry.progress = Math.min(t.target, challengeStreakDays);
+    if (t.type === "mastery") entry.baseline = subjects[weakestSubjectId()].mastery;
+    setActiveChallenges((prev) => [...prev, entry]);
+    checkChallengeCompletion(entry);
+  };
+
+  const cancelChallenge = (templateId: string) => {
+    setActiveChallenges((prev) => prev.filter((c) => c.templateId !== templateId));
+  };
+
+  const registerChallengeProgress = (isCorrect: boolean) => {
+    const streak = isCorrect ? challengeCorrectStreak + 1 : 0;
+    setChallengeCorrectStreak(streak);
+    const newlyCompleted: string[] = [];
+    const nextActive = activeChallenges
+      .map((entry) => {
+        const t = CHALLENGE_TEMPLATES.find((x) => x.id === entry.templateId);
+        if (!t) return entry;
+        const n = { ...entry };
+        if (t.type === "count" && isCorrect) n.progress = Math.min(t.target, n.progress + 1);
+        if (t.type === "accuracy") n.progress = Math.min(t.target, streak);
+        if (t.type === "mastery")
+          n.progress = Math.max(0, subjects[weakestSubjectId()].mastery - (n.baseline || 0));
+        return n;
+      })
+      .filter((entry) => {
+        const t = CHALLENGE_TEMPLATES.find((x) => x.id === entry.templateId);
+        if (!t) return false;
+        let current = entry.progress;
+        if (t.type === "mastery")
+          current = Math.max(0, subjects[weakestSubjectId()].mastery - (entry.baseline || 0));
+        if (current >= t.target && !completedChallenges.includes(entry.templateId)) {
+          newlyCompleted.push(entry.templateId);
+          return false;
+        }
+        return true;
+      });
+    if (newlyCompleted.length) {
+      setCompletedChallenges((prev) => [
+        ...new Set([...prev, ...newlyCompleted]),
+      ]);
+    }
+    setActiveChallenges(nextActive);
+  };
 
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
@@ -157,6 +273,20 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         handleTopicDone,
         assignDone,
         markAssignDone,
+        activeChallenges,
+        completedChallenges,
+        startChallenge,
+        cancelChallenge,
+        registerChallengeProgress,
+        isPlusUser,
+        freeAiUsesLeft,
+        activatePlus,
+        timetable,
+        setTimetable,
+        tasks,
+        setTasks,
+        exams,
+        setExams,
       }}
     >
       {children}

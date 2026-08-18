@@ -90,3 +90,46 @@ export const SpeakButtonSVG = () => (
     <path d="M15.5 8.5a5 5 0 0 1 0 7" />
   </svg>
 );
+
+export type PlanStatus = { isPlusUser: boolean; freeAiUsesLeft: number; freeAiDaily: number };
+
+const FREE_AI_DAILY = 3;
+
+export function planStatusContent({ isPlusUser, freeAiUsesLeft }: PlanStatus) {
+  if (isPlusUser)
+    return {
+      icon: "✨",
+      title: "AbSTopiq Plus",
+      sub: "Unlimited Sabi AI, audio & mock exams",
+    };
+  return {
+    icon: "🔓",
+    title: "Free plan",
+    sub: `${freeAiUsesLeft}/${FREE_AI_DAILY} Sabi AI questions left today · Upgrade for unlimited`,
+  };
+}
+
+export function PlanStatusCard({
+  plan,
+  onClick,
+  cursor,
+}: {
+  plan: PlanStatus;
+  onClick?: () => void;
+  cursor?: "default";
+}) {
+  const content = planStatusContent(plan);
+  return (
+    <div
+      className="plan-status-card"
+      onClick={onClick}
+      style={cursor ? { cursor } : undefined}
+    >
+      <span className="psc-icon">{content.icon}</span>
+      <div>
+        <div className="psc-title">{content.title}</div>
+        <div className="psc-sub">{content.sub}</div>
+      </div>
+    </div>
+  );
+}

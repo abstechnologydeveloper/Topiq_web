@@ -11,6 +11,7 @@ import {
   type SessionCfg,
 } from "./practiceTypes";
 import type { SubjectData } from "./DiscoverScreen";
+import { useDashboard } from "../DashboardContext";
 
 type Props = {
   cfg: SessionCfg;
@@ -22,6 +23,7 @@ type Props = {
 type MockEntry = { questions: PQuestion[]; index: number; passageDone: boolean };
 
 export default function PracticeSession({ cfg, subjects, openSubject, onExit }: Props) {
+  const { registerChallengeProgress } = useDashboard();
   const mockMode = cfg.mode === "mock";
   const ordered = mockMode ? cfg.ordered : [cfg.subjectId];
 
@@ -143,6 +145,7 @@ export default function PracticeSession({ cfg, subjects, openSubject, onExit }: 
     const next = cur.slice();
     next[index] = { ...q, _answered: true, _wasCorrect: isCorrect, _selectedIndex: optIndex };
     setQuestions(next);
+    registerChallengeProgress(isCorrect);
     if (mockMode) {
       setMockSessionData((d) => ({
         ...d,

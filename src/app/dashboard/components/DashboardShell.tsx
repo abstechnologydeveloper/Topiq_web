@@ -58,6 +58,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     openDrawer,
     closeDrawer,
     goTab,
+    activeChallenges,
   } = useDashboard();
 
   useEffect(() => {
@@ -116,6 +117,11 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
         {item.label}
         {surface !== "tab" && item.count ? (
           <span className="rl-count">{item.count}</span>
+        ) : null}
+        {surface !== "tab" && item.tab === "challenges" && activeChallenges.length > 0 ? (
+          <span className="rl-count" id={`${surface}ChallengeCount`}>
+            {activeChallenges.length}
+          </span>
         ) : null}
       </button>
     );

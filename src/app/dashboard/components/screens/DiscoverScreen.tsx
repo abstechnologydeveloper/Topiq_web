@@ -44,7 +44,7 @@ type Props = {
 };
 
 export default function DiscoverScreen({ subjects, student, goTab, openSubject }: Props) {
-  const { assignDone } = useDashboard();
+  const { assignDone, activeChallenges } = useDashboard();
   const [homeActiveSubject, setHomeActiveSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -195,7 +195,7 @@ export default function DiscoverScreen({ subjects, student, goTab, openSubject }
         <div className="quick-card" onClick={() => goTab("challenges")}>
           <div className="qc-icon">🏆</div>
           <div className="qc-title">Challenges</div>
-          <div className="qc-sub">4 to try</div>
+          <div className="qc-sub">{activeChallenges.length ? `${activeChallenges.length} active` : "4 to try"}</div>
         </div>
         <div className="quick-card" onClick={() => goTab("studentassign")}>
           <div className="qc-icon">📋</div>

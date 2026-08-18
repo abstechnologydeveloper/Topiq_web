@@ -1,7 +1,9 @@
 "use client";
 
-import ComingSoon from "../components/screens/ComingSoon";
+import { useDashboard } from "../components/DashboardContext";
+import WorkspaceScreen from "../components/screens/WorkspaceScreen";
 
-export default function Page() {
-  return <ComingSoon eyebrow="Workspace" title="Plan" sub="Your study plans, schedules and deadlines will appear here." />;
+export default function PlanPage() {
+  const { subjects } = useDashboard();
+  return <WorkspaceScreen subjects={subjects} />;
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import ComingSoon from "../components/screens/ComingSoon";
+import ChallengesScreen from "../components/screens/ChallengesScreen";
 
 export default function Page() {
-  return <ComingSoon eyebrow="Competitions" title="Challenges" sub="Daily streaks, quizzes and challenges will appear here." />;
+  return <ChallengesScreen />;
 }

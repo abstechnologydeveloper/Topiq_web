@@ -1,7 +1,11 @@
 "use client";
 
-import ComingSoon from "../components/screens/ComingSoon";
+import { useDashboard } from "../components/DashboardContext";
+import CompetitionsScreen from "../components/screens/CompetitionsScreen";
 
-export default function Page() {
-  return <ComingSoon eyebrow="Competitions" title="Competitions" sub="Upcoming competitions and leaderboards will appear here." />;
+export default function CompetitionsPage() {
+  const { subjects, goTab, startSession } = useDashboard();
+  return (
+    <CompetitionsScreen subjects={subjects} goTab={goTab} startSession={startSession} />
+  );
 }

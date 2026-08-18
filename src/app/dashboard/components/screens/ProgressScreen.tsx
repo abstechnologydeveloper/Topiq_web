@@ -4,11 +4,12 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { STUDY_ACTIVITY_MINUTES } from "../../data";
 import type { SubjectData } from "./DiscoverScreen";
-import { BackChevron } from "./shared";
+import { BackChevron, PlanStatusCard, type PlanStatus } from "./shared";
 
 type Props = {
   subjects: Record<string, SubjectData>;
   goTab: (tab: string) => void;
+  plan: PlanStatus;
 };
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -35,7 +36,7 @@ function ProgressRow({ subject, subjectIndex }: { subject: { icon: string; name:
   );
 }
 
-export default function ProgressScreen({ subjects, goTab }: Props) {
+export default function ProgressScreen({ subjects, goTab, plan }: Props) {
   const router = useRouter();
 
   const masteryRows = useMemo(
@@ -57,12 +58,8 @@ export default function ProgressScreen({ subjects, goTab }: Props) {
       <span className="eyebrow">This term</span>
       <h1 className="page-title">Your progress</h1>
       <p className="page-sub">Grounded in what you've actually covered, not a guess.</p>
-      <div className="plan-status-card" id="progressPlanCard" onClick={() => router.push("/dashboard/upgrade")}>
-        <span className="psc-icon">🔓</span>
-        <div>
-          <div className="psc-title">Free plan</div>
-          <div className="psc-sub">3/3 Sabi AI questions left today · Upgrade for unlimited</div>
-        </div>
+      <div id="progressPlanCard" onClick={() => router.push("/dashboard/upgrade")}>
+        <PlanStatusCard plan={plan} />
       </div>
       <div className="stat-row">
         <div className="stat"><div className="num">12</div><div className="lbl">day streak</div></div>
