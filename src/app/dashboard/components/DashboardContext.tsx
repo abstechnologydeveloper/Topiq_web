@@ -49,6 +49,10 @@ export type ProfileData = {
   participatedSubjects: string[];
 };
 
+export type AppMode = "student" | "teacher" | "school";
+export type School = { name: string; id: string };
+export type ObRole = "student" | "teacher" | "school";
+
 export type DashboardCtx = {
   subjects: Record<string, SubjectData>;
   setSubjects: Dispatch<SetStateAction<Record<string, SubjectData>>>;
@@ -87,6 +91,15 @@ export type DashboardCtx = {
   setExams: Dispatch<SetStateAction<WsExam[]>>;
   profile: ProfileData;
   setProfile: Dispatch<SetStateAction<ProfileData>>;
+  appMode: AppMode;
+  setAppMode: Dispatch<SetStateAction<AppMode>>;
+  studentSchool: School | null;
+  setStudentSchool: Dispatch<SetStateAction<School | null>>;
+  teacherSchool: School | null;
+  setTeacherSchool: Dispatch<SetStateAction<School | null>>;
+  onboardingOpen: boolean;
+  finishOnboarding: () => void;
+  logout: () => void;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -99,6 +112,11 @@ export function useDashboard() {
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const ONBOARD_KEY = "abstopiq_onboarded";
+  const [appMode, setAppMode] = useState<AppMode>("student");
+  const [studentSchool, setStudentSchool] = useState<School | null>(null);
+  const [teacherSchool, setTeacherSchool] = useState<School | null>(null);
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [subjects, setSubjects] = useState<Record<string, SubjectData>>(
     () => JSON.parse(JSON.stringify(SUBJECTS)),
   );
@@ -129,6 +147,19 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const activatePlus = () => {
     setIsPlusUser(true);
     setFreeAiUsesLeft(FREE_AI_DAILY);
+  };
+
+  const finishOnboarding = () => {
+    setOnboardingOpen(false);
+    if (typeof window !== "undefined") window.localStorage.setItem(ONBOARD_KEY, "1");
+  };
+
+  const logout = () => {
+    if (typeof window !== "undefined") window.localStorage.removeItem(ONBOARD_KEY);
+    setAppMode("student");
+    setStudentSchool(null);
+    setTeacherSchool(null);
+    setOnboardingOpen(true);
   };
 
   const weakestSubjectId = () =>
@@ -211,6 +242,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     const t = window.setTimeout(() => setToast(null), 3200);
     return () => window.clearTimeout(t);
   }, [toast, setToast]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && !window.localStorage.getItem(ONBOARD_KEY)) {
+      setOnboardingOpen(true);
+    }
+  }, []);
 
   const goTab = (tab: string) => {
     setDrawerOpen(false);
@@ -308,6 +345,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         setExams,
         profile,
         setProfile,
+        appMode,
+        setAppMode,
+        studentSchool,
+        setStudentSchool,
+        teacherSchool,
+        setTeacherSchool,
+        onboardingOpen,
+        finishOnboarding,
+        logout,
       }}
     >
       {children}

@@ -23,6 +23,8 @@ export const TAB_TO_PATH: Record<string, string> = {
   settings: "/dashboard/settings",
   subscription: "/dashboard/upgrade",
   progress: "/dashboard/progress",
+  teacherdash: "/dashboard/teacherdash",
+  schooladmin: "/dashboard/schooladmin",
 };
 
 function svg(width: number, children: ReactNode, strokeWidth = 1.8) {
@@ -198,7 +200,7 @@ export const NAV: Record<
   },
   teacher: {
     rail: [
-      L("teacherdash", "/dashboard", "Dashboard", I.teacherdash),
+      L("teacherdash", "/dashboard/teacherdash", "Dashboard", I.teacherdash),
       L("teacherclasses", "/dashboard/classes", "Classes", I.classes),
       L("livesession", "/dashboard/live", "Live Class", I.radar),
       L("teacherassign", "/dashboard/assignments", "Assignments", I.check),
@@ -206,14 +208,14 @@ export const NAV: Record<
       L("ask", "/dashboard/ask", "Sabi AI", I.ask),
     ],
     tabs: [
-      L("teacherdash", "/dashboard", "Dashboard", I.teacherdash),
+      L("teacherdash", "/dashboard/teacherdash", "Dashboard", I.teacherdash),
       L("teacherclasses", "/dashboard/classes", "Classes", I.classes),
       L("livesession", "/dashboard/live", "Live Class", I.radar),
       L("teacherassign", "/dashboard/assignments", "Assignments", I.check),
       L("ask", "/dashboard/ask", "Sabi AI", I.ask),
     ],
     drawer: [
-      L("teacherdash", "/dashboard", "Dashboard", I.teacherdash),
+      L("teacherdash", "/dashboard/teacherdash", "Dashboard", I.teacherdash),
       L("teacherclasses", "/dashboard/classes", "Classes", I.classes),
       L("livesession", "/dashboard/live", "Live Class", I.radar),
       L("teacherassign", "/dashboard/assignments", "Assignments", I.check),
@@ -223,15 +225,15 @@ export const NAV: Record<
   },
   school: {
     rail: [
-      L("schooladmin", "/dashboard", "Admin", I.admin),
+      L("schooladmin", "/dashboard/schooladmin", "Admin", I.admin),
       L("ask", "/dashboard/ask", "Sabi AI", I.ask),
     ],
     tabs: [
-      L("schooladmin", "/dashboard", "Admin", I.admin),
+      L("schooladmin", "/dashboard/schooladmin", "Admin", I.admin),
       L("ask", "/dashboard/ask", "Sabi AI", I.ask),
     ],
     drawer: [
-      L("schooladmin", "/dashboard", "Admin", I.admin),
+      L("schooladmin", "/dashboard/schooladmin", "Admin", I.admin),
       L("ask", "/dashboard/ask", "Sabi AI", I.ask),
     ],
   },

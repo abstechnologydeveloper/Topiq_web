@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./styles/dashboard.css";
 import DashboardShell from "./components/DashboardShell";
+import OnboardingFlow from "./components/screens/OnboardingFlow";
 import { DashboardProvider } from "./components/DashboardContext";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function DashboardLayout({
   return (
     <DashboardProvider>
       <DashboardShell>{children}</DashboardShell>
+      <OnboardingFlow />
     </DashboardProvider>
   );
 }

@@ -38,7 +38,7 @@ const CameraBadge = () => (
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { profile, setProfile, goTab } = useDashboard();
+  const { profile, setProfile, goTab, studentSchool } = useDashboard();
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [editing, setEditing] = useState(false);
@@ -157,7 +157,7 @@ export default function ProfileScreen() {
               ["pvGrade", "Grade level", profile.grade || "—"],
               ["pvGender", "Gender", profile.gender || "—"],
               ["pvTrack", "Class of study", profile.track || "—"],
-              ["pvSchool", "School", "Not linked — individual account"],
+              ["pvSchool", "School", studentSchool ? studentSchool.name : "Not linked — individual account"],
             ].map(([id, label, value], i) => (
               <div className="roster-row" key={label}>
                 <div className="roster-name" style={{ fontWeight: 600, color: "var(--ash)" }}>
