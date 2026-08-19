@@ -260,7 +260,11 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           <div className="rail-nav">
             <div className="nav-set active">{nav.rail.map((i, idx) => renderNavItem(i, "rail", idx))}</div>
           </div>
-          <button className="mode-switch-btn" style={{ display: "none" }} onClick={logout}>
+          <button
+            className="mode-switch-btn"
+            style={{ display: appMode === "student" ? "none" : "flex" }}
+            onClick={logout}
+          >
             🚪 Log out
           </button>
         </nav>
@@ -310,7 +314,11 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 {nav.drawer.map((i, idx) => renderNavItem(i, "drawer", idx))}
               </div>
             </div>
-            <button className="mode-switch-btn" style={{ display: "none" }} onClick={logout}>
+            <button
+              className="mode-switch-btn"
+              style={{ display: appMode === "student" ? "none" : "flex" }}
+              onClick={logout}
+            >
               🚪 Log out
             </button>
           </div>
