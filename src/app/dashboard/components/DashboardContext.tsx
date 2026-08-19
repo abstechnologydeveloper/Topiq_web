@@ -113,6 +113,8 @@ export type DashboardCtx = {
   liveView: LiveView;
   setLiveView: Dispatch<SetStateAction<LiveView>>;
   joinLiveSession: () => void;
+  startLiveSession: (s: { classId: string; subjectId: string; topicIndex: number }) => void;
+  endLiveSession: () => void;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -301,6 +303,20 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     router.push("/dashboard/live");
   };
 
+  const startLiveSession = (s: { classId: string; subjectId: string; topicIndex: number }) => {
+    setLiveSession({ ...s, pollIndex: 0 });
+    setLiveView("session");
+    setDrawerOpen(false);
+    router.push("/dashboard/live");
+  };
+
+  const endLiveSession = () => {
+    setLiveSession(null);
+    setLiveView("hub");
+    setDrawerOpen(false);
+    router.push("/dashboard/teacherdash");
+  };
+
   const exitSession = () => {
     setSessionCfg(null);
     setDrawerOpen(false);
@@ -389,6 +405,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         liveView,
         setLiveView,
         joinLiveSession,
+        startLiveSession,
+        endLiveSession,
       }}
     >
       {children}

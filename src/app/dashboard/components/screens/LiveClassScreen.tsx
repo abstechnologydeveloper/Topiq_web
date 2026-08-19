@@ -24,7 +24,7 @@ function getTopicSections(subject: SubjectData, topicIndex: number) {
 
 export default function LiveClassScreen({ subjects, student, startSession }: Props) {
   const router = useRouter();
-  const { liveSession, liveView, setLiveView } = useDashboard();
+  const { liveSession, liveView, setLiveView, appMode, endLiveSession } = useDashboard();
   const [hubPane, setHubPane] = useState<(typeof HUB_PANES)[number]>("today");
   const [livePane, setLivePane] = useState<"learn" | "practice" | "interactive">("learn");
   const [pollAnswered, setPollAnswered] = useState(false);
@@ -184,7 +184,14 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
               <div className="lt-title" id="lsTopbarTitle">{liveTopic.t}</div>
               <div className="lt-sub" id="lsTopbarSub">{liveSub.icon} {liveSub.name} · {liveC ? liveC.name : ""}</div>
             </div>
-            <button className="lt-end" id="lsEndBtn" style={{ display: "none" }}>End session</button>
+            <button
+              className="lt-end"
+              id="lsEndBtn"
+              style={{ display: appMode === "teacher" ? "inline-block" : "none" }}
+              onClick={endLiveSession}
+            >
+              End session
+            </button>
           </div>
 
           <div className="subnav" id="lsSubnav">
