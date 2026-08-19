@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SearchIcon } from "./shared";
 import { useDashboard } from "../DashboardContext";
 import { ASSIGNMENTS } from "../../data";
@@ -44,11 +44,25 @@ type Props = {
 };
 
 export default function DiscoverScreen({ subjects, student, goTab, openSubject }: Props) {
-  const { assignDone, activeChallenges } = useDashboard();
+  const { assignDone, activeChallenges, liveSession, joinLiveSession } = useDashboard();
   const [homeActiveSubject, setHomeActiveSubject] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onMouseDown = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+        setSearchOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, []);
+
+  const liveBanner = liveSession && liveSession.classId === "ss2bio" ? subjects[liveSession.subjectId] : null;
+  const liveBannerTopic =
+    liveSession && liveBanner ? liveBanner.topics[liveSession.topicIndex] : null;
 
   const ids = useMemo(() => {
     const preferred = PREFERRED_ORDER.filter((id) => subjects[id]);
@@ -125,7 +139,7 @@ export default function DiscoverScreen({ subjects, student, goTab, openSubject }
           <span className="hs-ai">✨</span>
         </div>
         {searchOpen && searchQuery.trim() ? (
-          <div className="search-dropdown" onClick={(e) => e.stopPropagation()}>
+          <div className="search-dropdown show" onClick={(e) => e.stopPropagation()}>
             {matches.length
               ? matches.map((r, i) => (
                   <div
@@ -158,14 +172,18 @@ export default function DiscoverScreen({ subjects, student, goTab, openSubject }
         ) : null}
       </div>
 
-      <div className="live-session-banner" style={{ display: "none" }}>
-        <span className="ls-dot"></span>
-        <div>
-          <div className="ls-label">Live now</div>
-          <div className="ls-title"></div>
+      {liveBanner && liveBannerTopic && (
+        <div className="live-session-banner" onClick={joinLiveSession}>
+          <span className="ls-dot"></span>
+          <div>
+            <div className="ls-label">Live now</div>
+            <div className="ls-title">
+              {liveBanner.icon} {liveBanner.name} · {liveBannerTopic.t}
+            </div>
+          </div>
+          <button className="ls-join">Join →</button>
         </div>
-        <button className="ls-join">Join →</button>
-      </div>
+      )}
 
       <span className="eyebrow">Today&apos;s plan</span>
       <div

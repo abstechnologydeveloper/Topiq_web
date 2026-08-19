@@ -6,6 +6,7 @@ import { CLASSES, LIVE_CLASS_LOG, ROSTERS, TIMETABLE } from "../../data";
 import type { SubjectData } from "./DiscoverScreen";
 import type { SessionCfg } from "./practiceTypes";
 import { BackChevron } from "./shared";
+import { useDashboard } from "../DashboardContext";
 
 type Props = {
   subjects: Record<string, SubjectData>;
@@ -13,14 +14,6 @@ type Props = {
   startSession: (cfg: SessionCfg) => void;
 };
 
-type LiveSession = {
-  classId: string;
-  subjectId: string;
-  topicIndex: number;
-  pollIndex: number;
-};
-
-const seedLive: LiveSession = { classId: "ss2bio", subjectId: "biology", topicIndex: 1, pollIndex: 0 };
 const HUB_PANES = ["today", "upcoming", "attended", "missed"] as const;
 
 function getTopicSections(subject: SubjectData, topicIndex: number) {
@@ -31,8 +24,7 @@ function getTopicSections(subject: SubjectData, topicIndex: number) {
 
 export default function LiveClassScreen({ subjects, student, startSession }: Props) {
   const router = useRouter();
-  const [liveSession, setLiveSession] = useState<LiveSession | null>(seedLive);
-  const [view, setView] = useState<"hub" | "session">("hub");
+  const { liveSession, liveView, setLiveView } = useDashboard();
   const [hubPane, setHubPane] = useState<(typeof HUB_PANES)[number]>("today");
   const [livePane, setLivePane] = useState<"learn" | "practice" | "interactive">("learn");
   const [pollAnswered, setPollAnswered] = useState(false);
@@ -44,14 +36,14 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
   const liveClass = liveSession ? CLASSES.find((c) => c.id === liveSession.classId) : undefined;
 
   const openHub = () => {
-    setView("hub");
+    setLiveView("hub");
     setLivePane("learn");
     setPollAnswered(false);
   };
 
   const openSession = () => {
     if (!liveSession) return;
-    setView("session");
+    setLiveView("session");
     setLivePane("learn");
     setPollAnswered(false);
   };
@@ -146,12 +138,12 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
 
   return (
     <section className="screen active" id="screen-livesession">
-      <div className="back-row" id="lsBackRow" onClick={() => (view === "session" ? openHub() : router.push("/dashboard"))} style={view === "session" ? { display: "flex" } : { display: "none" }}>
+      <div className="back-row" id="lsBackRow" onClick={() => (liveView === "session" ? openHub() : router.push("/dashboard"))} style={liveView === "session" ? { display: "flex" } : { display: "none" }}>
         <BackChevron />
-        <span id="lsBackLabel">{view === "session" ? "Back to schedule" : "Back"}</span>
+        <span id="lsBackLabel">{liveView === "session" ? "Back to schedule" : "Back"}</span>
       </div>
 
-      <div id="lsHub" style={{ display: view === "hub" ? "block" : "none" }}>
+      <div id="lsHub" style={{ display: liveView === "hub" ? "block" : "none" }}>
         <span className="eyebrow">Live Class</span>
         <h1 className="page-title" id="lsHubTitle">
           {hubPane === "today" ? "Today's classes" : hubPane === "upcoming" ? "Upcoming classes" : hubPane === "attended" ? "Attended classes" : "Missed classes"}
@@ -184,7 +176,7 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
       </div>
 
       {liveSession && liveSub && liveTopic && (
-        <div id="lsLiveContent" style={{ display: view === "session" ? "block" : "none" }}>
+        <div id="lsLiveContent" style={{ display: liveView === "session" ? "block" : "none" }}>
           <div className="live-topbar">
             <span className="lt-dot"></span>
             <div>

@@ -52,6 +52,13 @@ export type ProfileData = {
 export type AppMode = "student" | "teacher" | "school";
 export type School = { name: string; id: string };
 export type ObRole = "student" | "teacher" | "school";
+export type LiveSession = {
+  classId: string;
+  subjectId: string;
+  topicIndex: number;
+  pollIndex: number;
+};
+export type LiveView = "hub" | "session";
 
 export type DashboardCtx = {
   subjects: Record<string, SubjectData>;
@@ -100,6 +107,12 @@ export type DashboardCtx = {
   onboardingOpen: boolean;
   finishOnboarding: () => void;
   logout: () => void;
+  dark: boolean;
+  toggleDark: () => void;
+  liveSession: LiveSession | null;
+  liveView: LiveView;
+  setLiveView: Dispatch<SetStateAction<LiveView>>;
+  joinLiveSession: () => void;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -117,6 +130,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [studentSchool, setStudentSchool] = useState<School | null>(null);
   const [teacherSchool, setTeacherSchool] = useState<School | null>(null);
   const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+  const [liveSession, setLiveSession] = useState<LiveSession | null>({
+    classId: "ss2bio",
+    subjectId: "biology",
+    topicIndex: 1,
+    pollIndex: 0,
+  });
+  const [liveView, setLiveView] = useState<LiveView>("hub");
   const [subjects, setSubjects] = useState<Record<string, SubjectData>>(
     () => JSON.parse(JSON.stringify(SUBJECTS)),
   );
@@ -161,6 +182,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setTeacherSchool(null);
     setOnboardingOpen(true);
   };
+
+  const toggleDark = () => setDark((d) => !d);
 
   const weakestSubjectId = () =>
     Object.keys(subjects).sort((a, b) => subjects[a].mastery - subjects[b].mastery)[0];
@@ -272,6 +295,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     router.push("/dashboard/practice-session");
   };
 
+  const joinLiveSession = () => {
+    setLiveView("session");
+    setDrawerOpen(false);
+    router.push("/dashboard/live");
+  };
+
   const exitSession = () => {
     setSessionCfg(null);
     setDrawerOpen(false);
@@ -354,6 +383,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         onboardingOpen,
         finishOnboarding,
         logout,
+        dark,
+        toggleDark,
+        liveSession,
+        liveView,
+        setLiveView,
+        joinLiveSession,
       }}
     >
       {children}

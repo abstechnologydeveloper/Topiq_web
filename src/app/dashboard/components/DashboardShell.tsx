@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { NAV, type NavItem } from "./navConfig";
 import { useDashboard } from "./DashboardContext";
+import { ASSIGNMENTS } from "../data";
 
 const ChevronDown = () => (
   <svg
@@ -45,9 +46,28 @@ const Hamburger = () => (
   </svg>
 );
 
+const Checkmark = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="var(--thread)"
+    strokeWidth="2"
+  >
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+);
+
+const LINKED_ACCOUNTS = [
+  { mode: "student", icon: "🎓", label: "Chidinma Okafor", role: "Student" },
+  { mode: "teacher", icon: "🧑‍🏫", label: "Mrs. F. Adeyemi", role: "Teacher" },
+  { mode: "school", icon: "🏫", label: "Corona Secondary School", role: "School Admin" },
+] as const;
+
 export default function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [dark, setDark] = useState(false);
+  const [accountSwitchOpen, setAccountSwitchOpen] = useState(false);
   const {
     subjects,
     certSubject,
@@ -60,12 +80,37 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     activeChallenges,
     profile,
     appMode,
+    setAppMode,
     logout,
+    dark,
+    liveSession,
+    assignDone,
   } = useDashboard();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
   }, [dark]);
+
+  const pendingAssign = ASSIGNMENTS.filter((a) => !assignDone[a.id]).length;
+
+  const openAccountSwitch = () => {
+    closeDrawer();
+    setAccountSwitchOpen(true);
+  };
+  const closeAccountSwitch = () => setAccountSwitchOpen(false);
+
+  const switchAccount = (mode: typeof LINKED_ACCOUNTS[number]["mode"]) => {
+    closeAccountSwitch();
+    if (mode === appMode) return;
+    setAppMode(mode);
+    const home = mode === "teacher" ? "teacherdash" : mode === "school" ? "schooladmin" : "discover";
+    goTab(home);
+  };
+
+  const addAnotherAccount = () => {
+    closeAccountSwitch();
+    logout();
+  };
 
   const nav = NAV[appMode];
   const showTopbar = pathname === "/dashboard";
@@ -131,15 +176,26 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
         className={linkClass(item, surface)}
         onClick={() => goTab(item.tab)}
       >
-        {item.icon}
+{item.icon}
         {item.label}
-        {surface !== "tab" && item.count ? (
-          <span className="rl-count">{item.count}</span>
-        ) : null}
         {surface !== "tab" && item.tab === "challenges" && activeChallenges.length > 0 ? (
           <span className="rl-count" id={`${surface}ChallengeCount`}>
             {activeChallenges.length}
           </span>
+        ) : null}
+        {surface !== "tab" && item.tab === "studentassign" && pendingAssign > 0 ? (
+          <span
+            className="rl-count"
+            id={surface === "drawer" ? "drawerAssignCount" : "railAssignCount"}
+          >
+            {pendingAssign}
+          </span>
+        ) : null}
+        {item.tab === "livesession" && liveSession ? (
+          <span
+            className="nav-live-badge"
+            title="A live class is happening now"
+          />
         ) : null}
       </button>
     );
@@ -173,6 +229,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 className="brand-switch-btn"
                 title="Switch account"
                 aria-label="Switch account"
+                onClick={openAccountSwitch}
               >
                 <ChevronDown />
               </button>
@@ -196,7 +253,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
               height={34}
             />
             <div className="brand-name">{""}</div>
-            <button className="brand-switch-btn" title="Switch account" aria-label="Switch account">
+            <button className="brand-switch-btn" title="Switch account" aria-label="Switch account" onClick={openAccountSwitch}>
               <ChevronDown />
             </button>
           </div>
@@ -239,6 +296,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                   className="brand-switch-btn"
                   title="Switch account"
                   aria-label="Switch account"
+                  onClick={openAccountSwitch}
                 >
                   <ChevronDown />
                 </button>
@@ -260,6 +318,43 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
       )}
 
       {toast && <div className="badge-toast show" dangerouslySetInnerHTML={{ __html: toast }} />}
+
+      {accountSwitchOpen && (
+        <div className="modal-overlay show" id="accountSwitchModal">
+          <div className="modal-sheet">
+            <button className="modal-close" onClick={closeAccountSwitch} aria-label="Close">
+              ✕
+            </button>
+            <h2>Switch account</h2>
+            <p style={{ fontSize: "12px", color: "var(--ash)", margin: "-6px 0 16px", lineHeight: 1.5 }}>
+              Jump between your linked AbSTopiq accounts.
+            </p>
+            <div id="accountSwitchList">
+              {LINKED_ACCOUNTS.map((a) => (
+                <div
+                  key={a.mode}
+                  className="roster-row"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => switchAccount(a.mode)}
+                >
+                  <div className="roster-avatar">{a.icon}</div>
+                  <div className="roster-name">
+                    {a.label}
+                    <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--ash)" }}>
+                      {a.role}
+                      {a.mode === appMode ? " · current" : ""}
+                    </div>
+                  </div>
+                  {a.mode === appMode ? <Checkmark /> : null}
+                </div>
+              ))}
+            </div>
+            <button className="add-entry-btn" onClick={addAnotherAccount}>
+              + Add another account
+            </button>
+          </div>
+        </div>
+      )}
 
       {certSubject && subjects[certSubject] ? (
         <div className="modal-overlay show" id="certModal">
