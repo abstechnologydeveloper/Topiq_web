@@ -27,6 +27,9 @@ export const TAB_TO_PATH: Record<string, string> = {
   subscription: "/dashboard/upgrade",
   progress: "/dashboard/progress",
   teacherdash: "/dashboard/teacherdash",
+  teacherclasses: "/dashboard/classes",
+  teacherassign: "/dashboard/assignments",
+  lessonprep: "/dashboard/lesson-prep",
   schooladmin: "/dashboard/schooladmin",
 };
 
