@@ -106,7 +106,12 @@ export default function TeacherDashboardScreen() {
         {attention.map((c) => {
           const s = SUBJECT_LOOKUP[c.subject];
           return (
-            <div className="plan-item" key={c.id}>
+            <div
+              className="plan-item"
+              key={c.id}
+              onClick={() => router.push(`/dashboard/classes?class=${c.id}`)}
+              style={{ cursor: "pointer" }}
+            >
               <div className="plan-icon" style={{ background: `var(--${s.color}-soft)` }}>
                 {s.icon}
               </div>

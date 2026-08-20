@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CLASSES, ROSTERS } from "../../data/teacher";
 import { SUBJECTS } from "../../data/subjects";
 import type { SubjectData } from "./DiscoverScreen";
@@ -13,12 +14,20 @@ type RosterStudent = { name: string; mastery: number; pending?: boolean };
 const cloneRosters = () =>
   JSON.parse(JSON.stringify(ROSTERS)) as Record<string, RosterStudent[]>;
 
-export default function TeacherClassesScreen() {
-  const [selected, setSelected] = useState<string | null>(null);
+export default function TeacherClassesScreen({ initialClassId }: { initialClassId?: string | null }) {
+  const router = useRouter();
+  const [selected, setSelected] = useState<string | null>(initialClassId ?? null);
   const [rosters, setRosters] = useState<Record<string, RosterStudent[]>>(() => cloneRosters());
 
+  useEffect(() => {
+    setSelected(initialClassId ?? null);
+  }, [initialClassId]);
+
   const openClass = (classId: string) => setSelected(classId);
-  const backToList = () => setSelected(null);
+  const backToList = () => {
+    setSelected(null);
+    if (router.replace) router.replace("/dashboard/classes");
+  };
 
   const removeStudent = (classId: string, index: number) => {
     setRosters((prev) => {
