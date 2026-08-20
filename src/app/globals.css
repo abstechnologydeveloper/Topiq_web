@@ -1,6 +1,6 @@
   @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss/utilities.css";
 
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -36,7 +36,9 @@
     --shadow-deep:0 26px 60px rgba(28,14,60,0.20);
     --maxw:1180px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  @layer base{
+    *{box-sizing:border-box; margin:0; padding:0;}
+  }
   html{scroll-behavior:smooth;}
   body{
     font-family:var(--font-inter),sans-serif; color:var(--ink); background:var(--paper);
