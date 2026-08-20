@@ -14,6 +14,7 @@ import { SUBJECTS } from "../data/subjects";
 import { CHALLENGE_TEMPLATES } from "../data/challenges";
 import { studentProfile } from "../data/student";
 import { TIMETABLE, TASKS, EXAMS } from "../data/workspace";
+import { ASSIGNMENTS, CLASSES, FREE_TEACHER_ASSIGNMENTS } from "../data/teacher";
 import { TAB_TO_PATH } from "./navConfig";
 import type { SubjectData } from "./screens/DiscoverScreen";
 import type { SessionCfg } from "./screens/practiceTypes";
@@ -59,6 +60,22 @@ export type LiveSession = {
   pollIndex: number;
 };
 export type LiveView = "hub" | "session";
+export type TeacherClassRecord = {
+  id: string;
+  name: string;
+  subject: string;
+  board: string;
+  students: number;
+  avgMastery: number;
+};
+export type TeacherAssignment = {
+  id: number;
+  title: string;
+  classId: string;
+  subject: string;
+  due: string;
+  complete: number;
+};
 
 export type DashboardCtx = {
   subjects: Record<string, SubjectData>;
@@ -123,6 +140,15 @@ export type DashboardCtx = {
   selectLiveClass: (id: string) => void;
   selectLiveTopic: (idx: number) => void;
   startLiveForClass: (classId: string) => void;
+  teacherAssignments: TeacherAssignment[];
+  teacherAssignmentsUsed: number;
+  assignmentQuickAddOpen: boolean;
+  setAssignmentQuickAddOpen: Dispatch<SetStateAction<boolean>>;
+  addTeacherAssignment: (next: TeacherAssignment) => boolean;
+  teacherClasses: TeacherClassRecord[];
+  teacherClassQuickAddOpen: boolean;
+  setTeacherClassQuickAddOpen: Dispatch<SetStateAction<boolean>>;
+  addTeacherClass: (next: TeacherClassRecord) => void;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -151,6 +177,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [liveTeachOpen, setLiveTeachOpen] = useState(false);
   const [liveTeachClassId, setLiveTeachClassId] = useState<string | null>(null);
   const [liveTeachTopicIdx, setLiveTeachTopicIdx] = useState<number | null>(null);
+  const [teacherAssignments, setTeacherAssignments] = useState<TeacherAssignment[]>(() =>
+    JSON.parse(JSON.stringify(ASSIGNMENTS)),
+  );
+  const [teacherAssignmentsUsed, setTeacherAssignmentsUsed] = useState(0);
+  const [assignmentQuickAddOpen, setAssignmentQuickAddOpen] = useState(false);
+  const [teacherClasses, setTeacherClasses] = useState<TeacherClassRecord[]>(() =>
+    JSON.parse(JSON.stringify(CLASSES)),
+  );
+  const [teacherClassQuickAddOpen, setTeacherClassQuickAddOpen] = useState(false);
   const [subjects, setSubjects] = useState<Record<string, SubjectData>>(
     () => JSON.parse(JSON.stringify(SUBJECTS)),
   );
@@ -355,6 +390,19 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setLiveTeachOpen(true);
   };
 
+  const addTeacherAssignment = (next: TeacherAssignment) => {
+    if (teacherSchool || isPlusUser || teacherAssignmentsUsed < FREE_TEACHER_ASSIGNMENTS) {
+      setTeacherAssignments((prev) => [...prev, next]);
+      setTeacherAssignmentsUsed((prev) => prev + 1);
+      return true;
+    }
+    return false;
+  };
+
+  const addTeacherClass = (next: TeacherClassRecord) => {
+    setTeacherClasses((prev) => [...prev, next]);
+  };
+
   const exitSession = () => {
     setSessionCfg(null);
     setDrawerOpen(false);
@@ -453,6 +501,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         selectLiveClass,
         selectLiveTopic,
         startLiveForClass,
+        teacherAssignments,
+        teacherAssignmentsUsed,
+        assignmentQuickAddOpen,
+        setAssignmentQuickAddOpen,
+        addTeacherAssignment,
+        teacherClasses,
+        teacherClassQuickAddOpen,
+        setTeacherClassQuickAddOpen,
+        addTeacherClass,
       }}
     >
       {children}

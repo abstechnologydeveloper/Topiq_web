@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CLASSES, ROSTERS } from "../../data/teacher";
+import { ROSTERS } from "../../data/teacher";
 import { SUBJECTS } from "../../data/subjects";
+import { useDashboard } from "../DashboardContext";
 import type { SubjectData } from "./DiscoverScreen";
 import { BackChevron, ChevronMicro } from "./shared";
 
@@ -27,6 +28,7 @@ function nameFromEmail(email: string) {
 
 export default function TeacherClassesScreen({ initialClassId }: { initialClassId?: string | null }) {
   const router = useRouter();
+  const { teacherClasses, setTeacherClassQuickAddOpen } = useDashboard();
   const [selected, setSelected] = useState<string | null>(initialClassId ?? null);
   const [rosters, setRosters] = useState<Record<string, RosterStudent[]>>(() => cloneRosters());
   const [inviteOpen, setInviteOpen] = useState(false);
@@ -88,7 +90,7 @@ export default function TeacherClassesScreen({ initialClassId }: { initialClassI
   };
 
   if (selected) {
-    const c = CLASSES.find((x) => x.id === selected);
+    const c = teacherClasses.find((x) => x.id === selected);
     const roster = rosters[selected] || [];
     return (
       <section className="screen active" id="screen-teacherclasses">
@@ -190,7 +192,7 @@ export default function TeacherClassesScreen({ initialClassId }: { initialClassI
       <span className="eyebrow">Your classes</span>
       <h1 className="page-title">Classes</h1>
       <p className="page-sub">Tap a class to see individual student mastery.</p>
-      {CLASSES.map((c) => {
+      {teacherClasses.map((c) => {
           const s = SUBJECT_LOOKUP[c.subject];
           return (
             <div className="class-card" key={c.id} onClick={() => openClass(c.id)} style={{ cursor: "pointer" }}>
@@ -207,7 +209,7 @@ export default function TeacherClassesScreen({ initialClassId }: { initialClassI
             </div>
           );
         })}
-      <button className="add-entry-btn">+ New class</button>
+      <button className="add-entry-btn" onClick={() => setTeacherClassQuickAddOpen(true)}>+ New class</button>
     </section>
   );
 }

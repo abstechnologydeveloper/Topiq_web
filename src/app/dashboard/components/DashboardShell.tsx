@@ -7,6 +7,8 @@ import { NAV, type NavItem } from "./navConfig";
 import { useDashboard } from "./DashboardContext";
 import { ASSIGNMENTS } from "../data";
 import StartLiveModal from "./screens/StartLiveModal";
+import AssignmentQuickAddModal from "./screens/AssignmentQuickAddModal";
+import TeacherClassQuickAddModal from "./screens/TeacherClassQuickAddModal";
 
 const ChevronDown = () => (
   <svg
@@ -393,6 +395,10 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
       ) : null}
 
       <StartLiveModal />
+
+      <AssignmentQuickAddModal />
+
+      <TeacherClassQuickAddModal />
     </div>
   );
 }

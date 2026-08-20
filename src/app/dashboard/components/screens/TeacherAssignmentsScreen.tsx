@@ -1,12 +1,14 @@
 "use client";
 
-import { ASSIGNMENTS, CLASSES } from "../../data/teacher";
+import { CLASSES } from "../../data/teacher";
 import { SUBJECTS } from "../../data/subjects";
+import { useDashboard } from "../DashboardContext";
 import type { SubjectData } from "./DiscoverScreen";
 
 const SUBJECT_LOOKUP = SUBJECTS as unknown as Record<string, SubjectData>;
 
 export default function TeacherAssignmentsScreen() {
+  const { teacherAssignments, setAssignmentQuickAddOpen } = useDashboard();
   return (
     <section className="screen active" id="screen-teacherassign">
       <span className="eyebrow">Set work, track completion</span>
@@ -14,7 +16,7 @@ export default function TeacherAssignmentsScreen() {
       <p className="page-sub">
         Assign a topic or practice set to a class and watch completion update live.
       </p>
-      {ASSIGNMENTS.map((a) => {
+      {teacherAssignments.map((a) => {
         const c = CLASSES.find((x) => x.id === a.classId);
         const s = SUBJECT_LOOKUP[a.subject];
         return (
@@ -32,7 +34,9 @@ export default function TeacherAssignmentsScreen() {
           </div>
         );
       })}
-      <button className="add-entry-btn">+ New assignment</button>
+      <button className="add-entry-btn" onClick={() => setAssignmentQuickAddOpen(true)}>
+        + New assignment
+      </button>
     </section>
   );
 }

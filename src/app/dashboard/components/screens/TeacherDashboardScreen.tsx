@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { CLASSES, FREE_TEACHER_ASSIGNMENTS } from "../../data/teacher";
+import { FREE_TEACHER_ASSIGNMENTS } from "../../data/teacher";
 import { SUBJECTS } from "../../data/subjects";
 import { useDashboard } from "../DashboardContext";
 import { ChevronMicro } from "./shared";
@@ -11,7 +11,7 @@ const SUBJECT_LOOKUP = SUBJECTS as unknown as Record<string, SubjectData>;
 
 export default function TeacherDashboardScreen() {
   const router = useRouter();
-  const { teacherSchool, liveSession, openLiveTeach, joinLiveSession } = useDashboard();
+  const { teacherSchool, liveSession, openLiveTeach, joinLiveSession, teacherAssignmentsUsed, isPlusUser, teacherClasses } = useDashboard();
 
   const openTeacherLive = () => {
     if (liveSession) {
@@ -21,7 +21,7 @@ export default function TeacherDashboardScreen() {
     openLiveTeach();
   };
 
-  const attention = [...CLASSES].sort((a, b) => a.avgMastery - b.avgMastery);
+  const attention = [...teacherClasses].sort((a, b) => a.avgMastery - b.avgMastery);
 
   const quick = [
     { label: "Start a live teaching session", color: "var(--coral)", onClick: openTeacherLive },
@@ -32,7 +32,7 @@ export default function TeacherDashboardScreen() {
 
   const liveCardData = liveSession
     ? (() => {
-        const c = CLASSES.find((x) => x.id === liveSession.classId);
+        const c = teacherClasses.find((x) => x.id === liveSession.classId);
         const s = SUBJECT_LOOKUP[liveSession.subjectId];
         const topic = s ? s.topics[liveSession.topicIndex] : null;
         if (c && s && topic) return { c, s, topic };
@@ -58,16 +58,19 @@ export default function TeacherDashboardScreen() {
             </div>
           </>
         ) : (
-          <>
+          <div
+            onClick={() => router.push("/dashboard/upgrade")}
+            style={{ cursor: "pointer", display: "contents" }}
+          >
             <span className="psc-icon">🔓</span>
             <div>
               <div className="psc-title">Free plan</div>
               <div className="psc-sub">
-                {FREE_TEACHER_ASSIGNMENTS}/{FREE_TEACHER_ASSIGNMENTS} assignments left this term ·
-                Upgrade for unlimited
+                {Math.max(0, FREE_TEACHER_ASSIGNMENTS - teacherAssignmentsUsed)}/
+                {FREE_TEACHER_ASSIGNMENTS} assignments left this term · Upgrade for unlimited
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
 
