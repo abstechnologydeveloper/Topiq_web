@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { NAV, type NavItem } from "./navConfig";
 import { useDashboard } from "./DashboardContext";
 import { ASSIGNMENTS } from "../data";
+import StartLiveModal from "./screens/StartLiveModal";
 
 const ChevronDown = () => (
   <svg
@@ -390,6 +391,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           </div>
         </div>
       ) : null}
+
+      <StartLiveModal />
     </div>
   );
 }

@@ -115,6 +115,14 @@ export type DashboardCtx = {
   joinLiveSession: () => void;
   startLiveSession: (s: { classId: string; subjectId: string; topicIndex: number }) => void;
   endLiveSession: () => void;
+  liveTeachOpen: boolean;
+  liveTeachClassId: string | null;
+  liveTeachTopicIdx: number | null;
+  openLiveTeach: (seedClassId?: string) => void;
+  closeLiveTeach: () => void;
+  selectLiveClass: (id: string) => void;
+  selectLiveTopic: (idx: number) => void;
+  startLiveForClass: (classId: string) => void;
 };
 
 const Ctx = createContext<DashboardCtx | null>(null);
@@ -140,6 +148,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     pollIndex: 0,
   });
   const [liveView, setLiveView] = useState<LiveView>("hub");
+  const [liveTeachOpen, setLiveTeachOpen] = useState(false);
+  const [liveTeachClassId, setLiveTeachClassId] = useState<string | null>(null);
+  const [liveTeachTopicIdx, setLiveTeachTopicIdx] = useState<number | null>(null);
   const [subjects, setSubjects] = useState<Record<string, SubjectData>>(
     () => JSON.parse(JSON.stringify(SUBJECTS)),
   );
@@ -317,6 +328,33 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     router.push("/dashboard/teacherdash");
   };
 
+  const openLiveTeach = (seedClassId?: string) => {
+    setLiveTeachClassId(seedClassId ?? null);
+    setLiveTeachTopicIdx(null);
+    setLiveTeachOpen(true);
+  };
+
+  const closeLiveTeach = () => setLiveTeachOpen(false);
+
+  const selectLiveClass = (id: string) => {
+    setLiveTeachClassId(id);
+    setLiveTeachTopicIdx(null);
+  };
+
+  const selectLiveTopic = (idx: number) => setLiveTeachTopicIdx(idx);
+
+  const startLiveForClass = (classId: string) => {
+    if (liveSession) {
+      setLiveView("session");
+      setDrawerOpen(false);
+      router.push("/dashboard/live");
+      return;
+    }
+    setLiveTeachTopicIdx(null);
+    setLiveTeachClassId(classId);
+    setLiveTeachOpen(true);
+  };
+
   const exitSession = () => {
     setSessionCfg(null);
     setDrawerOpen(false);
@@ -407,6 +445,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         joinLiveSession,
         startLiveSession,
         endLiveSession,
+        liveTeachOpen,
+        liveTeachClassId,
+        liveTeachTopicIdx,
+        openLiveTeach,
+        closeLiveTeach,
+        selectLiveClass,
+        selectLiveTopic,
+        startLiveForClass,
       }}
     >
       {children}

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CLASSES, FREE_TEACHER_ASSIGNMENTS } from "../../data/teacher";
 import { SUBJECTS } from "../../data/subjects";
@@ -12,44 +11,14 @@ const SUBJECT_LOOKUP = SUBJECTS as unknown as Record<string, SubjectData>;
 
 export default function TeacherDashboardScreen() {
   const router = useRouter();
-  const { teacherSchool, liveSession, startLiveSession, joinLiveSession } = useDashboard();
-  const [liveTeachOpen, setLiveTeachOpen] = useState(false);
-  const [liveClassId, setLiveClassId] = useState<string | null>(null);
-  const [liveTopicIdx, setLiveTopicIdx] = useState<number | null>(null);
-
-  const liveClass = liveClassId ? CLASSES.find((x) => x.id === liveClassId) : undefined;
-  const liveSubject = liveClass ? SUBJECT_LOOKUP[liveClass.subject] : undefined;
-  const confirmReady = liveClassId !== null && liveTopicIdx !== null;
-  const confirmLabel = confirmReady
-    ? "Go live →"
-    : liveClassId
-      ? "Pick a topic"
-      : "Pick a class and topic first";
+  const { teacherSchool, liveSession, openLiveTeach, joinLiveSession } = useDashboard();
 
   const openTeacherLive = () => {
     if (liveSession) {
       joinLiveSession();
       return;
     }
-    setLiveClassId(null);
-    setLiveTopicIdx(null);
-    setLiveTeachOpen(true);
-  };
-
-  const closeTeacherLive = () => setLiveTeachOpen(false);
-
-  const selectLiveClass = (id: string) => {
-    setLiveClassId(id);
-    setLiveTopicIdx(null);
-  };
-
-  const confirmStartLive = () => {
-    if (!liveClass || !liveSubject || liveTopicIdx === null) return;
-    startLiveSession({
-      classId: liveClass.id,
-      subjectId: liveClass.subject,
-      topicIndex: liveTopicIdx,
-    });
+    openLiveTeach();
   };
 
   const attention = [...CLASSES].sort((a, b) => a.avgMastery - b.avgMastery);
@@ -161,63 +130,6 @@ export default function TeacherDashboardScreen() {
           </div>
         ))}
       </div>
-
-      {liveTeachOpen && (
-        <div className="modal-overlay show" id="liveTeachModal">
-          <div className="modal-sheet">
-            <button className="modal-close" onClick={closeTeacherLive} aria-label="Close">✕</button>
-            <h2 id="liveTeachModalTitle">Start a live session</h2>
-            <p style={{ fontSize: "13px", color: "var(--ash)", marginBottom: "16px" }}>
-              Pick a class and a topic — every student in that class sees it appear live on their
-              Home, and can join you in Learn → Practice → Interactive.
-            </p>
-            <div className="mock-picker-row">
-              <span className="mock-picker-label">Class</span>
-              <div className="class-pick-row" id="liveClassPicker">
-                {CLASSES.map((c) => {
-                  const s = SUBJECT_LOOKUP[c.subject];
-                  return (
-                    <div
-                      key={c.id}
-                      className={`pick-item${liveClassId === c.id ? " selected" : ""}`}
-                      onClick={() => selectLiveClass(c.id)}
-                    >
-                      <span>{s.icon}</span>
-                      <span>{c.name}</span>
-                      <span className="pi-meta">{c.students} students</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            {liveClass && liveSubject && (
-              <div className="mock-picker-row" id="liveTopicPickerWrap">
-                <span className="mock-picker-label">Topic</span>
-                <div className="topic-pick-row" id="liveTopicPicker">
-                  {liveSubject.topics.map((t, i) => (
-                    <div
-                      key={i}
-                      className={`pick-item${liveTopicIdx === i ? " selected" : ""}`}
-                      onClick={() => setLiveTopicIdx(i)}
-                    >
-                      <span className="topic-dot" style={{ background: `var(--${t.status})` }}></span>
-                      <span>{t.t}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            <button
-              className="modal-done-btn"
-              id="liveTeachConfirmBtn"
-              onClick={confirmStartLive}
-              disabled={!confirmReady}
-            >
-              {confirmLabel}
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

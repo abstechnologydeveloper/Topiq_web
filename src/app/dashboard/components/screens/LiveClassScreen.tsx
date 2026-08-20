@@ -2,11 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CLASSES, LIVE_CLASS_LOG, ROSTERS, TIMETABLE } from "../../data";
+import { CLASSES, LIVE_CLASS_LOG, ROSTERS, TEACHER_TODAY_SCHEDULE, TIMETABLE } from "../../data";
+import { SUBJECTS } from "../../data/subjects";
 import type { SubjectData } from "./DiscoverScreen";
 import type { SessionCfg } from "./practiceTypes";
 import { BackChevron } from "./shared";
 import { useDashboard } from "../DashboardContext";
+
+const SUBJECT_LOOKUP = SUBJECTS as unknown as Record<string, SubjectData>;
 
 type Props = {
   subjects: Record<string, SubjectData>;
@@ -22,15 +25,24 @@ function getTopicSections(subject: SubjectData, topicIndex: number) {
   return subject.tutorials.slice(0, 2).map((t) => ({ heading: t.title, text: t.content || "Content grounded in your syllabus goes here." }));
 }
 
+type TeacherScheduleItem = { time: string; classId: string; addedByUser?: boolean };
+
 export default function LiveClassScreen({ subjects, student, startSession }: Props) {
   const router = useRouter();
-  const { liveSession, liveView, setLiveView, appMode, endLiveSession } = useDashboard();
+  const { liveSession, liveView, setLiveView, appMode, endLiveSession, startLiveForClass } = useDashboard();
   const [hubPane, setHubPane] = useState<(typeof HUB_PANES)[number]>("today");
   const [livePane, setLivePane] = useState<"learn" | "practice" | "interactive">("learn");
   const [pollAnswered, setPollAnswered] = useState(false);
   const [pollResponses, setPollResponses] = useState(0);
   const [latestPick, setLatestPick] = useState<number>(-1);
   const [pollPcts, setPollPcts] = useState<number[]>([]);
+  const [teacherSchedule, setTeacherSchedule] = useState<TeacherScheduleItem[]>(
+    () => JSON.parse(JSON.stringify(TEACHER_TODAY_SCHEDULE)),
+  );
+  const [qaOpen, setQaOpen] = useState(false);
+  const [qaTime, setQaTime] = useState("");
+  const [qaClass, setQaClass] = useState<string | null>(null);
+  const [qaTimeError, setQaTimeError] = useState(false);
 
   const liveIdx = liveSession ? (TIMETABLE["Mon"] as { time: string; subj: string }[]).findIndex((p) => p.subj === liveSession.subjectId) : -1;
   const liveClass = liveSession ? CLASSES.find((c) => c.id === liveSession.classId) : undefined;
@@ -47,6 +59,60 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
     setLivePane("learn");
     setPollAnswered(false);
   };
+
+  const isLiveClass = (classId: string) => liveSession !== null && liveSession.classId === classId;
+
+  const teacherRows = teacherSchedule.map((item) => {
+    const c = CLASSES.find((x) => x.id === item.classId);
+    if (!c) return null;
+    const s = SUBJECT_LOOKUP[c.subject];
+    const isLive = isLiveClass(c.id);
+    const onClick = isLive ? openSession : () => startLiveForClass(c.id);
+    return (
+      <div
+        className={`ls-sched-row ${isLive ? "live" : "upcoming"}`}
+        key={`${c.id}-${item.time}`}
+        onClick={onClick}
+        style={{ cursor: "pointer" }}
+      >
+        <div className="lsr-time">{item.time}</div>
+        <div className="lsr-icon" style={{ background: `var(--${s.color}-soft)` }}>{s.icon}</div>
+        <div className="lsr-main">
+          <div className="lsr-title">{c.name}</div>
+          <div className="lsr-sub">{c.students} students · {c.board}</div>
+        </div>
+        <div className={`lsr-status ${isLive ? "live" : "upcoming"}`}>
+          {isLive ? (
+            <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <span className="dotpulse"></span>Live — manage →
+            </span>
+          ) : (
+            "Start →"
+          )}
+        </div>
+      </div>
+    );
+  });
+
+  const openQa = () => {
+    setQaTime("");
+    setQaClass(null);
+    setQaTimeError(false);
+    setQaOpen(true);
+  };
+
+  const confirmQa = () => {
+    const time = qaTime.trim();
+    setQaTimeError(!time);
+    if (!time || !qaClass) return;
+    setTeacherSchedule((prev) => {
+      const next = [...prev, { time, classId: qaClass, addedByUser: true }];
+      return next.sort((a, b) => a.time.localeCompare(b.time, undefined, { numeric: true }));
+    });
+    setQaOpen(false);
+  };
+
+  const selectQaClass = (id: string) => setQaClass(id);
 
   const selectHubPane = (name: (typeof HUB_PANES)[number]) => setHubPane(name);
 
@@ -145,34 +211,53 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
 
       <div id="lsHub" style={{ display: liveView === "hub" ? "block" : "none" }}>
         <span className="eyebrow">Live Class</span>
-        <h1 className="page-title" id="lsHubTitle">
-          {hubPane === "today" ? "Today's classes" : hubPane === "upcoming" ? "Upcoming classes" : hubPane === "attended" ? "Attended classes" : "Missed classes"}
-        </h1>
-        <p className="page-sub" id="lsHubSub">
-          {hubPane === "today"
-            ? liveIdx >= 0
-              ? "One of your classes is live right now — tap it to join."
-              : "Here's today's schedule. We'll notify you the moment a class goes live."
-            : hubPane === "upcoming"
-              ? "Classes coming up on your timetable."
-              : hubPane === "attended"
-                ? "Classes you've joined so far."
-                : "Classes you missed — catch up with the recording or ask Sabi AI to summarise."}
-        </p>
-        <div className="subnav" id="lsHubSubnav" style={{ display: "flex" }}>
-          {HUB_PANES.map((name) => (
-            <button key={name} className={hubPane === name ? "active" : ""} data-lshubpane={name} onClick={() => selectHubPane(name)}>
-              {name.charAt(0).toUpperCase() + name.slice(1)}
+        {appMode === "teacher" ? (
+          <>
+            <h1 className="page-title" id="lsHubTitle">Today's classes</h1>
+            <p className="page-sub" id="lsHubSub">
+              {liveSession ? "One class is live right now." : "Tap any class below to go live."}
+            </p>
+            <div id="lsScheduleList">
+              {teacherRows.length
+                ? teacherRows
+                : <p style={{ fontSize: 13, color: "var(--ash)" }}>No classes scheduled today.</p>}
+            </div>
+            <button className="add-entry-btn" id="lsAddClassBtn" onClick={openQa}>
+              + Add a class to today
             </button>
-          ))}
-        </div>
-        <div id="lsScheduleList">
-          {hubPane === "today"
-            ? todayRows
-            : logRows.length
-              ? logRows
-              : <p style={{ fontSize: 13, color: "var(--ash)", padding: "16px 4px" }}>No {hubPane} classes to show.</p>}
-        </div>
+          </>
+        ) : (
+          <>
+            <h1 className="page-title" id="lsHubTitle">
+              {hubPane === "today" ? "Today's classes" : hubPane === "upcoming" ? "Upcoming classes" : hubPane === "attended" ? "Attended classes" : "Missed classes"}
+            </h1>
+            <p className="page-sub" id="lsHubSub">
+              {hubPane === "today"
+                ? liveIdx >= 0
+                  ? "One of your classes is live right now — tap it to join."
+                  : "Here's today's schedule. We'll notify you the moment a class goes live."
+                : hubPane === "upcoming"
+                  ? "Classes coming up on your timetable."
+                  : hubPane === "attended"
+                    ? "Classes you've joined so far."
+                    : "Classes you missed — catch up with the recording or ask Sabi AI to summarise."}
+            </p>
+            <div className="subnav" id="lsHubSubnav" style={{ display: "flex" }}>
+              {HUB_PANES.map((name) => (
+                <button key={name} className={hubPane === name ? "active" : ""} data-lshubpane={name} onClick={() => selectHubPane(name)}>
+                  {name.charAt(0).toUpperCase() + name.slice(1)}
+                </button>
+              ))}
+            </div>
+            <div id="lsScheduleList">
+              {hubPane === "today"
+                ? todayRows
+                : logRows.length
+                  ? logRows
+                  : <p style={{ fontSize: 13, color: "var(--ash)", padding: "16px 4px" }}>No {hubPane} classes to show.</p>}
+            </div>
+          </>
+        )}
       </div>
 
       {liveSession && liveSub && liveTopic && (
@@ -266,6 +351,44 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
                 <div className="ipc-q" id="lsPollQ">No interactive questions for this subject yet.</div>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {qaOpen && (
+        <div className="modal-overlay show" id="quickAddModal">
+          <div className="modal-sheet">
+            <button className="modal-close" onClick={() => setQaOpen(false)} aria-label="Close">✕</button>
+            <h2 id="qaTitle">Add a class to today's schedule</h2>
+            <div className="mock-picker-row">
+              <span className="mock-picker-label">What time?</span>
+              <input
+                type="text"
+                className="qa-text-input"
+                placeholder="e.g. 2:30"
+                value={qaTime}
+                onChange={(e) => {
+                  setQaTime(e.target.value);
+                  if (e.target.value.trim()) setQaTimeError(false);
+                }}
+                style={qaTimeError ? { borderColor: "var(--coral)" } : undefined}
+              />
+            </div>
+            <div className="mock-picker-row" id="qaClassRow">
+              <span className="mock-picker-label">Class</span>
+              <div className="ask-context-row" id="qaClassChips">
+                {CLASSES.map((c) => (
+                  <button
+                    key={c.id}
+                    className={`context-chip${qaClass === c.id ? " active" : ""}`}
+                    onClick={() => selectQaClass(c.id)}
+                  >
+                    {c.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button className="modal-done-btn" onClick={confirmQa}>Add →</button>
           </div>
         </div>
       )}
