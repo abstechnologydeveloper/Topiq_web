@@ -33,13 +33,23 @@ const PersonSVG = ({ size = 30 }: { size?: number }) => (
 );
 
 const CameraBadge = () => (
-  <span className="avatar-badge">
+  <span className="absolute -bottom-px -right-px flex h-6.5 w-6.5 items-center justify-center rounded-full border-2 border-white bg-ink">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2">
       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
       <circle cx="12" cy="13" r="4" />
     </svg>
   </span>
 );
+
+const QA_INPUT =
+  "w-full rounded-[10px] border-[1.5px] border-ash-line px-3.5 py-[11px] text-[14px] outline-none focus:border-thread";
+const LABEL = "mb-1.5 block text-[12px] font-bold text-ink-soft";
+const OB_FIELD = "mb-4";
+const MODE_BADGE =
+  "block mx-auto mb-3.5 w-fit text-center [font-family:'IBM_Plex_Mono',monospace] text-[9.5px] font-bold uppercase tracking-[0.04em] bg-paper-dim text-ash px-[7px] py-[2px] rounded-lg ml-0.5";
+const BACK = "mb-4 flex cursor-pointer items-center gap-1.5 text-[12.5px] font-semibold text-ash";
+const FINISH_BTN =
+  "mt-1.5 w-full cursor-pointer rounded-[14px] border-none bg-ink px-[13px] py-[13px] text-[14px] font-bold text-paper";
 
 export default function OnboardingFlow() {
   const router = useRouter();
@@ -156,25 +166,44 @@ export default function OnboardingFlow() {
   const progressN = STEP_ORDER[step] || 1;
 
   return (
-    <div className="onboarding-overlay" id="onboardingOverlay">
-      <div className="ob-card">
-        <div className={`ob-progress ${step === "auth" ? "" : "show"}`} id="obProgress">
+    <div
+      className="fixed inset-0 z-1000 flex items-start justify-center overflow-y-auto bg-paper px-6 py-10 [-webkit-overflow-scrolling:touch]"
+      id="onboardingOverlay"
+    >
+      <div className="w-full max-w-100">
+        <div
+          className={`mb-7 gap-1.5 ${step === "auth" ? "hidden" : "flex"}`}
+          id="obProgress"
+        >
           {[1, 2, 3, 4].map((n) => (
-            <div key={n} className={`dot ${progressN >= n ? "done" : ""}`} id={`obDot${n}`} />
+            <div
+              key={n}
+              className={`flex-1 h-1 rounded-[3px] ${progressN >= n ? "bg-thread" : "bg-ash-line"}`}
+              id={`obDot${n}`}
+            />
           ))}
         </div>
 
         {/* STEP 1: AUTH */}
-        <div className={`ob-step ${step === "auth" ? "active" : ""}`} id="ob-step-auth">
-          <div className="ob-brand">
-            <Image className="brand-mark" src="/logo.png" alt="AbSTopiq" width={52} height={52} />
-            <div className="brand-name" />
+        <div
+          className={`${step === "auth" ? "block animate-[fade_.25s_ease]" : "hidden"}`}
+          id="ob-step-auth"
+        >
+          <div className="flex items-center justify-center gap-2.5 mb-7">
+            <Image src="/logo.png" alt="AbSTopiq" width={52} height={52} />
           </div>
-          <div className="ob-headline">Learn it. Practice it. Sabi it.</div>
-          <p className="ob-sub">Sign up in one tap — onboarding takes just a minute after.</p>
+          <div className="mb-2 text-center text-[23px] font-semibold font-['Fraunces',serif]">
+            Learn it. Practice it. Sabi it.
+          </div>
+          <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">
+            Sign up in one tap — onboarding takes just a minute after.
+          </p>
 
-          <button className="auth-btn" onClick={() => goToStep("role")}>
-            <span className="auth-icon google">
+          <button
+            className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border-[1.5px] border-ash-line bg-surface px-[13px] py-[13px] text-[14px] font-bold text-ink hover:border-thread"
+            onClick={() => goToStep("role")}
+          >
+            <span className="flex h-4.75 w-4.75 shrink-0 items-center justify-center rounded-full text-[12px] font-extrabold bg-[conic-gradient(from_-45deg,#4285F4_0_25%,#34A853_0_50%,#FBBC05_0_75%,#EA4335_0_100%)] text-white">
               <svg width="12" height="12" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
@@ -195,8 +224,11 @@ export default function OnboardingFlow() {
               </svg>
             </span> Continue with Google
           </button>
-          <button className="auth-btn apple" onClick={() => goToStep("role")}>
-            <span className="auth-icon apple">
+          <button
+            className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border-[1.5px] border-ink bg-ink px-[13px] py-[13px] text-[14px] font-bold text-white hover:border-thread"
+            onClick={() => goToStep("role")}
+          >
+            <span className="flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full text-[12px] font-extrabold bg-surface text-ink">
               <svg width="13" height="13" viewBox="0 0 384 512">
                 <path
                   fill="currentColor"
@@ -205,8 +237,11 @@ export default function OnboardingFlow() {
               </svg>
             </span> Continue with Apple
           </button>
-          <button className="auth-btn facebook" onClick={() => goToStep("role")}>
-            <span className="auth-icon facebook">
+          <button
+            className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border-[1.5px] border-[#1877F2] bg-[#1877F2] px-[13px] py-[13px] text-[14px] font-bold text-white hover:border-thread"
+            onClick={() => goToStep("role")}
+          >
+            <span className="flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full text-[12px] font-extrabold bg-surface text-[#1877F2]">
               <svg width="12" height="12" viewBox="0 0 24 24">
                 <path
                   fill="#1877F2"
@@ -215,72 +250,78 @@ export default function OnboardingFlow() {
               </svg>
             </span> Continue with Facebook
           </button>
-          <p className="ob-legal">
+          <p className="mt-4 text-center text-[11px] leading-[1.6] text-ash">
             By continuing, you agree to AbSTopiq's Terms of Service and Privacy Policy.
           </p>
         </div>
 
         {/* STEP 2: ROLE */}
-        <div className={`ob-step ${step === "role" ? "active" : ""}`} id="ob-step-role">
-          <span className="mode-badge" style={{ display: "block", textAlign: "center", width: "fit-content", margin: "0 auto 14px" }}>
+        <div
+          className={`${step === "role" ? "block animate-[fade_.25s_ease]" : "hidden"}`}
+          id="ob-step-role"
+        >
+          <span className={MODE_BADGE}>
             Onboarding · Step 1 of 2
           </span>
-          <div className="ob-headline">Who's this for?</div>
-          <p className="ob-sub">This decides what your AbSTopiq looks like — we'll set it up right.</p>
+          <div className="mb-2 text-center text-[23px] font-semibold [font-family:'Fraunces',serif]">Who's this for?</div>
+          <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">This decides what your AbSTopiq looks like — we'll set it up right.</p>
 
           <div
-            className={`role-card ${obRole === "student" ? "selected" : ""}`}
+            className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-[16px] border-[1.5px] border-ash-line bg-surface p-4 hover:border-thread ${obRole === "student" ? "border-thread bg-thread-soft" : ""}`}
             id="obRoleStudent"
             onClick={() => selectRole("student")}
           >
-            <span className="rc-icon">🎓</span>
+            <span className="shrink-0 text-[26px]">🎓</span>
             <div>
-              <div className="rc-name">Student</div>
-              <div className="rc-desc">Learn, practice, and prep for exams</div>
+              <div className="text-[14.5px] font-bold">Student</div>
+              <div className="text-[12px] text-ash">Learn, practice, and prep for exams</div>
             </div>
           </div>
           <div
-            className={`role-card ${obRole === "teacher" ? "selected" : ""}`}
+            className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-[16px] border-[1.5px] border-ash-line bg-surface p-4 hover:border-thread ${obRole === "teacher" ? "border-thread bg-thread-soft" : ""}`}
             id="obRoleTeacher"
             onClick={() => selectRole("teacher")}
           >
-            <span className="rc-icon">🍎</span>
+            <span className="shrink-0 text-[26px]">🍎</span>
             <div>
-              <div className="rc-name">Teacher</div>
-              <div className="rc-desc">Track a class and set assignments</div>
+              <div className="text-[14.5px] font-bold">Teacher</div>
+              <div className="text-[12px] text-ash">Track a class and set assignments</div>
             </div>
           </div>
           <div
-            className={`role-card ${obRole === "school" ? "selected" : ""}`}
+            className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-[16px] border-[1.5px] border-ash-line bg-surface p-4 hover:border-thread ${obRole === "school" ? "border-thread bg-thread-soft" : ""}`}
             id="obRoleSchool"
             onClick={() => selectRole("school")}
           >
-            <span className="rc-icon">🏫</span>
+            <span className="shrink-0 text-[26px]">🏫</span>
             <div>
-              <div className="rc-name">School / Institution</div>
-              <div className="rc-desc">Set up AbSTopiq for your whole school</div>
+              <div className="text-[14.5px] font-bold">School / Institution</div>
+              <div className="text-[12px] text-ash">Set up AbSTopiq for your whole school</div>
             </div>
           </div>
 
-          <div className="ob-back" onClick={() => goToStep("auth")}>
+          <div className={BACK} onClick={() => goToStep("auth")}>
             <BackIcon /> Back
           </div>
         </div>
 
         {/* STEP 3: DETAILS */}
-        <div className={`ob-step ${step === "details" ? "active" : ""}`} id="ob-step-details">
-          <span className="mode-badge" style={{ display: "block", textAlign: "center", width: "fit-content", margin: "0 auto 14px" }}>
+        <div
+          className={`${step === "details" ? "block animate-[fade_.25s_ease]" : "hidden"}`}
+          id="ob-step-details"
+        >
+          <span className={MODE_BADGE}>
             Onboarding · Step 2 of 2
           </span>
-          <div className="ob-headline">{detailsHeadline}</div>
-          <p className="ob-sub">{detailsSub}</p>
+          <div className="mb-2 text-center text-[23px] font-semibold [font-family:'Fraunces',serif]">{detailsHeadline}</div>
+          <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">{detailsSub}</p>
 
           {obRole === "student" && (
             <div id="obFieldsStudent">
-              <div className="avatar-picker" onClick={() => avatarInputRef.current && avatarInputRef.current.click()}>
-                <div className="avatar-circle" id="obAvatarCircle">
+              <div className="mb-[22px] flex cursor-pointer flex-col items-center" onClick={() => avatarInputRef.current && avatarInputRef.current.click()}>
+                <div className="relative mb-2 flex h-[84px] w-[84px] items-center justify-center overflow-hidden rounded-full border-[1.5px] border-dashed border-ash-line bg-paper-dim" id="obAvatarCircle">
                   {obAvatarDataUrl ? (
-                    <img src={obAvatarDataUrl} alt="Profile picture" />
+                    <img src={obAvatarDataUrl} alt="Profile picture" className="h-full w-full object-cover" />
                   ) : (
                     <>
                       <PersonSVG />
@@ -288,46 +329,47 @@ export default function OnboardingFlow() {
                     </>
                   )}
                 </div>
-                <span className="avatar-hint">Add profile picture</span>
+                <span className="text-[12px] font-bold text-ash">Add profile picture</span>
                 <input
                   type="file"
                   accept="image/*"
                   id="obAvatarInput"
                   ref={avatarInputRef}
-                  style={{ display: "none" }}
+                  className="hidden"
                   onChange={(e) => previewAvatar(e.target.files?.[0])}
                 />
               </div>
-              <div className="ob-field">
-                <label>Username</label>
-                <div className="username-input-wrap">
-                  <span>@</span>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>Username</label>
+                <div className="flex items-center gap-0.5 rounded-[10px] border-[1.5px] border-ash-line px-3.5">
+                  <span className="text-[14px] font-semibold text-ash">@</span>
                   <input
                     type="text"
                     id="obUsername"
                     placeholder="chidinma_o"
+                    className="flex-1 bg-transparent px-0.5 py-[11px] text-[14px] outline-none"
                     value={obUsername}
                     onChange={(e) => setObUsername(e.target.value)}
                   />
                 </div>
               </div>
-              <div className="ob-field-row">
-                <div className="ob-field">
-                  <label>First name</label>
+              <div className="flex gap-2.5">
+                <div className={`${OB_FIELD} mb-0 flex-1`}>
+                  <label className={LABEL}>First name</label>
                   <input
                     type="text"
-                    className="qa-text-input"
+                    className={QA_INPUT}
                     id="obFirstName"
                     placeholder="Chidinma"
                     value={obFirstName}
                     onChange={(e) => setObFirstName(e.target.value)}
                   />
                 </div>
-                <div className="ob-field">
-                  <label>Last name</label>
+                <div className={`${OB_FIELD} mb-0 flex-1`}>
+                  <label className={LABEL}>Last name</label>
                   <input
                     type="text"
-                    className="qa-text-input"
+                    className={QA_INPUT}
                     id="obLastName"
                     placeholder="Okafor"
                     value={obLastName}
@@ -335,12 +377,12 @@ export default function OnboardingFlow() {
                   />
                 </div>
               </div>
-              <div className="ob-field-row">
-                <div className="ob-field">
-                  <label>Age</label>
+              <div className="flex gap-2.5">
+                <div className={`${OB_FIELD} mb-0 flex-1`}>
+                  <label className={LABEL}>Age</label>
                   <input
                     type="number"
-                    className="qa-text-input"
+                    className={QA_INPUT}
                     id="obAge"
                     placeholder="16"
                     min={8}
@@ -349,24 +391,24 @@ export default function OnboardingFlow() {
                     onChange={(e) => setObAge(e.target.value)}
                   />
                 </div>
-                <div className="ob-field">
-                  <label>Date of birth</label>
+                <div className={`${OB_FIELD} mb-0 flex-1`}>
+                  <label className={LABEL}>Date of birth</label>
                   <input
                     type="date"
-                    className="qa-text-input"
+                    className={QA_INPUT}
                     id="obDob"
                     value={obDob}
                     onChange={(e) => setObDob(e.target.value)}
                   />
                 </div>
               </div>
-              <div className="ob-field">
-                <label>
-                  Phone number <span style={{ fontWeight: 400, color: "var(--ash)" }}>(optional)</span>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>
+                  Phone number <span className="font-normal text-ash">(optional)</span>
                 </label>
                 <input
                   type="tel"
-                  className="qa-text-input"
+                  className={QA_INPUT}
                   id="obPhone"
                   placeholder="080X XXX XXXX"
                   value={obPhone}
@@ -378,23 +420,23 @@ export default function OnboardingFlow() {
 
           {obRole === "teacher" && (
             <div id="obFieldsTeacher">
-              <div className="ob-field-row">
-                <div className="ob-field">
-                  <label>First name</label>
+              <div className="flex gap-2.5">
+                <div className={`${OB_FIELD} mb-0 flex-1`}>
+                  <label className={LABEL}>First name</label>
                   <input
                     type="text"
-                    className="qa-text-input"
+                    className={QA_INPUT}
                     id="obTFirstName"
                     placeholder="Funmilayo"
                     value={obTFirstName}
                     onChange={(e) => setObTFirstName(e.target.value)}
                   />
                 </div>
-                <div className="ob-field">
-                  <label>Last name</label>
+                <div className={`${OB_FIELD} mb-0 flex-1`}>
+                  <label className={LABEL}>Last name</label>
                   <input
                     type="text"
-                    className="qa-text-input"
+                    className={QA_INPUT}
                     id="obTLastName"
                     placeholder="Adeyemi"
                     value={obTLastName}
@@ -402,28 +444,28 @@ export default function OnboardingFlow() {
                   />
                 </div>
               </div>
-              <div className="ob-field">
-                <label>
-                  Phone number <span style={{ fontWeight: 400, color: "var(--ash)" }}>(optional)</span>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>
+                  Phone number <span className="font-normal text-ash">(optional)</span>
                 </label>
                 <input
                   type="tel"
-                  className="qa-text-input"
+                  className={QA_INPUT}
                   id="obTPhone"
                   placeholder="080X XXX XXXX"
                   value={obTPhone}
                   onChange={(e) => setObTPhone(e.target.value)}
                 />
               </div>
-              <div className="ob-field">
-                <label>Subject(s) you teach</label>
-                <div className="ob-subject-grid" id="obSubjectGrid">
+              <div className={OB_FIELD}>
+                <label className={LABEL}>Subject(s) you teach</label>
+                <div className="flex flex-wrap gap-2" id="obSubjectGrid">
                   {Object.keys(SUBJECTS_BY_ID).map((id) => {
                     const s = SUBJECTS_BY_ID[id];
                     return (
                       <button
                         key={id}
-                        className={`context-chip ${obSelectedSubjects.includes(id) ? "active" : ""}`}
+                        className={`shrink-0 cursor-pointer whitespace-nowrap rounded-[16px] border-[1.5px] border-ash-line bg-surface px-[13px] py-[7px] text-[12.5px] font-bold text-ash ${obSelectedSubjects.includes(id) ? "border-thread bg-thread-soft text-thread" : ""}`}
                         onClick={() => toggleSubject(id)}
                       >
                         {s.icon} {s.name}
@@ -432,20 +474,19 @@ export default function OnboardingFlow() {
                   })}
                 </div>
               </div>
-              <div className="ob-field">
-                <label>
-                  School code <span style={{ fontWeight: 400, color: "var(--ash)" }}>(optional)</span>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>
+                  School code <span className="font-normal text-ash">(optional)</span>
                 </label>
                 <input
                   type="text"
-                  className="qa-text-input"
+                  className={`${QA_INPUT} uppercase`}
                   id="obTeacherSchoolCode"
                   placeholder="e.g. CORONA2026"
-                  style={{ textTransform: "uppercase" }}
                   value={obTeacherSchoolCode}
                   onChange={(e) => setObTeacherSchoolCode(e.target.value)}
                 />
-                <p style={{ fontSize: 11, color: "var(--ash)", marginTop: 6, lineHeight: 1.5 }}>
+                <p className="mt-1.5 text-[11px] leading-[1.5] text-ash">
                   Have a code from your school admin? Enter it and your AbSTopiq for Teachers plan is
                   covered by your school, free. No code — teach independently on the free plan, or
                   upgrade anytime.
@@ -456,46 +497,46 @@ export default function OnboardingFlow() {
 
           {obRole === "school" && (
             <div id="obFieldsSchool">
-              <div className="ob-field">
-                <label>Institution name</label>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>Institution name</label>
                 <input
                   type="text"
-                  className="qa-text-input"
+                  className={QA_INPUT}
                   id="obInstName"
                   placeholder="Corona Secondary School"
                   value={obInstName}
                   onChange={(e) => setObInstName(e.target.value)}
                 />
               </div>
-              <div className="ob-field">
-                <label>Contact person</label>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>Contact person</label>
                 <input
                   type="text"
-                  className="qa-text-input"
+                  className={QA_INPUT}
                   id="obContactName"
                   placeholder="Full name"
                   value={obContactName}
                   onChange={(e) => setObContactName(e.target.value)}
                 />
               </div>
-              <div className="ob-field">
-                <label>
-                  Phone number <span style={{ fontWeight: 400, color: "var(--ash)" }}>(optional)</span>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>
+                  Phone number <span className="font-normal text-ash">(optional)</span>
                 </label>
                 <input
                   type="tel"
-                  className="qa-text-input"
+                  className={QA_INPUT}
                   id="obInstPhone"
                   placeholder="080X XXX XXXX"
                   value={obInstPhone}
                   onChange={(e) => setObInstPhone(e.target.value)}
                 />
               </div>
-              <div className="ob-field">
-                <label>Estimated number of students</label>
+              <div className={OB_FIELD}>
+                <label className={LABEL}>Estimated number of students</label>
                 <input
                   type="number"
-                  className="qa-text-input"
+                  className={QA_INPUT}
                   id="obInstSize"
                   placeholder="e.g. 250"
                   value={obInstSize}
@@ -505,45 +546,48 @@ export default function OnboardingFlow() {
             </div>
           )}
 
-          <div className="ob-back" onClick={() => goToStep("role")}>
+          <div className={BACK} onClick={() => goToStep("role")}>
             <BackIcon /> Back
           </div>
-          <button className="ob-finish-btn" id="obDetailsPrimaryBtn" onClick={detailsPrimary}>
+          <button className={FINISH_BTN} id="obDetailsPrimaryBtn" onClick={detailsPrimary}>
             {detailsPrimaryLabel}
           </button>
         </div>
 
         {/* STEP 4: DETAILS 2 (student only) */}
-        <div className={`ob-step ${step === "details2" ? "active" : ""}`} id="ob-step-details2">
-          <span className="mode-badge" style={{ display: "block", textAlign: "center", width: "fit-content", margin: "0 auto 14px" }}>
+        <div
+          className={`${step === "details2" ? "block animate-[fade_.25s_ease]" : "hidden"}`}
+          id="ob-step-details2"
+        >
+          <span className={MODE_BADGE}>
             Onboarding · Step 2 of 2
           </span>
-          <div className="ob-headline">Almost done</div>
-          <p className="ob-sub">This helps us match content to your class.</p>
+          <div className="mb-2 text-center text-[23px] font-semibold [font-family:'Fraunces',serif]">Almost done</div>
+          <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">This helps us match content to your class.</p>
 
-          <div className="ob-field">
-            <label>Grade level</label>
-            <div className="type-toggle" id="obCurriculumToggle">
+          <div className={OB_FIELD}>
+            <label className={LABEL}>Grade level</label>
+            <div className="mb-5 flex gap-2" id="obCurriculumToggle">
               <button
                 type="button"
-                className={`type-toggle-btn ${obCurriculum === "ng" ? "active" : ""}`}
+                className={`flex flex-col items-center gap-0.5 rounded-[14px] border-[1.5px] border-ash-line bg-surface px-2.5 py-3 ${obCurriculum === "ng" ? "border-thread bg-thread-soft" : ""}`}
                 onClick={() => pickCurriculum("ng")}
               >
-                <span className="ttb-name">Nigerian (JSS/SS)</span>
+                <span className={`text-[12.5px] font-bold ${obCurriculum === "ng" ? "text-thread" : "text-ink-soft"}`}>Nigerian (JSS/SS)</span>
               </button>
               <button
                 type="button"
-                className={`type-toggle-btn ${obCurriculum === "intl" ? "active" : ""}`}
+                className={`flex flex-col items-center gap-0.5 rounded-[14px] border-[1.5px] border-ash-line bg-surface px-2.5 py-3 ${obCurriculum === "intl" ? "border-thread bg-thread-soft" : ""}`}
                 onClick={() => pickCurriculum("intl")}
               >
-                <span className="ttb-name">International (Grade 9–12)</span>
+                <span className={`text-[12.5px] font-bold ${obCurriculum === "intl" ? "text-thread" : "text-ink-soft"}`}>International (Grade 9–12)</span>
               </button>
             </div>
-            <div className="ob-grade-grid" id="obGradeGrid">
+            <div className="grid grid-cols-3 gap-2" id="obGradeGrid">
               {OB_GRADES[obCurriculum].map((g) => (
                 <div
                   key={g}
-                  className={`ob-grade-chip ${g === obSelectedGrade ? "active" : ""}`}
+                  className={`cursor-pointer rounded-[12px] border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === obSelectedGrade ? "border-thread bg-thread-soft text-thread" : ""}`}
                   onClick={() => pickGrade(g)}
                 >
                   {g}
@@ -551,13 +595,13 @@ export default function OnboardingFlow() {
               ))}
             </div>
           </div>
-          <div className="ob-field">
-            <label>Gender</label>
-            <div className="ob-grade-grid" id="obGenderGrid" style={{ gridTemplateColumns: "repeat(2,1fr)" }}>
+          <div className={OB_FIELD}>
+            <label className={LABEL}>Gender</label>
+            <div className="grid grid-cols-2 gap-2" id="obGenderGrid">
               {["Female", "Male"].map((g) => (
                 <div
                   key={g}
-                  className={`ob-grade-chip ${g === obSelectedGender ? "active" : ""}`}
+                  className={`cursor-pointer rounded-[12px] border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === obSelectedGender ? "border-thread bg-thread-soft text-thread" : ""}`}
                   onClick={() => setObSelectedGender(g)}
                 >
                   {g}
@@ -565,13 +609,13 @@ export default function OnboardingFlow() {
               ))}
             </div>
           </div>
-          <div className="ob-field" id="obTrackField" style={{ display: trackVisible ? "block" : "none" }}>
-            <label>Class of study</label>
-            <div className="ob-grade-grid" id="obTrackGrid" style={{ gridTemplateColumns: "repeat(3,1fr)" }}>
+          <div className={`${OB_FIELD} ${trackVisible ? "block" : "hidden"}`} id="obTrackField">
+            <label className={LABEL}>Class of study</label>
+            <div className="grid grid-cols-3 gap-2" id="obTrackGrid">
               {["Science", "Arts", "Commercial"].map((t) => (
                 <div
                   key={t}
-                  className={`ob-grade-chip ${t === obSelectedTrack ? "active" : ""}`}
+                  className={`cursor-pointer rounded-[12px] border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${t === obSelectedTrack ? "border-thread bg-thread-soft text-thread" : ""}`}
                   onClick={() => setObSelectedTrack(t)}
                 >
                   {t}
@@ -579,29 +623,28 @@ export default function OnboardingFlow() {
               ))}
             </div>
           </div>
-          <div className="ob-field">
-            <label>
-              School code <span style={{ fontWeight: 400, color: "var(--ash)" }}>(optional)</span>
+          <div className={OB_FIELD}>
+            <label className={LABEL}>
+              School code <span className="font-normal text-ash">(optional)</span>
             </label>
             <input
               type="text"
-              className="qa-text-input"
+              className={`${QA_INPUT} uppercase`}
               id="obStudentSchoolCode"
               placeholder="e.g. CORONA2026"
-              style={{ textTransform: "uppercase" }}
               value={obStudentSchoolCode}
               onChange={(e) => setObStudentSchoolCode(e.target.value)}
             />
-            <p style={{ fontSize: 11, color: "var(--ash)", marginTop: 6, lineHeight: 1.5 }}>
+            <p className="mt-1.5 text-[11px] leading-[1.5] text-ash">
               Ask your school for their AbSTopiq code — it links your account to their plan, so
               you're covered free. Don't have one? Leave blank, you can add it later.
             </p>
           </div>
 
-          <div className="ob-back" onClick={() => goToStep("details")}>
+          <div className={BACK} onClick={() => goToStep("details")}>
             <BackIcon /> Back
           </div>
-          <button className="ob-finish-btn" onClick={finish}>
+          <button className={FINISH_BTN} onClick={finish}>
             Finish setup →
           </button>
         </div>
