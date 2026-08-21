@@ -31,7 +31,7 @@ export function TeacherDetails({
   return (
     <div id="obFieldsTeacher">
       <div className="flex gap-2.5">
-        <div className={`${OB_FIELD} mb-0 flex-1`}>
+        <div className={`${OB_FIELD} mb-0 flex-1 min-w-0`}>
           <label className={LABEL}>First name</label>
           <input
             type="text"
@@ -42,7 +42,7 @@ export function TeacherDetails({
             onChange={(e) => onChangeTFirstName(e.target.value)}
           />
         </div>
-        <div className={`${OB_FIELD} mb-0 flex-1`}>
+        <div className={`${OB_FIELD} mb-0 flex-1 min-w-0`}>
           <label className={LABEL}>Last name</label>
           <input
             type="text"

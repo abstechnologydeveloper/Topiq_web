@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { OB_TRACK_GRADES, SCHOOLS } from "../../../data";
 import { useDashboard } from "../../DashboardContext";
@@ -45,6 +45,13 @@ export function useOnboarding() {
   const [obSelectedSubjects, setObSelectedSubjects] = useState<string[]>([]);
   const [obAvatarDataUrl, setObAvatarDataUrl] = useState<string | null>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!onboardingOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [onboardingOpen]);
 
   const goToStep = (s: string) => setStep(s);
 
