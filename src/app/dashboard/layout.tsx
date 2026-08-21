@@ -17,7 +17,7 @@ export default function DashboardLayout({
 }) {
   return (
     <DashboardProvider>
-      <div className="[line-height:normal]">
+      <div className="leading-[normal]">
         <DashboardShell>{children}</DashboardShell>
         <OnboardingFlow />
       </div>

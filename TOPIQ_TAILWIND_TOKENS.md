@@ -72,6 +72,12 @@ Mirror of the current `@theme inline` block in `src/app/globals.css`. Keep these
 
 Default Tailwind scale (`--spacing = 0.25rem`). Fractional steps like `px-3.5`, `h-4.75` are valid — do not tokenize them.
 
+### Breakpoints
+
+| Token | Prefix | Value | Notes |
+|---|---|---|---|
+| `--breakpoint-nav` | `nav:` / `max-nav:` | 780px | dashboard shell breakpoint (rail vs topbar/tabbar) — NOT the default `md:` 768px |
+
 ## §3 — Shared composite classes
 
 Reusable const strings exported from `src/app/dashboard/components/screens/onboarding/shared.tsx`. Other screens should import/reuse these rather than re-declaring equivalent class strings:

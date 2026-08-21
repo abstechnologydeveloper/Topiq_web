@@ -35,6 +35,8 @@
   --radius-tile: 12px;
   --radius-btn: 14px;
   --radius-card: 16px;
+
+  --breakpoint-nav: 780px;
 }
 
 @utility border-1_5 {
