@@ -36,6 +36,10 @@
   --radius-btn: 14px;
   --radius-card: 16px;
 }
+
+@utility border-1_5 {
+  border-width: 1.5px;
+}
   :root{
     --ink:#26232E; --ink-soft:#665F78;
     --paper:#FBF9F5; --paper-dim:#F3EEFB; --paper-line:#EAE3F7;

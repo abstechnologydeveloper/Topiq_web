@@ -21,7 +21,7 @@ export default function RoleStep({
       <p className="mb-7 text-center text-sub text-ash">This decides what your AbSTopiq looks like — we'll set it up right.</p>
 
       <div
-        className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-card border-[1.5px] border-ash-line bg-surface p-4 hover:border-thread ${role === "student" ? "border-thread bg-thread-soft" : ""}`}
+        className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-card border-1_5 border-ash-line bg-surface p-4 hover:border-thread ${role === "student" ? "border-thread bg-thread-soft" : ""}`}
         id="obRoleStudent"
         onClick={() => onSelect("student")}
       >
@@ -32,7 +32,7 @@ export default function RoleStep({
         </div>
       </div>
       <div
-        className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-card border-[1.5px] border-ash-line bg-surface p-4 hover:border-thread ${role === "teacher" ? "border-thread bg-thread-soft" : ""}`}
+        className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-card border-1_5 border-ash-line bg-surface p-4 hover:border-thread ${role === "teacher" ? "border-thread bg-thread-soft" : ""}`}
         id="obRoleTeacher"
         onClick={() => onSelect("teacher")}
       >
@@ -43,7 +43,7 @@ export default function RoleStep({
         </div>
       </div>
       <div
-        className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-card border-[1.5px] border-ash-line bg-surface p-4 hover:border-thread ${role === "school" ? "border-thread bg-thread-soft" : ""}`}
+        className={`mb-3 flex cursor-pointer items-center gap-3.5 rounded-card border-1_5 border-ash-line bg-surface p-4 hover:border-thread ${role === "school" ? "border-thread bg-thread-soft" : ""}`}
         id="obRoleSchool"
         onClick={() => onSelect("school")}
       >

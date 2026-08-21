@@ -2,6 +2,8 @@
 
 This file is the permanent contract for the migration of `topiq_mockup_v25.html` into the React/Next.js dashboard.
 
+> Tailwind token registry & reuse rules: see [TOPIQ_TAILWIND_TOKENS.md](./TOPIQ_TAILWIND_TOKENS.md) — consult it before any traditional-CSS → Tailwind conversion.
+
 ## Rules
 
 1. `topiq_mockup_v25.html` is the source of truth.

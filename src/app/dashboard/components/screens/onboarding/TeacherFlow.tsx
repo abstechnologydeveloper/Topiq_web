@@ -75,7 +75,7 @@ export function TeacherDetails({
             return (
               <button
                 key={id}
-                className={`shrink-0 cursor-pointer whitespace-nowrap rounded-card border-[1.5px] border-ash-line bg-surface px-[13px] py-[7px] text-[12.5px] font-bold text-ash ${selectedSubjects.includes(id) ? "border-thread bg-thread-soft text-thread" : ""}`}
+                className={`shrink-0 cursor-pointer whitespace-nowrap rounded-card border-1_5 border-ash-line bg-surface px-[13px] py-[7px] text-[12.5px] font-bold text-ash ${selectedSubjects.includes(id) ? "border-thread bg-thread-soft text-thread" : ""}`}
                 onClick={() => onToggleSubject(id)}
               >
                 {s.icon} {s.name}
