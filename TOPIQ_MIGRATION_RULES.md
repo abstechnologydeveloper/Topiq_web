@@ -4,6 +4,8 @@ This file is the permanent contract for the migration of `topiq_mockup_v25.html`
 
 > Tailwind token registry & reuse rules: see [TOPIQ_TAILWIND_TOKENS.md](./TOPIQ_TAILWIND_TOKENS.md) — consult it before any traditional-CSS → Tailwind conversion.
 
+Teacher role icon: 🧑‍🏫 per owner, deviates from mockup 🍎
+
 ## Rules
 
 1. `topiq_mockup_v25.html` is the source of truth.

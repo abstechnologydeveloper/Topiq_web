@@ -66,7 +66,7 @@ Mirror of the current `@theme inline` block in `src/app/globals.css`. Keep these
 
 | Utility | Emitted CSS | Defined via |
 |---|---|---|
-| `border-1_5` | `border-width: 1.5px` | `@utility border-1_5` in globals.css (promoted from `border-[1.5px]`, 15+ occurrences) |
+| `border-1_5` | `border-width: 1.5px; border-style: solid` | `@utility border-1_5` in globals.css (promoted from `border-[1.5px]`, 15+ occurrences). Note: project has no Tailwind preflight, so border utilities must always carry their own `border-style`. |
 
 ### Spacing
 

@@ -38,6 +38,7 @@
 }
 
 @utility border-1_5 {
+  border-style: solid;
   border-width: 1.5px;
 }
   :root{

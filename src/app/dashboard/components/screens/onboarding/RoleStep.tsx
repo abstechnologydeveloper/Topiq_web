@@ -36,7 +36,7 @@ export default function RoleStep({
         id="obRoleTeacher"
         onClick={() => onSelect("teacher")}
       >
-        <span className="shrink-0 text-[26px]">🍎</span>
+        <span className="shrink-0 text-[26px]">🧑‍🏫</span>
         <div>
           <div className="text-[14.5px] font-bold">Teacher</div>
           <div className="text-label text-ash">Track a class and set assignments</div>
