@@ -141,8 +141,6 @@ export function StudentDetails({
 }
 
 export function StudentDetails2({
-  curriculum,
-  onPickCurriculum,
   selectedGrade,
   onPickGrade,
   selectedGender,
@@ -153,8 +151,6 @@ export function StudentDetails2({
   studentSchoolCode,
   onChangeStudentSchoolCode,
 }: {
-  curriculum: "ng" | "intl";
-  onPickCurriculum: (sys: "ng" | "intl") => void;
   selectedGrade: string | null;
   onPickGrade: (g: string) => void;
   selectedGender: string | null;
@@ -169,24 +165,8 @@ export function StudentDetails2({
     <>
       <div className={OB_FIELD}>
         <label className={LABEL}>Grade level</label>
-        <div className="mb-5 flex gap-2" id="obCurriculumToggle">
-          <button
-            type="button"
-            className={`flex flex-col items-center gap-0.5 rounded-btn border-1_5 border-ash-line bg-surface px-2.5 py-3 ${curriculum === "ng" ? "border-thread bg-thread-soft" : ""}`}
-            onClick={() => onPickCurriculum("ng")}
-          >
-            <span className={`text-[12.5px] font-bold ${curriculum === "ng" ? "text-thread" : "text-ink-soft"}`}>Nigerian (JSS/SS)</span>
-          </button>
-          <button
-            type="button"
-            className={`flex flex-col items-center gap-0.5 rounded-btn border-1_5 border-ash-line bg-surface px-2.5 py-3 ${curriculum === "intl" ? "border-thread bg-thread-soft" : ""}`}
-            onClick={() => onPickCurriculum("intl")}
-          >
-            <span className={`text-[12.5px] font-bold ${curriculum === "intl" ? "text-thread" : "text-ink-soft"}`}>International (Grade 9–12)</span>
-          </button>
-        </div>
         <div className="grid grid-cols-3 gap-2" id="obGradeGrid">
-          {OB_GRADES[curriculum].map((g) => (
+          {OB_GRADES.ng.map((g) => (
             <div
               key={g}
               className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGrade ? "border-thread bg-thread-soft text-thread" : ""}`}

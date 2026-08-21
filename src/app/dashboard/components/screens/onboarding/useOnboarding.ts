@@ -38,7 +38,6 @@ export function useOnboarding() {
   const [obInstSize, setObInstSize] = useState("");
   const [obTeacherSchoolCode, setObTeacherSchoolCode] = useState("");
   const [obStudentSchoolCode, setObStudentSchoolCode] = useState("");
-  const [obCurriculum, setObCurriculum] = useState<"ng" | "intl">("ng");
   const [obSelectedGrade, setObSelectedGrade] = useState<string | null>(null);
   const [obSelectedGender, setObSelectedGender] = useState<string | null>(null);
   const [obSelectedTrack, setObSelectedTrack] = useState<string | null>(null);
@@ -67,11 +66,6 @@ export function useOnboarding() {
   };
 
   const pickGrade = (g: string) => setObSelectedGrade(g);
-
-  const pickCurriculum = (sys: "ng" | "intl") => {
-    setObCurriculum(sys);
-    setObSelectedGrade(null);
-  };
 
   const trackVisible = obSelectedGrade === null ? false : OB_TRACK_GRADES.includes(obSelectedGrade);
 
@@ -165,8 +159,6 @@ export function useOnboarding() {
     setObTeacherSchoolCode,
     obStudentSchoolCode,
     setObStudentSchoolCode,
-    obCurriculum,
-    setObCurriculum,
     obSelectedGrade,
     setObSelectedGrade,
     obSelectedGender,
@@ -181,7 +173,6 @@ export function useOnboarding() {
     previewAvatar,
     toggleSubject,
     pickGrade,
-    pickCurriculum,
     trackVisible,
     detailsHeadline,
     detailsSub,

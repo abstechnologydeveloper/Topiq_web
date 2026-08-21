@@ -126,8 +126,6 @@ export default function OnboardingFlow() {
 
           {o.obRole === "student" && (
             <StudentDetails2
-              curriculum={o.obCurriculum}
-              onPickCurriculum={o.pickCurriculum}
               selectedGrade={o.obSelectedGrade}
               onPickGrade={o.pickGrade}
               selectedGender={o.obSelectedGender}
