@@ -1,5 +1,5 @@
 export const QA_INPUT =
-  "w-full rounded-input border-1_5 border-ash-line px-3.5 py-[11px] text-input outline-none focus:border-thread";
+  "w-full rounded-input border-1_5 border-ash-line px-3.5 py-[11px] text-input outline-none! focus:border-thread";
 export const LABEL = "mb-1.5 block text-label font-bold text-ink-soft";
 export const OB_FIELD = "mb-4";
 export const MODE_BADGE =

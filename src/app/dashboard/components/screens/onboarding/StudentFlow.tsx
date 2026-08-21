@@ -68,7 +68,7 @@ export function StudentDetails({
             type="text"
             id="obUsername"
             placeholder="chidinma_o"
-            className="flex-1 bg-transparent px-0.5 py-[11px] text-input outline-none"
+            className="flex-1 border-none bg-transparent px-0.5 py-[11px] text-input outline-none!"
             value={username}
             onChange={(e) => onChangeUsername(e.target.value)}
           />
