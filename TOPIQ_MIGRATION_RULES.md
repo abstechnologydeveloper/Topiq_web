@@ -6,6 +6,8 @@ This file is the permanent contract for the migration of `topiq_mockup_v25.html`
 
 Teacher role icon: 🧑‍🏫 per owner, deviates from mockup 🍎
 
+Dashboard shell is full-bleed by owner decision (100% width, no body padding, no border-radius/shadow) — deviates from mockup's framed 1180px card. Do not restore.
+
 ## Rules
 
 1. `topiq_mockup_v25.html` is the source of truth.
