@@ -21,6 +21,20 @@
   --color-coral-soft: var(--coral-soft);
   --color-violet: var(--violet);
   --color-violet-soft: var(--violet-soft);
+
+  --font-display: var(--font-fraunces), serif;
+  --font-mono: var(--font-mono), monospace;
+
+  --text-headline: 23px;
+  --text-sub: 13.5px;
+  --text-sub--line-height: 1.6;
+  --text-label: 12px;
+  --text-input: 14px;
+
+  --radius-input: 10px;
+  --radius-tile: 12px;
+  --radius-btn: 14px;
+  --radius-card: 16px;
 }
   :root{
     --ink:#26232E; --ink-soft:#665F78;

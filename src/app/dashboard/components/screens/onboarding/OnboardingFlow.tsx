@@ -15,7 +15,7 @@ export default function OnboardingFlow() {
 
   return (
     <div
-      className="fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto bg-paper px-6 py-10 [-webkit-overflow-scrolling:touch]"
+      className="fixed inset-0 z-1000 flex items-start justify-center overflow-y-auto bg-paper px-6 py-10 [-webkit-overflow-scrolling:touch]"
       id="onboardingOverlay"
     >
       <div className="w-full max-w-100">
@@ -56,8 +56,8 @@ export default function OnboardingFlow() {
           <span className={MODE_BADGE}>
             Onboarding · Step 2 of 2
           </span>
-          <div className="mb-2 text-center text-[23px] font-semibold [font-family:'Fraunces',serif]">{o.detailsHeadline}</div>
-          <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">{o.detailsSub}</p>
+          <div className="mb-2 text-center text-headline font-semibold font-display">{o.detailsHeadline}</div>
+          <p className="mb-7 text-center text-sub text-ash">{o.detailsSub}</p>
 
           {o.obRole === "student" && (
             <StudentDetails
@@ -121,8 +121,8 @@ export default function OnboardingFlow() {
           <span className={MODE_BADGE}>
             Onboarding · Step 2 of 2
           </span>
-          <div className="mb-2 text-center text-[23px] font-semibold [font-family:'Fraunces',serif]">Almost done</div>
-          <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">This helps us match content to your class.</p>
+          <div className="mb-2 text-center text-headline font-semibold font-display">Almost done</div>
+          <p className="mb-7 text-center text-sub text-ash">This helps us match content to your class.</p>
 
           {o.obRole === "student" && (
             <StudentDetails2

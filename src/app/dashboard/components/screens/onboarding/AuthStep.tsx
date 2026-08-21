@@ -8,18 +8,18 @@ export default function AuthStep({ onContinue }: { onContinue: () => void }) {
       <div className="flex items-center justify-center gap-2.5 mb-7">
         <Image src="/logo.png" alt="AbSTopiq" width={52} height={52} />
       </div>
-      <div className="mb-2 text-center text-[23px] font-semibold font-['Fraunces',serif]">
+      <div className="mb-2 text-center text-headline font-semibold font-display">
         Learn it. Practice it. Sabi it.
       </div>
-      <p className="mb-7 text-center text-[13.5px] leading-[1.6] text-ash">
+      <p className="mb-7 text-center text-sub text-ash">
         Sign up in one tap — onboarding takes just a minute after.
       </p>
 
       <button
-        className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border-[1.5px] border-ash-line bg-surface px-3.25 py-3.25 text-[14px] font-bold text-ink hover:border-thread"
+        className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-btn border-[1.5px] border-ash-line bg-surface px-3.25 py-3.25 text-input font-bold text-ink hover:border-thread"
         onClick={() => onContinue()}
       >
-        <span className="flex h-4.75 w-4.75 shrink-0 items-center justify-center rounded-full text-[12px] font-extrabold bg-[conic-gradient(from_-45deg,#4285F4_0_25%,#34A853_0_50%,#FBBC05_0_75%,#EA4335_0_100%)] text-white">
+        <span className="flex h-4.75 w-4.75 shrink-0 items-center justify-center rounded-full text-label font-extrabold bg-[conic-gradient(from_-45deg,#4285F4_0_25%,#34A853_0_50%,#FBBC05_0_75%,#EA4335_0_100%)] text-white">
           <svg width="12" height="12" viewBox="0 0 24 24">
             <path
               fill="#4285F4"
@@ -41,10 +41,10 @@ export default function AuthStep({ onContinue }: { onContinue: () => void }) {
         </span> Continue with Google
       </button>
       <button
-        className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border-[1.5px] border-ink bg-ink px-[13px] py-[13px] text-[14px] font-bold text-white hover:border-thread"
+        className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-btn border-[1.5px] border-ink bg-ink px-[13px] py-[13px] text-input font-bold text-white hover:border-thread"
         onClick={() => onContinue()}
       >
-        <span className="flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full text-[12px] font-extrabold bg-surface text-ink">
+        <span className="flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full text-label font-extrabold bg-surface text-ink">
           <svg width="13" height="13" viewBox="0 0 384 512">
             <path
               fill="currentColor"
@@ -54,10 +54,10 @@ export default function AuthStep({ onContinue }: { onContinue: () => void }) {
         </span> Continue with Apple
       </button>
       <button
-        className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-[14px] border-[1.5px] border-[#1877F2] bg-[#1877F2] px-[13px] py-[13px] text-[14px] font-bold text-white hover:border-thread"
+        className="mb-3 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-btn border-[1.5px] border-[#1877F2] bg-[#1877F2] px-[13px] py-[13px] text-input font-bold text-white hover:border-thread"
         onClick={() => onContinue()}
       >
-        <span className="flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full text-[12px] font-extrabold bg-surface text-[#1877F2]">
+        <span className="flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full text-label font-extrabold bg-surface text-[#1877F2]">
           <svg width="12" height="12" viewBox="0 0 24 24">
             <path
               fill="#1877F2"

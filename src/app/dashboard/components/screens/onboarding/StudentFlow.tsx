@@ -50,7 +50,7 @@ export function StudentDetails({
             </>
           )}
         </div>
-        <span className="text-[12px] font-bold text-ash">Add profile picture</span>
+        <span className="text-label font-bold text-ash">Add profile picture</span>
         <input
           type="file"
           accept="image/*"
@@ -62,13 +62,13 @@ export function StudentDetails({
       </div>
       <div className={OB_FIELD}>
         <label className={LABEL}>Username</label>
-        <div className="flex items-center gap-0.5 rounded-[10px] border-[1.5px] border-ash-line px-3.5">
-          <span className="text-[14px] font-semibold text-ash">@</span>
+        <div className="flex items-center gap-0.5 rounded-input border-[1.5px] border-ash-line px-3.5">
+          <span className="text-input font-semibold text-ash">@</span>
           <input
             type="text"
             id="obUsername"
             placeholder="chidinma_o"
-            className="flex-1 bg-transparent px-0.5 py-[11px] text-[14px] outline-none"
+            className="flex-1 bg-transparent px-0.5 py-[11px] text-input outline-none"
             value={username}
             onChange={(e) => onChangeUsername(e.target.value)}
           />
@@ -172,14 +172,14 @@ export function StudentDetails2({
         <div className="mb-5 flex gap-2" id="obCurriculumToggle">
           <button
             type="button"
-            className={`flex flex-col items-center gap-0.5 rounded-[14px] border-[1.5px] border-ash-line bg-surface px-2.5 py-3 ${curriculum === "ng" ? "border-thread bg-thread-soft" : ""}`}
+            className={`flex flex-col items-center gap-0.5 rounded-btn border-[1.5px] border-ash-line bg-surface px-2.5 py-3 ${curriculum === "ng" ? "border-thread bg-thread-soft" : ""}`}
             onClick={() => onPickCurriculum("ng")}
           >
             <span className={`text-[12.5px] font-bold ${curriculum === "ng" ? "text-thread" : "text-ink-soft"}`}>Nigerian (JSS/SS)</span>
           </button>
           <button
             type="button"
-            className={`flex flex-col items-center gap-0.5 rounded-[14px] border-[1.5px] border-ash-line bg-surface px-2.5 py-3 ${curriculum === "intl" ? "border-thread bg-thread-soft" : ""}`}
+            className={`flex flex-col items-center gap-0.5 rounded-btn border-[1.5px] border-ash-line bg-surface px-2.5 py-3 ${curriculum === "intl" ? "border-thread bg-thread-soft" : ""}`}
             onClick={() => onPickCurriculum("intl")}
           >
             <span className={`text-[12.5px] font-bold ${curriculum === "intl" ? "text-thread" : "text-ink-soft"}`}>International (Grade 9–12)</span>
@@ -189,7 +189,7 @@ export function StudentDetails2({
           {OB_GRADES[curriculum].map((g) => (
             <div
               key={g}
-              className={`cursor-pointer rounded-[12px] border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGrade ? "border-thread bg-thread-soft text-thread" : ""}`}
+              className={`cursor-pointer rounded-tile border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGrade ? "border-thread bg-thread-soft text-thread" : ""}`}
               onClick={() => onPickGrade(g)}
             >
               {g}
@@ -203,7 +203,7 @@ export function StudentDetails2({
           {["Female", "Male"].map((g) => (
             <div
               key={g}
-              className={`cursor-pointer rounded-[12px] border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGender ? "border-thread bg-thread-soft text-thread" : ""}`}
+              className={`cursor-pointer rounded-tile border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGender ? "border-thread bg-thread-soft text-thread" : ""}`}
               onClick={() => onPickGender(g)}
             >
               {g}
@@ -217,7 +217,7 @@ export function StudentDetails2({
           {["Science", "Arts", "Commercial"].map((t) => (
             <div
               key={t}
-              className={`cursor-pointer rounded-[12px] border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${t === selectedTrack ? "border-thread bg-thread-soft text-thread" : ""}`}
+              className={`cursor-pointer rounded-tile border-[1.5px] border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${t === selectedTrack ? "border-thread bg-thread-soft text-thread" : ""}`}
               onClick={() => onPickTrack(t)}
             >
               {t}
