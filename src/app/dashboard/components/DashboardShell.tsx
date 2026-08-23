@@ -2,7 +2,6 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import { NAV } from "./navConfig";
 import { useDashboard } from "./DashboardContext";
 import { ASSIGNMENTS } from "../data";
@@ -141,17 +140,17 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
 
       {certSubject && subjects[certSubject] ? (
         <div
-          className="fixed inset-0 z-[100] flex animate-[fade_.2s_ease] items-end justify-center bg-[rgba(20,23,43,0.55)]"
+          className="fixed inset-0 z-100 flex animate-[fade_.2s_ease] items-end justify-center bg-[rgba(20,23,43,0.55)]"
           id="certModal"
         >
-          <div className="m-auto max-h-[82vh] w-full max-w-[520px] overflow-y-auto rounded-t-[20px] bg-paper px-5 pt-[22px] pb-7">
+          <div className="m-auto max-h-[82vh] w-full max-w-130 overflow-y-auto rounded-t-[20px] bg-paper px-5 pt-5.5 pb-7">
             <button
-              className="float-right h-[30px] w-[30px] cursor-pointer rounded-full border-none bg-paper-dim text-sm"
+              className="float-right h-7.5 w-7.5 cursor-pointer rounded-full border-none bg-paper-dim text-sm"
               onClick={() => setCertSubject(null)}
             >
               ✕
             </button>
-            <div className="rounded-card border-2 border-thread bg-[linear-gradient(160deg,var(--thread-soft),var(--surface))] px-5 py-[30px] text-center">
+            <div className="rounded-card border-2 border-thread bg-[linear-gradient(160deg,var(--thread-soft),var(--surface))] px-5 py-7.5 text-center">
               <div className="mb-2 text-[34px]">🎓</div>
               <div className="font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-thread">Certificate of Completion</div>
               <div className="mt-2.5 text-[19px] font-extrabold text-ink">
@@ -166,7 +165,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
               </div>
             </div>
             <button
-              className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-[11px] text-[13px] font-bold text-white"
+              className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-2.75 text-[13px] font-bold text-white"
               onClick={() => setCertSubject(null)}
             >
               Done
