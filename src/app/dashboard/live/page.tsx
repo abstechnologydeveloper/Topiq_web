@@ -1,7 +1,7 @@
 "use client";
 
 import { useDashboard } from "../components/DashboardContext";
-import LiveClassScreen from "../components/screens/LiveClassScreen";
+import LiveClassScreen from "./components/LiveClassScreen";
 
 export default function LivePage() {
   const { subjects, student, startSession } = useDashboard();

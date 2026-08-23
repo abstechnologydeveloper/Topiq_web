@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { NAV } from "./navConfig";
 import { useDashboard } from "./DashboardContext";
 import { ASSIGNMENTS } from "../data";
-import StartLiveModal from "./screens/StartLiveModal";
+import StartLiveModal from "../live/components/StartLiveModal";
 import AssignmentQuickAddModal from "./screens/AssignmentQuickAddModal";
 import TeacherClassQuickAddModal from "./screens/TeacherClassQuickAddModal";
 import { NavItemView } from "./shell/NavItemView";

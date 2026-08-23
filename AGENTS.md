@@ -19,6 +19,8 @@
 ### State & architecture
 - Reuse existing `DashboardContext` state, routes, nav and data — no second
   conflicting state; single shared `appMode`, single shared `liveSession`.
+- Each route folder may own a `components/` subfolder for its page-specific
+  components; move such components there when converting a page.
 
 ### Full migration contract
 - See `TOPIQ_MIGRATION_RULES.md`.

@@ -2,8 +2,8 @@
 
 import { CLASSES } from "../../data/teacher";
 import { SUBJECTS } from "../../data/subjects";
-import { useDashboard } from "../DashboardContext";
-import type { SubjectData } from "./DiscoverScreen";
+import { useDashboard } from "../../components/DashboardContext";
+import type { SubjectData } from "../../components/screens/DiscoverScreen";
 
 const SUBJECT_LOOKUP = SUBJECTS as unknown as Record<string, SubjectData>;
 
