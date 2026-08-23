@@ -15,7 +15,7 @@ export default function OnboardingFlow() {
 
   return (
     <div
-      className="fixed inset-0 z-1000 flex items-start justify-center overflow-y-auto bg-paper px-6 py-10 [-webkit-overflow-scrolling:touch]"
+      className="fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto bg-paper px-6 py-10 [-webkit-overflow-scrolling:touch]"
       id="onboardingOverlay"
     >
       <div className="w-full max-w-100">
