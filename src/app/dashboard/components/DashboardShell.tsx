@@ -3,35 +3,20 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { NAV, type NavItem } from "./navConfig";
+import { NAV } from "./navConfig";
 import { useDashboard } from "./DashboardContext";
 import { ASSIGNMENTS } from "../data";
 import StartLiveModal from "./screens/StartLiveModal";
 import AssignmentQuickAddModal from "./screens/AssignmentQuickAddModal";
 import TeacherClassQuickAddModal from "./screens/TeacherClassQuickAddModal";
-import {
-  AVATAR_CIRCLE,
-  DRAWER_LINK,
-  DRAWER_LINK_ACTIVE,
-  LIVE_BADGE_DRAWER,
-  LIVE_BADGE_RAIL,
-  RAIL_LINK,
-  RAIL_LINK_ACTIVE,
-  RL_COUNT,
-  RL_COUNT_ACTIVE,
-  TAB,
-  TAB_ACTIVE,
-} from "./shell/shellClasses";
-import { Checkmark } from "./shell/ShellIcons";
+import { NavItemView } from "./shell/NavItemView";
+import type { NavItem } from "./navConfig";
 import Topbar from "./shell/Topbar";
 import RailNav from "./shell/RailNav";
 import Tabbar from "./shell/Tabbar";
 import Drawer from "./shell/Drawer";
 import AccountSwitchModal, { type LinkedAccountMode } from "./shell/AccountSwitchModal";
 import Toast from "./shell/Toast";
-
-const UPGRADE_CLS =
-  " bg-thread text-white font-extrabold mt-1 [&_svg]:stroke-white [&_svg]:fill-white hover:bg-thread hover:text-white hover:opacity-90";
 
 export default function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -89,111 +74,24 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
     return pathname === p || (p !== "/dashboard" && pathname.startsWith(p));
   };
 
-  const detailActive = (item: NavItem) => {
-    if (item.kind !== "account") return false;
-    const p = pathname?.split("?")[0] || "";
-    return p === "/dashboard/profile";
-  };
+  const detailActive = (item: NavItem) =>
+    item.kind === "account" && (pathname?.split("?")[0] || "") === "/dashboard/profile";
 
-  const linkClass = (item: NavItem, surface: "rail" | "drawer" | "tab") => {
-    if (item.kind !== "link") return "";
-    const active = isActive(item);
-    if (surface === "rail") {
-      let cls = RAIL_LINK;
-      if (item.upgrade) cls += UPGRADE_CLS;
-      else if (active) cls += " " + RAIL_LINK_ACTIVE;
-      return cls;
-    }
-    if (surface === "drawer") {
-      let cls = DRAWER_LINK;
-      if (item.upgrade) cls += UPGRADE_CLS;
-      else if (active) cls += " " + DRAWER_LINK_ACTIVE;
-      return cls;
-    }
-    return active ? `${TAB} ${TAB_ACTIVE}` : TAB;
-  };
-
-  const renderNavItem = (item: NavItem, surface: "rail" | "drawer" | "tab", index: number) => {
-    if (item.kind === "divider") {
-      return (
-        <div
-          key={index}
-          className={`h-px bg-ash-line my-2.5 ${surface === "rail" ? "mx-1.5" : "mx-1"} ${item.gap ? "mt-auto mb-2.5" : ""}`}
-        />
-      );
-    }
-    if (item.kind === "account") {
-      const active = detailActive(item);
-      const avatarId = surface === "rail" ? "railAvatarCircle" : "drawerAvatarCircle";
-      const nameId = surface === "rail" ? "railAvatarName" : "drawerAvatarName";
-      const rowCls =
-        surface === "rail"
-          ? "flex items-center gap-2.5 rounded-xl px-2.5 py-2 cursor-pointer hover:bg-paper-dim"
-          : "flex items-center gap-2.5 rounded-xl px-2.5 py-[9px] cursor-pointer hover:bg-paper-dim";
-      const nameCls =
-        surface === "rail"
-          ? "text-[13px] font-bold whitespace-nowrap overflow-hidden text-ellipsis"
-          : "text-sub font-bold whitespace-nowrap overflow-hidden text-ellipsis";
-      const roleCls = surface === "rail" ? "text-[10.5px] text-ash" : "text-[11px] text-ash";
-      return (
-        <div
-          key={index}
-          className={`${rowCls} ${active ? "bg-thread-soft" : ""}`}
-          data-tab={item.tab}
-          onClick={() => goTab(item.tab)}
-        >
-          <div className={AVATAR_CIRCLE} id={avatarId}>
-            {profile.avatar ? (
-              <img src={profile.avatar} alt="Profile picture" className="h-full w-full object-cover" />
-            ) : (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff">
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 20c0-4 4-6 8-6s8 2 8 6z" />
-              </svg>
-            )}
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className={`${nameCls} ${active ? "text-thread" : ""}`} id={nameId}>{profile.firstName || "Profile"}</div>
-            <div className={roleCls}>{item.role}</div>
-          </div>
-        </div>
-      );
-    }
-    const countCls = `${RL_COUNT} ${isActive(item) && surface !== "tab" ? RL_COUNT_ACTIVE : ""}`;
-    return (
-      <button
-        key={index}
-        data-tab={item.tab}
-        className={linkClass(item, surface)}
-        onClick={() => goTab(item.tab)}
-      >
-{item.icon}
-        {item.label}
-        {surface !== "tab" && item.tab === "challenges" && activeChallenges.length > 0 ? (
-          <span className={countCls} id={`${surface}ChallengeCount`}>
-            {activeChallenges.length}
-          </span>
-        ) : null}
-        {surface !== "tab" && item.tab === "studentassign" && pendingAssign > 0 ? (
-          <span
-            className={countCls}
-            id={surface === "drawer" ? "drawerAssignCount" : "railAssignCount"}
-          >
-            {pendingAssign}
-          </span>
-        ) : null}
-        {surface !== "tab" && item.count ? (
-          <span className={countCls}>{item.count}</span>
-        ) : null}
-        {item.tab === "livesession" && liveSession ? (
-          <span
-            className={surface === "drawer" ? LIVE_BADGE_DRAWER : LIVE_BADGE_RAIL}
-            title="A live class is happening now"
-          />
-        ) : null}
-      </button>
-    );
-  };
+  const renderItem = (surface: "rail" | "drawer" | "tab") => (item: NavItem, index: number) => (
+    <NavItemView
+      key={index}
+      item={item}
+      surface={surface}
+      index={index}
+      active={detailActive(item) || isActive(item)}
+      liveSession={Boolean(liveSession)}
+      challengeCount={activeChallenges.length}
+      pendingAssign={pendingAssign}
+      avatarUrl={profile.avatar}
+      firstName={profile.firstName}
+      onSelect={goTab}
+    />
+  );
 
   return (
     <div className="flex w-full min-h-screen flex-col bg-paper nav:h-screen nav:max-h-screen nav:min-h-0 nav:overflow-hidden">
@@ -206,23 +104,23 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
       <div className="flex min-h-0 flex-1">
         <RailNav
           items={nav.rail}
-          renderItem={(item, surface, index) => renderNavItem(item, surface, index)}
+          renderItem={(item, surface, index) => renderItem(surface)(item, index)}
           appMode={appMode}
           onSwitchAccount={openAccountSwitch}
           onLogout={logout}
         />
 
-        <main className="min-w-0 flex-1 overflow-y-auto p-5 pb-24 nav:px-10 nav:pt-4 nav:pb-6">{children}</main>
+        <main className="min-w-0 flex-1 overflow-y-auto p-5 pb-24 nav:px-10 nav:pt-2 nav:pb-3">{children}</main>
       </div>
 
       {/* ---------- Tab bar (mobile) ---------- */}
-      <Tabbar items={nav.tabs} renderItem={(item, surface, index) => renderNavItem(item, surface, index)} />
+      <Tabbar items={nav.tabs} renderItem={(item, surface, index) => renderItem(surface)(item, index)} />
 
       {/* ---------- Mobile drawer ---------- */}
       {drawerOpen && (
         <Drawer
           items={nav.drawer}
-          renderItem={(item, surface, index) => renderNavItem(item, surface, index)}
+          renderItem={(item, surface, index) => renderItem(surface)(item, index)}
           appMode={appMode}
           onClose={closeDrawer}
           onSwitchAccount={openAccountSwitch}
