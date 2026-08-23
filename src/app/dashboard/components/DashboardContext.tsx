@@ -162,6 +162,7 @@ export function useDashboard() {
 export function DashboardProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const ONBOARD_KEY = "abstopiq_onboarded";
+  const APP_MODE_KEY = "abstopiq_app_mode";
   const [appMode, setAppMode] = useState<AppMode>("student");
   const [studentSchool, setStudentSchool] = useState<School | null>(null);
   const [teacherSchool, setTeacherSchool] = useState<School | null>(null);
@@ -319,6 +320,27 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       setOnboardingOpen(true);
     }
   }, []);
+
+  useEffect(() => {
+    const p = window.location.pathname;
+    let m: AppMode | null = null;
+    if (p.startsWith("/dashboard/schooladmin")) m = "school";
+    else if (
+      p.startsWith("/dashboard/teacherdash") ||
+      p.startsWith("/dashboard/classes") ||
+      p.startsWith("/dashboard/lesson-prep")
+    )
+      m = "teacher";
+    else {
+      const saved = window.localStorage.getItem(APP_MODE_KEY);
+      if (saved === "teacher" || saved === "school") m = saved;
+    }
+    if (m) setAppMode(m);
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(APP_MODE_KEY, appMode);
+  }, [appMode]);
 
   const goTab = (tab: string) => {
     setDrawerOpen(false);
