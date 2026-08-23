@@ -8,6 +8,8 @@ Teacher role icon: 🧑‍🏫 per owner, deviates from mockup 🍎
 
 Dashboard shell is full-bleed by owner decision (100% width, no body padding, no border-radius/shadow) — deviates from mockup's framed 1180px card. Do not restore.
 
+Dashboard main padding tightened to 16/24 desktop by owner decision — deviates from mockup's 28/40.
+
 ## Rules
 
 1. `topiq_mockup_v25.html` is the source of truth.

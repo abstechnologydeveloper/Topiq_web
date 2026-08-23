@@ -90,7 +90,6 @@
     letter-spacing:0.09em; text-transform:uppercase; color:var(--thread-deep);
     display:inline-flex; align-items:center; gap:8px;
   }
-  .eyebrow::before{content:"§"; font-size:14px;}
   .grade-mark{
     display:inline-flex; align-items:center; gap:6px; font-family:var(--font-fraunces),serif; font-style:italic;
     font-weight:600; font-size:13.5px; color:var(--coral); transform:rotate(-2deg); white-space:nowrap;
