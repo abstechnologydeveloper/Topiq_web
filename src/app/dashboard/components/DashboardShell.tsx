@@ -110,7 +110,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           onLogout={logout}
         />
 
-        <main className="min-w-0 flex-1 overflow-y-auto p-5 pb-24 nav:px-10 nav:pt-2 nav:pb-3">{children}</main>
+        <main className="min-w-0 flex-1 overflow-y-auto p-5 pb-24 nav:px-10 nav:pt-7 nav:pb-10">{children}</main>
       </div>
 
       {/* ---------- Tab bar (mobile) ---------- */}

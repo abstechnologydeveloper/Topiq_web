@@ -8,7 +8,7 @@ Teacher role icon: 🧑‍🏫 per owner, deviates from mockup 🍎
 
 Dashboard shell is full-bleed by owner decision (100% width, no body padding, no border-radius/shadow) — deviates from mockup's framed 1180px card. Do not restore.
 
-Dashboard main padding tightened to 8px top / 12px bottom desktop by owner decision.
+Landing globals can leak into dashboard routes (e.g. section{padding:84px 0}, :focus-visible) — when a dashboard value looks inflated vs the mockup, first check for unlayered element-selector rules in globals.css.
 
 ## Rules
 
