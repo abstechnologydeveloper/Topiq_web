@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Inter } from "next/font/google";
 
 import "./globals.css";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
-import CookieBanner from "@/components/CookieBanner";
+import AppShell from "@/components/AppShell";
 import OrganizationSchema from "@/components/OrganizationSchema";
 
 const inter = Inter({
@@ -59,21 +57,12 @@ export const metadata: Metadata = {
     title: "AbSTopiq — Learn It. Practice It. Sabi It.",
     description:
       "Every subject, grounded in your syllabus. Lessons, practice and Sabi AI that cites its sources.",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "AbSTopiq — Learn It. Practice It. Sabi It.",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "AbSTopiq — Learn It. Practice It. Sabi It.",
     description:
       "Every subject, grounded in your syllabus. Lessons, practice and Sabi AI that cites its sources.",
-    images: ["/opengraph-image.png"],
   },
   robots: {
     index: true,
@@ -113,12 +102,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${fraunces.variable} ${ibmPlexMono.variable}`}
       >
-        <NavBar />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
-        <CookieBanner />
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

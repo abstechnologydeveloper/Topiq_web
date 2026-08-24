@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "AbSTopiq's privacy policy — how we collect, use, and protect your data.",
   robots: {
     index: true,
-    follow: false,
+    follow: true,
   },
   alternates: {
     canonical: "https://www.abstopiq.com/privacy",

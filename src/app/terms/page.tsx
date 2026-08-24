@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "AbSTopiq's terms of service — the rules and guidelines for using our platform.",
   robots: {
     index: true,
-    follow: false,
+    follow: true,
   },
   alternates: {
     canonical: "https://www.abstopiq.com/terms",

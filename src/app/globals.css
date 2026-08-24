@@ -1,3 +1,48 @@
+  @layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-paper-line: var(--paper-line);
+  --color-surface: var(--surface);
+  --color-ash: var(--ash);
+  --color-ash-line: var(--ash-line);
+  --color-thread: var(--thread);
+  --color-thread-soft: var(--thread-soft);
+  --color-thread-deep: var(--thread-deep);
+  --color-ember: var(--ember);
+  --color-ember-soft: var(--ember-soft);
+  --color-coral: var(--coral);
+  --color-coral-soft: var(--coral-soft);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+
+  --font-display: var(--font-fraunces), serif;
+  --font-mono: var(--font-mono), monospace;
+
+  --text-headline: 23px;
+  --text-sub: 13.5px;
+  --text-sub--line-height: 1.6;
+  --text-label: 12px;
+  --text-input: 14px;
+
+  --radius-input: 10px;
+  --radius-tile: 12px;
+  --radius-btn: 14px;
+  --radius-card: 16px;
+
+  --breakpoint-nav: 780px;
+}
+
+@utility border-1_5 {
+  border-style: solid;
+  border-width: 1.5px;
+}
   :root{
     --ink:#26232E; --ink-soft:#665F78;
     --paper:#FBF9F5; --paper-dim:#F3EEFB; --paper-line:#EAE3F7;
@@ -12,7 +57,9 @@
     --shadow-deep:0 26px 60px rgba(28,14,60,0.20);
     --maxw:1180px;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+  @layer base{
+    *{box-sizing:border-box; margin:0; padding:0;}
+  }
   html{scroll-behavior:smooth;}
   body{
     font-family:var(--font-inter),sans-serif; color:var(--ink); background:var(--paper);
@@ -43,7 +90,6 @@
     letter-spacing:0.09em; text-transform:uppercase; color:var(--thread-deep);
     display:inline-flex; align-items:center; gap:8px;
   }
-  .eyebrow::before{content:"§"; font-size:14px;}
   .grade-mark{
     display:inline-flex; align-items:center; gap:6px; font-family:var(--font-fraunces),serif; font-style:italic;
     font-weight:600; font-size:13.5px; color:var(--coral); transform:rotate(-2deg); white-space:nowrap;
