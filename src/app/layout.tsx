@@ -57,21 +57,12 @@ export const metadata: Metadata = {
     title: "AbSTopiq — Learn It. Practice It. Sabi It.",
     description:
       "Every subject, grounded in your syllabus. Lessons, practice and Sabi AI that cites its sources.",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "AbSTopiq — Learn It. Practice It. Sabi It.",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "AbSTopiq — Learn It. Practice It. Sabi It.",
     description:
       "Every subject, grounded in your syllabus. Lessons, practice and Sabi AI that cites its sources.",
-    images: ["/opengraph-image.png"],
   },
   robots: {
     index: true,
