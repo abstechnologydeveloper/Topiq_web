@@ -656,11 +656,6 @@
   .live-teach-card .ltc-dot{ width:8px; height:8px; border-radius:50%; background:var(--surface); flex-shrink:0; animation:lsblink 1.3s infinite; margin-right:-2px; }
   .live-teach-card .ltc-arrow{ margin-left:auto; flex-shrink:0; }
 
-  .class-pick-row, .topic-pick-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:16px; max-height:220px; overflow-y:auto; }
-  .pick-item{ display:flex; align-items:center; gap:10px; border:1.5px solid var(--ash-line); border-radius:12px; padding:10px 12px; cursor:pointer; font-size:13px; font-weight:600; }
-  .pick-item:hover{ border-color:var(--thread); }
-  .pick-item.selected{ border-color:var(--thread); background:var(--thread-soft); }
-  .pick-item .pi-meta{ font-weight:500; font-size:11.5px; color:var(--ash); margin-left:auto; }
 
   .school-hero{ background:var(--ink); color:var(--paper); border-radius:var(--radius); padding:22px 18px; margin-bottom:20px; }
   .school-hero h1{ font-family:'Fraunces',serif; font-size:22px; font-weight:600; margin-bottom:8px; }
