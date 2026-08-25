@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { MicIcon, SendIcon } from "../../components/screens/shared";
 import GroundedReply from "./GroundedReply";
-import { BUBBLE, BUBBLE_USER, BUBBLE_AI, CHAT_SCROLL, COMPOSER, COMPOSER_INPUT, ICON_BTN, SEND_BTN } from "./constants";
+import { BUBBLE, BUBBLE_USER, BUBBLE_AI, CHAT_SCROLL, COMPOSER, COMPOSER_INPUT, ICON_BTN, SEND_BTN, USAGE_CHIP, UC_LABEL, UC_LINK } from "./constants";
 
 export type ChatBubble =
   | { role: "user"; text: string }
@@ -29,9 +29,9 @@ export default function SabiChatBlock({
 
   return (
     <>
-      <div className="usage-chip">
-        <span className="uc-label">3 free Sabi AI questions left today</span>
-        <span className="uc-link">Upgrade</span>
+      <div className={USAGE_CHIP}>
+        <span className={UC_LABEL}>3 free Sabi AI questions left today</span>
+        <span className={UC_LINK}>Upgrade</span>
       </div>
       <div className={`${CHAT_SCROLL} mb-3`}>
         {messages.map((m, i) =>

@@ -143,7 +143,7 @@ export default function ArticleModal({ cfg, subjects, diagrams, onClose, onDone 
         <SabiChatBlock messages={chat} onSend={sendMessage} placeholder="Ask about this, without leaving the page…" />
         <br />
         <button
-          className="modal-done-btn"
+          className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-[11px] text-body font-bold text-white disabled:bg-ash-line disabled:text-ash disabled:opacity-45 disabled:cursor-not-allowed"
           onClick={() => {
             onDone();
             onClose();

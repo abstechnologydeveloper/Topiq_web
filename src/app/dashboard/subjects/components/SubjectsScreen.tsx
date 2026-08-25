@@ -2,7 +2,7 @@
 
 import type { SubjectData } from "../../components/screens/DiscoverScreen";
 import SubjectCard from "./SubjectCard";
-import { EYEBROW, SUBJECT_GRID } from "./constants";
+import { EYEBROW, PAGE_TITLE, PAGE_SUB, SUBJECT_GRID } from "./constants";
 
 type Props = {
   subjects: Record<string, SubjectData>;
@@ -14,8 +14,8 @@ export default function SubjectsScreen({ subjects, student, openSubject }: Props
   return (
     <section className="block animate-[fade_.25s_ease] p-0">
       <span className={EYEBROW}>Your library</span>
-      <h1 className="page-title">Subjects</h1>
-      <p className="page-sub">Every subject, grounded in your syllabus — no board attached to learning.</p>
+      <h1 className={PAGE_TITLE}>Subjects</h1>
+      <p className={PAGE_SUB}>Every subject, grounded in your syllabus — no board attached to learning.</p>
       <div className={SUBJECT_GRID}>
         {Object.keys(subjects).map((id) => (
           <SubjectCard

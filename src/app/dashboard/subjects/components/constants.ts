@@ -55,6 +55,17 @@ export const REC_BTN =
 export const FOCUS_RING =
   "focus-visible:[outline:2px_solid_var(--thread)] focus-visible:[outline-offset:2px]";
 
+export const USAGE_CHIP =
+  "mb-3.5 flex items-center justify-between rounded-xl bg-paper-dim px-[13px] py-[9px] text-label";
+export const UC_LABEL = "font-bold";
+export const UC_LINK =
+  "cursor-pointer font-mono font-bold text-thread underline";
+
+export const CARD =
+  "rounded-[var(--radius)] border border-ash-line bg-surface p-4";
+
+export const META = "text-[12.5px] text-ash";
+
 export const TUT_CARD =
   "mb-2.5 flex cursor-pointer gap-[13px] rounded-btn border border-ash-line bg-surface p-3 transition-[border-color,transform] duration-150 hover:border-thread hover:-translate-y-px";
 export const TUT_THUMB = "relative flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-tile text-2xl";

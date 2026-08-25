@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { EYEBROW } from "./constants";
+import { EYEBROW, CARD } from "./constants";
 
 type Card = { front: string; back: string };
 
@@ -56,7 +56,7 @@ export default function FlashcardsPane({ cards }: { cards: Card[] }) {
   if (flashDone) {
     return (
       <div className="block animate-[fade_.2s_ease]">
-        <div className="card p-6 text-center">
+        <div className={`${CARD} p-6 text-center`}>
           <div className={EYEBROW} style={{ justifyContent: "center" }}>
             Deck reviewed
           </div>
