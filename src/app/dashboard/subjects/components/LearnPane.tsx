@@ -71,11 +71,9 @@ export default function LearnPane({
               {t.icon}
               {t.format === "Video" ? (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <svg className="h-[26px] w-[26px]" viewBox="0 0 24 24" fill="rgba(20,23,43,0.55)">
-                    <circle cx="12" cy="12" r="11" />
-                  </svg>
-                  <svg className="absolute h-[26px] w-[26px]" viewBox="0 0 24 24" fill="#fff">
-                    <path d="M9 6v12l9-6z" />
+                  <svg className="h-[26px] w-[26px]" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="12" fill="rgba(20,23,43,0.55)" />
+                    <path d="M9 6v12l9-6z" fill="#fff" />
                   </svg>
                 </div>
               ) : null}
