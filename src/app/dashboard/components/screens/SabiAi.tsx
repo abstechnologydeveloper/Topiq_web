@@ -135,7 +135,7 @@ export default function SabiAi() {
 
   const groundedHTML = (sub: SubjectData, topic: string) =>
     `Here's the grounded explanation for that, tied to your ${sub.name} syllabus rather than a generic web answer.
-     <div class="grounding"><svg class="thread-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg><span class="chip">§ ${sub.name} — ${topic}</span></div>
+     <div class="grounding"><svg class="thread-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg><span class="chip">${sub.name} — ${topic}</span></div>
      <span data-speak-key="KEY">SPEAK</span>`;
 
   const stopSpeaking = () => {
@@ -270,7 +270,7 @@ export default function SabiAi() {
            <div class="grounding"><svg class="thread-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg><span class="chip">${q.ref}</span></div>
            <span data-speak-key="${key}">SPEAK</span>`
         : `Got it — here's the grounded walkthrough for that question.
-           <div class="grounding"><svg class="thread-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg><span class="chip">§ ${g.sub.name} — ${g.topic}</span></div>
+           <div class="grounding"><svg class="thread-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg><span class="chip">${g.sub.name} — ${g.topic}</span></div>
            <span data-speak-key="${key}">SPEAK</span>`;
       setMsgs((prev) => [...prev, { role: "ai", html }]);
       if (voiceModeOn) setSpeakingKey(key);
