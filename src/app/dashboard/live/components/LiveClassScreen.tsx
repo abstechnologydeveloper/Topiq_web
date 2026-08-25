@@ -143,7 +143,7 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
   return (
     <section className="block animate-[fade_.25s_ease] p-0">
       <div
-        className={`mb-3.5 cursor-pointer items-center gap-2 text-[13px] font-semibold text-ash ${liveView === "session" ? "flex" : "hidden"}`}
+        className={`mb-3.5 cursor-pointer items-center gap-2 text-body font-semibold text-ash ${liveView === "session" ? "flex" : "hidden"}`}
         onClick={() => (liveView === "session" ? openHub() : router.push("/dashboard"))}
       >
         <BackChevron />
@@ -175,11 +175,11 @@ export default function LiveClassScreen({ subjects, student, startSession }: Pro
             onEnd={endLiveSession}
           />
 
-          <div className="mb-[18px] flex gap-1 overflow-x-auto border-b border-ash-line pb-0.5">
+          <div className="mb-4.5 flex gap-1 overflow-x-auto border-b border-ash-line pb-0.5">
             {(["learn", "practice", "interactive"] as const).map((pane) => (
               <button
                 key={pane}
-                className={`shrink-0 cursor-pointer whitespace-nowrap border-none bg-transparent px-3.5 py-2.5 text-[13px] font-bold ${livePane === pane ? "text-ink [border-bottom:2px_solid_var(--thread)]" : "text-ash [border-bottom:2px_solid_transparent]"}`}
+                className={`shrink-0 cursor-pointer whitespace-nowrap border-none bg-transparent px-3.5 py-2.5 text-body font-bold ${livePane === pane ? "text-ink [border-bottom:2px_solid_var(--thread)]" : "text-ash [border-bottom:2px_solid_transparent]"}`}
                 data-lspane={pane}
                 onClick={() => setLivePaneFn(pane)}
               >

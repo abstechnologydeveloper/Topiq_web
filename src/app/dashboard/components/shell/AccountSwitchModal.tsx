@@ -50,7 +50,7 @@ export default function AccountSwitchModal({
               </div>
               <div className="flex-1 text-sub font-semibold">
                 {a.label}
-                <div className="text-[11px] font-semibold text-ash">
+                <div className="text-fine font-semibold text-ash">
                   {a.role}
                   {a.mode === appMode ? " · current" : ""}
                 </div>
@@ -60,7 +60,7 @@ export default function AccountSwitchModal({
           ))}
         </div>
         <button
-          className="mt-2.5 w-full cursor-pointer rounded-btn border-[1.5px] border-dashed border-ash-line bg-transparent p-3 text-[13px] font-bold text-ash hover:border-thread hover:text-thread"
+          className="mt-2.5 w-full cursor-pointer rounded-btn border-[1.5px] border-dashed border-ash-line bg-transparent p-3 text-body font-bold text-ash hover:border-thread hover:text-thread"
           onClick={onAddAnother}
         >
           + Add another account

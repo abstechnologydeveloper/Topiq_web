@@ -24,12 +24,12 @@ export default function InteractivePoll({
 }) {
   return (
     <div>
-      <span className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-thread">
+      <span className="mb-1.5 block font-mono text-fine font-semibold uppercase tracking-[0.06em] text-thread">
         Answer live, together
       </span>
       <div className="mb-3.5 rounded-card border border-ash-line bg-surface p-4">
         <div className="flex items-center gap-1.5">
-          <span className="m-0 block font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-thread">
+          <span className="m-0 block font-mono text-fine font-semibold uppercase tracking-[0.06em] text-thread">
             Question from your teacher
           </span>
         </div>
@@ -44,7 +44,7 @@ export default function InteractivePoll({
                 return (
                   <div
                     key={i}
-                    className={`relative flex cursor-pointer items-center gap-2.5 overflow-hidden rounded-tile border-1_5 py-2.5 px-3 mb-2 text-[13px] font-semibold ${isCorrect ? "border-thread" : isWrong ? "border-coral" : "border-ash-line"}`}
+                    className={`relative flex cursor-pointer items-center gap-2.5 overflow-hidden rounded-tile border-1_5 py-2.5 px-3 mb-2 text-body font-semibold ${isCorrect ? "border-thread" : isWrong ? "border-coral" : "border-ash-line"}`}
                     onClick={() => onAnswer(i)}
                   >
                     <div

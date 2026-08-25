@@ -18,7 +18,7 @@ export default function LiveTopbar({
       <span className="h-[9px] w-[9px] shrink-0 animate-[lsblink_1.3s_infinite] rounded-full bg-surface"></span>
       <div>
         <div className="font-mono text-[10px] font-bold uppercase tracking-[0.04em] text-[#FFD9E0]">{label}</div>
-        <div className="text-[14.5px] font-bold">{title}</div>
+        <div className="text-emphasis font-bold">{title}</div>
         <div className="text-[11.5px] opacity-90">{sub}</div>
       </div>
       <button

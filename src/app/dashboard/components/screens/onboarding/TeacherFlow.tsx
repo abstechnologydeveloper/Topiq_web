@@ -75,7 +75,7 @@ export function TeacherDetails({
             return (
               <button
                 key={id}
-                className={`shrink-0 cursor-pointer whitespace-nowrap rounded-card border-1_5 border-ash-line bg-surface px-[13px] py-[7px] text-[12.5px] font-bold text-ash ${selectedSubjects.includes(id) ? "border-thread bg-thread-soft text-thread" : ""}`}
+                className={`shrink-0 cursor-pointer whitespace-nowrap rounded-card border-1_5 border-ash-line bg-surface px-[13px] py-[7px] text-meta font-bold text-ash ${selectedSubjects.includes(id) ? "border-thread bg-thread-soft text-thread" : ""}`}
                 onClick={() => onToggleSubject(id)}
               >
                 {s.icon} {s.name}
@@ -96,7 +96,7 @@ export function TeacherDetails({
           value={teacherSchoolCode}
           onChange={(e) => onChangeTeacherSchoolCode(e.target.value)}
         />
-        <p className="mt-1.5 text-[11px] leading-[1.5] text-ash">
+        <p className="mt-1.5 text-fine leading-[1.5] text-ash">
           Have a code from your school admin? Enter it and your AbSTopiq for Teachers plan is
           covered by your school, free. No code — teach independently on the free plan, or
           upgrade anytime.

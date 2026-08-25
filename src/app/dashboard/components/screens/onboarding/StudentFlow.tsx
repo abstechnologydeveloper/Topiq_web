@@ -169,7 +169,7 @@ export function StudentDetails2({
           {OB_GRADES.ng.map((g) => (
             <div
               key={g}
-              className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGrade ? "border-thread bg-thread-soft text-thread" : ""}`}
+              className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-body font-bold ${g === selectedGrade ? "border-thread bg-thread-soft text-thread" : ""}`}
               onClick={() => onPickGrade(g)}
             >
               {g}
@@ -183,7 +183,7 @@ export function StudentDetails2({
           {["Female", "Male"].map((g) => (
             <div
               key={g}
-              className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${g === selectedGender ? "border-thread bg-thread-soft text-thread" : ""}`}
+              className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-body font-bold ${g === selectedGender ? "border-thread bg-thread-soft text-thread" : ""}`}
               onClick={() => onPickGender(g)}
             >
               {g}
@@ -197,7 +197,7 @@ export function StudentDetails2({
           {["Science", "Arts", "Commercial"].map((t) => (
             <div
               key={t}
-              className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-[13px] font-bold ${t === selectedTrack ? "border-thread bg-thread-soft text-thread" : ""}`}
+              className={`cursor-pointer rounded-tile border-1_5 border-ash-line px-1 py-[11px] text-center text-body font-bold ${t === selectedTrack ? "border-thread bg-thread-soft text-thread" : ""}`}
               onClick={() => onPickTrack(t)}
             >
               {t}
@@ -217,7 +217,7 @@ export function StudentDetails2({
           value={studentSchoolCode}
           onChange={(e) => onChangeStudentSchoolCode(e.target.value)}
         />
-        <p className="mt-1.5 text-[11px] leading-[1.5] text-ash">
+        <p className="mt-1.5 text-fine leading-[1.5] text-ash">
           Ask your school for their AbSTopiq code — it links your account to their plan, so
           you're covered free. Don't have one? Leave blank, you can add it later.
         </p>

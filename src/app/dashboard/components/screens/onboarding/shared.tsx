@@ -4,7 +4,7 @@ export const LABEL = "mb-1.5 block text-label font-bold text-ink-soft";
 export const OB_FIELD = "mb-4";
 export const MODE_BADGE =
   "block mx-auto mb-3.5 w-fit text-center font-mono text-[9.5px] font-bold uppercase tracking-[0.04em] bg-paper-dim text-ash px-[7px] py-[2px] rounded-lg";
-export const BACK = "mb-4 flex cursor-pointer items-center gap-1.5 text-[12.5px] font-semibold text-ash";
+export const BACK = "mb-4 flex cursor-pointer items-center gap-1.5 text-meta font-semibold text-ash";
 export const FINISH_BTN =
   "mt-1.5 w-full cursor-pointer rounded-btn border-none bg-ink px-[13px] py-[13px] text-input font-bold text-paper";
 

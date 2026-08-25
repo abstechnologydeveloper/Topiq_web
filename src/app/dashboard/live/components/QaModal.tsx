@@ -45,7 +45,7 @@ export default function QaModal({
             {classes.map((c) => (
               <button
                 key={c.id}
-                className={`shrink-0 cursor-pointer whitespace-nowrap rounded-card border-1_5 bg-surface px-[13px] py-[7px] text-[12.5px] font-bold ${qaClass === c.id ? "border-thread bg-thread-soft text-thread" : "border-ash-line text-ash"}`}
+                className={`shrink-0 cursor-pointer whitespace-nowrap rounded-card border-1_5 bg-surface px-[13px] py-[7px] text-meta font-bold ${qaClass === c.id ? "border-thread bg-thread-soft text-thread" : "border-ash-line text-ash"}`}
                 onClick={() => onSelectClass(c.id)}
               >
                 {c.name}
@@ -53,7 +53,7 @@ export default function QaModal({
             ))}
           </div>
         </div>
-        <button className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-[11px] text-[13px] font-bold text-white" onClick={onConfirm}>Add →</button>
+        <button className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-[11px] text-body font-bold text-white" onClick={onConfirm}>Add →</button>
       </div>
     </div>
   );

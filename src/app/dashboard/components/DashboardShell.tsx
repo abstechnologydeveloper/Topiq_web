@@ -152,20 +152,20 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             </button>
             <div className="rounded-card border-2 border-thread bg-[linear-gradient(160deg,var(--thread-soft),var(--surface))] px-5 py-7.5 text-center">
               <div className="mb-2 text-[34px]">🎓</div>
-              <div className="font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-thread">Certificate of Completion</div>
+              <div className="font-mono text-fine font-bold uppercase tracking-[0.08em] text-thread">Certificate of Completion</div>
               <div className="mt-2.5 text-[19px] font-extrabold text-ink">
                 {profile.firstName || "Student"} {profile.lastName || ""}
               </div>
-              <div className="mt-1 text-[12.5px] text-ash">has completed every topic in</div>
+              <div className="mt-1 text-meta text-ash">has completed every topic in</div>
               <div className="mt-1.5 text-base font-bold text-thread">
                 {subjects[certSubject].icon} {subjects[certSubject].name}
               </div>
-              <div className="mt-4 font-mono text-[11px] text-ash">
+              <div className="mt-4 font-mono text-fine text-ash">
                 AbSTopiq · {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
               </div>
             </div>
             <button
-              className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-2.75 text-[13px] font-bold text-white"
+              className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-2.75 text-body font-bold text-white"
               onClick={() => setCertSubject(null)}
             >
               Done

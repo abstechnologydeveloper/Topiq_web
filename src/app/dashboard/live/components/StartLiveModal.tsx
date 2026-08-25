@@ -9,7 +9,7 @@ const SUBJECT_LOOKUP = SUBJECTS as unknown as Record<string, SubjectData>;
 
 const PICK_ROW = "mb-4 flex max-h-[220px] flex-col gap-2 overflow-y-auto";
 const PICK_ITEM =
-  "flex cursor-pointer items-center gap-2.5 rounded-tile border-1_5 px-3 py-2.5 text-[13px] font-semibold";
+  "flex cursor-pointer items-center gap-2.5 rounded-tile border-1_5 px-3 py-2.5 text-body font-semibold";
 const PICKER_LABEL =
   "mb-2 block font-mono text-[10.5px] font-bold uppercase tracking-[0.05em] text-ash";
 
@@ -45,11 +45,11 @@ export default function StartLiveModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex animate-[fade_.2s_ease] items-end justify-center bg-[rgba(20,23,43,0.55)] nav:items-center">
-      <div className="mx-auto max-h-[82vh] w-full max-w-[520px] overflow-y-auto rounded-t-[20px] bg-paper px-5 pt-[22px] pb-7 nav:rounded-[20px]">
-        <button className="float-right h-[30px] w-[30px] cursor-pointer rounded-full border-none bg-paper-dim text-sm" onClick={closeLiveTeach} aria-label="Close">✕</button>
+    <div className="fixed inset-0 z-100 flex animate-[fade_.2s_ease] items-end justify-center bg-[rgba(20,23,43,0.55)] nav:items-center">
+      <div className="mx-auto max-h-[82vh] w-full max-w-130 overflow-y-auto rounded-t-[20px] bg-paper px-5 pt-5.5 pb-7 nav:rounded-[20px]">
+        <button className="float-right h-7.5 w-7.5 cursor-pointer rounded-full border-none bg-paper-dim text-sm" onClick={closeLiveTeach} aria-label="Close">✕</button>
         <h2 className="clear-both mb-2.5 font-display text-[20px] font-semibold">Start a live session</h2>
-        <p className="mb-4 text-[13px] text-ash">
+        <p className="mb-4 text-body text-ash">
           Pick a class and a topic — every student in that class sees it appear live on their Home,
           and can join you in Learn → Practice → Interactive.
         </p>
@@ -90,7 +90,7 @@ export default function StartLiveModal() {
           </div>
         )}
         <button
-          className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-[11px] text-[13px] font-bold text-white disabled:bg-ash-line disabled:text-ash disabled:opacity-45 disabled:cursor-not-allowed"
+          className="mt-2 cursor-pointer rounded-[22px] border-none bg-thread px-5 py-[11px] text-body font-bold text-white disabled:bg-ash-line disabled:text-ash disabled:opacity-45 disabled:cursor-not-allowed"
           onClick={confirmStart}
           disabled={!confirmReady}
         >

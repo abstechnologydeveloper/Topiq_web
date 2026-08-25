@@ -27,7 +27,7 @@ export default function RoleStep({
       >
         <span className="shrink-0 text-[26px]">🎓</span>
         <div>
-          <div className="text-[14.5px] font-bold">Student</div>
+          <div className="text-emphasis font-bold">Student</div>
           <div className="text-label text-ash">Learn, practice, and prep for exams</div>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default function RoleStep({
       >
         <span className="shrink-0 text-[26px]">🧑‍🏫</span>
         <div>
-          <div className="text-[14.5px] font-bold">Teacher</div>
+          <div className="text-emphasis font-bold">Teacher</div>
           <div className="text-label text-ash">Track a class and set assignments</div>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function RoleStep({
       >
         <span className="shrink-0 text-[26px]">🏫</span>
         <div>
-          <div className="text-[14.5px] font-bold">School / Institution</div>
+          <div className="text-emphasis font-bold">School / Institution</div>
           <div className="text-label text-ash">Set up AbSTopiq for your whole school</div>
         </div>
       </div>

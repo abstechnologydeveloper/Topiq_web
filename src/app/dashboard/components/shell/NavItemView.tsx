@@ -78,9 +78,9 @@ export function NavItemView({
         : "flex items-center gap-2.5 rounded-xl px-2.5 py-[9px] cursor-pointer hover:bg-paper-dim";
     const nameCls =
       surface === "rail"
-        ? "text-[13px] font-bold whitespace-nowrap overflow-hidden text-ellipsis"
+        ? "text-body font-bold whitespace-nowrap overflow-hidden text-ellipsis"
         : "text-sub font-bold whitespace-nowrap overflow-hidden text-ellipsis";
-    const roleCls = surface === "rail" ? "text-[10.5px] text-ash" : "text-[11px] text-ash";
+    const roleCls = surface === "rail" ? "text-[10.5px] text-ash" : "text-fine text-ash";
     return (
       <div
         className={`${rowCls} ${active ? "bg-thread-soft" : ""}`}

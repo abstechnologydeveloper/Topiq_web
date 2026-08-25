@@ -58,5 +58,5 @@ export function AttendBadge({ kind }: { kind: "attended" | "missed" | "upcoming"
         ? "bg-coral-soft text-coral"
         : "bg-ember-soft text-ember";
   const label = kind === "attended" ? "✓ Attended" : kind === "missed" ? "✕ Missed" : "Upcoming";
-  return <span className={`shrink-0 rounded-card px-2.5 py-[5px] text-[11px] font-bold ${tone}`}>{label}</span>;
+  return <span className={`shrink-0 rounded-card px-2.5 py-[5px] text-fine font-bold ${tone}`}>{label}</span>;
 }

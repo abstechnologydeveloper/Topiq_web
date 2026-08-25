@@ -66,7 +66,7 @@ export default function AuthStep({ onContinue }: { onContinue: () => void }) {
           </svg>
         </span> Continue with Facebook
       </button>
-      <p className="mt-4 text-center text-[11px] leading-[1.6] text-ash">
+      <p className="mt-4 text-center text-fine leading-[1.6] text-ash">
         By continuing, you agree to AbSTopiq's Terms of Service and Privacy Policy.
       </p>
     </>

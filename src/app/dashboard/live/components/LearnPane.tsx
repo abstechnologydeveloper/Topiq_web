@@ -11,14 +11,14 @@ export default function LearnPane({
 }) {
   return (
     <div>
-      <span className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-thread">
+      <span className="mb-1.5 block font-mono text-fine font-semibold uppercase tracking-[0.06em] text-thread">
         Following along with your teacher
       </span>
       <div>
         {sections.map((sec, i) => (
           <div key={i}>
             {sec.heading && <div className="mt-1 mb-2 font-display text-[16.5px] font-semibold">{sec.heading}</div>}
-            <p className="mb-3.5 text-[14.5px] leading-[1.7] text-ink-soft">{sec.text}</p>
+            <p className="mb-3.5 text-emphasis leading-[1.7] text-ink-soft">{sec.text}</p>
           </div>
         ))}
         {takeaway && (
@@ -26,7 +26,7 @@ export default function LearnPane({
             <span className="shrink-0 text-lg">💡</span>
             <div>
               <div className="mb-[3px] font-mono text-[10px] uppercase tracking-[0.05em] text-ember-soft">Key takeaway</div>
-              <div className="text-[13px] leading-[1.55]">{takeaway}</div>
+              <div className="text-body leading-[1.55]">{takeaway}</div>
             </div>
           </div>
         )}
