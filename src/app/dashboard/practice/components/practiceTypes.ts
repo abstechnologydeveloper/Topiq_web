@@ -1,4 +1,4 @@
-import type { SubjectData } from "./DiscoverScreen";
+import type { SubjectData } from "../../components/screens/DiscoverScreen";
 
 export type PQuestion = {
   tag: string;

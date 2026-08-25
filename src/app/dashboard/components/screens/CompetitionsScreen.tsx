@@ -3,7 +3,7 @@
 import { COMPETITIONS } from "../../data/challenges";
 import type { SubjectData } from "./DiscoverScreen";
 import { BackChevron } from "./shared";
-import type { SessionCfg } from "./practiceTypes";
+import type { SessionCfg } from "../../practice/components/practiceTypes";
 
 type Props = {
   subjects: Record<string, SubjectData>;

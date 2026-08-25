@@ -17,7 +17,7 @@ import { TIMETABLE, TASKS, EXAMS } from "../data/workspace";
 import { ASSIGNMENTS, CLASSES, FREE_TEACHER_ASSIGNMENTS } from "../data/teacher";
 import { TAB_TO_PATH } from "./navConfig";
 import type { SubjectData } from "./screens/DiscoverScreen";
-import type { SessionCfg } from "./screens/practiceTypes";
+import type { SessionCfg } from "../practice/components/practiceTypes";
 
 export type Pane = "overview" | "learn" | "flash";
 export type Student = { grade: string };

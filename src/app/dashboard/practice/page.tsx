@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useDashboard } from "../components/DashboardContext";
-import PracticeHub from "../components/screens/PracticeHub";
+import PracticeHub from "./components/PracticeHub";
 
 function PracticeContent() {
   const { subjects, participated, startSession } = useDashboard();

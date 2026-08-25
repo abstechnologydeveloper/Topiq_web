@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { CLASSES, ROSTERS, TEACHER_TODAY_SCHEDULE, TIMETABLE } from "../../data";
 import { SUBJECTS } from "../../data/subjects";
 import type { SubjectData } from "../../components/screens/DiscoverScreen";
-import type { SessionCfg } from "../../components/screens/practiceTypes";
+import type { SessionCfg } from "../../practice/components/practiceTypes";
 import { BackChevron } from "../../components/screens/shared";
 import { useDashboard } from "../../components/DashboardContext";
 import LiveHub from "./LiveHub";

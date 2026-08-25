@@ -1,7 +1,7 @@
 "use client";
 
 import { useDashboard } from "../components/DashboardContext";
-import PracticeSession from "../components/screens/PracticeSession";
+import PracticeSession from "../practice/components/PracticeSession";
 import ComingSoon from "../components/screens/ComingSoon";
 
 export default function PracticeSessionPage() {
