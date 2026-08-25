@@ -30,6 +30,10 @@
   --text-sub--line-height: 1.6;
   --text-label: 12px;
   --text-input: 14px;
+  --text-body: 13px;
+  --text-meta: 12.5px;
+  --text-fine: 11px;
+  --text-emphasis: 14.5px;
 
   --radius-input: 10px;
   --radius-tile: 12px;

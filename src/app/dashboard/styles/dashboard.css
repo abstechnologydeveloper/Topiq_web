@@ -44,13 +44,9 @@
 
   /* ---- Search bar (global signature: one search across every subject/board) ---- */
   .search-wrap{ position:relative; }
-  .search-bar{ display:flex; align-items:center; gap:10px; background:var(--surface); border:1.5px solid var(--ash-line); border-radius:26px; padding:12px 16px; margin-bottom:14px; }
   .search-dropdown{ display:none; position:absolute; top:calc(100% - 6px); left:0; right:0; z-index:15; background:var(--surface); border:1px solid var(--ash-line); border-radius:16px; padding:4px 0; max-height:340px; overflow-y:auto; box-shadow:0 16px 36px rgba(0,0,0,0.10); }
   .search-dropdown.show{ display:block; }
   .search-dropdown .result-row{ padding:12px 16px; }
-  .search-bar svg{ flex-shrink:0; color:var(--ash); }
-  .search-bar input{ flex:1; border:none; outline:none; font-size:14.5px; font-family:'Inter',sans-serif; background:none; }
-  .search-bar .board-pill{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; color:var(--thread); background:var(--thread-soft); padding:4px 9px; border-radius:14px; flex-shrink:0; }
 
   .chip-row, .ask-context-row, .subnav, .board-switch{
     scrollbar-width: none;
@@ -564,7 +560,6 @@
   .comp-cta{ background:var(--ink); color:var(--paper); border:none; padding:9px 16px; border-radius:20px; font-weight:700; font-size:12.5px; cursor:pointer; }
 
   /* ---- Mode switching: Student vs Teacher/School, same shell ---- */
-  .mode-badge{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:var(--paper-dim); color:var(--ash); padding:2px 7px; border-radius:8px; margin-left:2px; }
 
   /* ---- Teacher dashboard / classes / assignments ---- */
   .teacher-stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }

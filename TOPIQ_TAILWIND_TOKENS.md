@@ -52,6 +52,10 @@ Mirror of the current `@theme inline` block in `src/app/globals.css`. Keep these
 | `--text-sub` | `text-sub` | 13.5px | line-height 1.6 bundled via `--text-sub--line-height` |
 | `--text-label` | `text-label` | 12px | field labels, small captions |
 | `--text-input` | `text-input` | 14px | input/button body text |
+| `--text-body` | `text-body` | 13px | general body copy |
+| `--text-meta` | `text-meta` | 12.5px | metadata, chips, secondary buttons |
+| `--text-fine` | `text-fine` | 11px | fine print, badges |
+| `--text-emphasis` | `text-emphasis` | 14.5px | emphasized list titles |
 
 ### Radii
 
@@ -100,11 +104,8 @@ Also exported from `shared.tsx`: `BackIcon`, `PersonSVG`, `CameraBadge` (shared 
 
 - `border-[1.5px]` — 15+ occurrences → exceeds threshold. **Promoted** as `border-1_5` (see §2 Custom utilities).
 - Watch list (below 5× threshold, do NOT tokenize yet):
-  - `text-[12.5px]` ×4
   - `text-[26px]` ×3
-  - `text-[14.5px]` ×3
-  - `text-[13px]` ×3
-  - `text-[11px]` ×3
+  - `max-w-[420px]` ×2
 
 Re-check counts whenever converting a new screen; promote anything that crosses 5+.
 
