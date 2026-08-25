@@ -28,7 +28,7 @@ export default function LearnPane({
         node: (
           <GroundedReply
             intro={`Here's the grounded explanation, tied directly to your ${s.name} syllabus.`}
-            chipLabel={`§ ${s.name} — ${s.topics[0].t}`}
+            chipLabel={`${s.name} — ${s.topics[0].t}`}
           />
         ),
       },
@@ -50,7 +50,7 @@ export default function LearnPane({
           node: (
             <GroundedReply
               intro={`Here's the grounded explanation for that, tied to your ${s.name} syllabus rather than a generic web answer.`}
-              chipLabel={`§ ${s.name} — ${s.topics[0].t}`}
+              chipLabel={`${s.name} — ${s.topics[0].t}`}
             />
           ),
         },
@@ -93,7 +93,7 @@ export default function LearnPane({
               </div>
               <div className={GROUNDING}>
                 <ThreadMark />
-                <span className={CHIP}>{t.ref || `§ ${s.name}`}</span>
+                <span className={CHIP}>{t.ref || `${s.name}`}</span>
               </div>
             </div>
           </div>

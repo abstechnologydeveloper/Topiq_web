@@ -66,7 +66,7 @@ export default function ArticleModal({ cfg, subjects, diagrams, onClose, onDone 
           node: (
             <GroundedReply
               intro={`Here's the grounded explanation for that, tied to your ${s.name} syllabus rather than a generic web answer.`}
-              chipLabel={`§ ${s.name} — ${cfg.title}`}
+              chipLabel={`${s.name} — ${cfg.title}`}
             />
           ),
         },

@@ -60,7 +60,7 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
       takeaway:
         topic.takeaway ||
         `You now understand the core idea behind ${topic.t.toLowerCase()}. Head to Practice to test yourself on it.`,
-      ref: `§ ${s.name} — ${topic.t}`,
+      ref: `${s.name} — ${topic.t}`,
       subjectId,
       doneMessage: "Mark as done ✓",
       isTutorial: false,
@@ -85,7 +85,7 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
       showTermGrid: false,
       quickCheck: null,
       takeaway: null,
-      ref: t.ref || `§ ${s.name}`,
+      ref: t.ref || `${s.name}`,
       subjectId,
       doneMessage: "Mark as done ✓",
       isTutorial: true,
