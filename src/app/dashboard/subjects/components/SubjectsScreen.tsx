@@ -1,6 +1,6 @@
 "use client";
 
-import type { SubjectData } from "./DiscoverScreen";
+import type { SubjectData } from "../../components/screens/DiscoverScreen";
 
 type Props = {
   subjects: Record<string, SubjectData>;
@@ -10,7 +10,7 @@ type Props = {
 
 export default function SubjectsScreen({ subjects, student, openSubject }: Props) {
   return (
-    <section className="screen active" id="screen-subjects">
+    <section className="block animate-[fade_.25s_ease] p-0">
       <span className="eyebrow">Your library</span>
       <h1 className="page-title">Subjects</h1>
       <p className="page-sub">Every subject, grounded in your syllabus — no board attached to learning.</p>

@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useDashboard } from "../../components/DashboardContext";
-import SubjectHub from "../../components/screens/SubjectHub";
+import SubjectHub from "../components/SubjectHub";
 import ComingSoon from "../../components/screens/ComingSoon";
 
 export default function SubjectHubPage() {

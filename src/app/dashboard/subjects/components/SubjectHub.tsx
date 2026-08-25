@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SUBJECT_DIAGRAMS } from "../../data/subjects";
-import { BackChevron, MicIcon, SearchIcon, SendIcon, SpeakButtonSVG, ThreadMark } from "./shared";
+import { BackChevron, MicIcon, SearchIcon, SendIcon, SpeakButtonSVG, ThreadMark } from "../../components/screens/shared";
 import ArticleModal, { type ArticleCfg } from "./ArticleModal";
-import type { SubjectData } from "./DiscoverScreen";
+import type { SubjectData } from "../../components/screens/DiscoverScreen";
 
 export type ArticleTarget = { kind: "topic" | "tutorial"; index: number };
 
@@ -20,6 +20,13 @@ type Props = {
 type Bubble =
   | { role: "user"; text: string }
   | { role: "ai"; node: React.ReactNode };
+
+const TUT_CARD =
+  "mb-2.5 flex cursor-pointer gap-[13px] rounded-btn border border-ash-line bg-surface p-3 transition-[border-color,transform] duration-150 hover:border-thread hover:-translate-y-px";
+const FLASH_ARROW =
+  "flex h-[34px] w-[34px] shrink-0 cursor-pointer items-center justify-center rounded-full border-1_5 border-ash-line bg-surface text-ink transition-colors duration-150 hover:bg-paper-dim disabled:opacity-35 disabled:cursor-default";
+const FLASH_FACE =
+  "absolute inset-0 flex items-center justify-center rounded-card p-6 text-center text-base font-semibold [backface-visibility:hidden]";
 
 export default function SubjectHub({ subjectId, subjects, student, goTab, onDone, initialPane = "overview" }: Props) {
   const s = subjects[subjectId];
@@ -218,21 +225,17 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
 
   return (
     <>
-      <section className="screen active" id="screen-hub">
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-          <div className="back-row" style={{ marginBottom: 0 }} onClick={() => goTab("subjects")}>
+      <section className="block animate-[fade_.25s_ease] p-0">
+        <div className="mb-3.5 flex items-center justify-between">
+          <div className="back-row !mb-0" onClick={() => goTab("subjects")}>
             <BackChevron />
             Subjects
           </div>
           <span className="mode-badge">{student.grade}</span>
         </div>
-        <div className="hub-header">
-          <div>
-            <h1 className="page-title" style={{ marginBottom: 0 }}>
-              {s.icon} {s.name}
-            </h1>
-          </div>
-        </div>
+        <h1 className="font-display mb-3.5 text-[25px] font-semibold tracking-[-0.01em]">
+          {s.icon} {s.name}
+        </h1>
 
         <div className="search-bar">
           <SearchIcon size={18} />
@@ -257,7 +260,7 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
         </div>
 
         {pane === "overview" && (
-          <div className="hub-pane active">
+          <div className="block animate-[fade_.2s_ease]">
             <div className="recommend-card">
               <div>
                 <div className="lbl">Recommended next</div>
@@ -265,7 +268,7 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
               </div>
               <button onClick={() => openTopicArticle(recIdx)}>Start</button>
             </div>
-            <div className="card" style={{ padding: "4px 16px" }}>
+            <div className="rounded-[18px] border border-ash-line bg-surface px-4 py-1">
               {filteredTopics.length ? (
                 filteredTopics.map(({ t, i }) => (
                   <div key={i} className="topic-row" onClick={() => openTopicArticle(i)}>
@@ -284,40 +287,38 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
                   </div>
                 ))
               ) : (
-                <p style={{ padding: "14px 4px", color: "var(--ash)", fontSize: 13 }}>
-                  No topics match that search.
-                </p>
+                <p className="px-1 py-3.5 text-[13px] text-ash">No topics match that search.</p>
               )}
             </div>
           </div>
         )}
 
         {pane === "learn" && (
-          <div className="hub-pane active">
+          <div className="block animate-[fade_.2s_ease]">
             <span className="eyebrow">Watch, read &amp; understand</span>
             <div>
               {s.tutorials.map((t, i) => (
-                <div key={i} className="tut-card" onClick={() => openTutorial(i)}>
-                  <div className="tut-thumb" style={{ background: `var(--${s.color}-soft)` }}>
+                <div key={i} className={TUT_CARD} onClick={() => openTutorial(i)}>
+                  <div className="relative flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-tile text-2xl" style={{ background: `var(--${s.color}-soft)` }}>
                     {t.icon}
                     {t.format === "Video" ? (
-                      <div className="play-overlay">
-                        <svg viewBox="0 0 24 24" fill="rgba(20,23,43,0.55)">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <svg className="h-[26px] w-[26px]" viewBox="0 0 24 24" fill="rgba(20,23,43,0.55)">
                           <circle cx="12" cy="12" r="11" />
                         </svg>
-                        <svg style={{ position: "absolute" }} viewBox="0 0 24 24" fill="#fff">
+                        <svg className="absolute h-[26px] w-[26px]" viewBox="0 0 24 24" fill="#fff">
                           <path d="M9 6v12l9-6z" />
                         </svg>
                       </div>
                     ) : null}
                   </div>
-                  <div className="tut-body">
-                    <div className="tut-title">
-                      <span className="tut-step">{i + 1}</span>
+                  <div className="min-w-0 flex-1 pt-0.5">
+                    <div className="text-input mb-[3px] font-bold leading-[1.3]">
+                      <span className="mr-[5px] inline-flex h-[18px] w-[18px] items-center justify-center rounded-full bg-paper-dim text-[9.5px] font-bold">{i + 1}</span>
                       {t.title}
                     </div>
-                    <div className="tut-meta">
-                      <span className="format-tag">{t.format === "Video" ? "▶ Watch" : "📖 Read"}</span>
+                    <div className="mb-1.5 flex items-center gap-2 text-[11.5px] text-ash">
+                      <span className="font-mono font-semibold">{t.format === "Video" ? "▶ Watch" : "📖 Read"}</span>
                       <span>{t.mins}</span>
                     </div>
                     <div className="grounding">
@@ -329,14 +330,12 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
               ))}
             </div>
 
-            <span className="eyebrow" style={{ marginTop: 6 }}>
-              Still stuck? Ask Sabi AI right here
-            </span>
+            <span className="eyebrow mt-1.5">Still stuck? Ask Sabi AI right here</span>
             <div className="usage-chip">
               <span className="uc-label">3 free Sabi AI questions left today</span>
               <span className="uc-link">Upgrade</span>
             </div>
-            <div className="chat-scroll" style={{ marginBottom: 12 }}>
+            <div className="chat-scroll mb-3">
               {hubChat.map((m, i) =>
                 m.role === "user" ? (
                   <div key={i} className="bubble user">
@@ -371,12 +370,12 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
         )}
 
         {pane === "flash" && (
-          <div className="hub-pane active">
+          <div className="block animate-[fade_.2s_ease]">
             {!flashDone ? (
-              <div className="flash-wrap">
-                <div className="flash-carousel">
+              <div className="flex flex-col items-center">
+                <div className="flex w-full max-w-[420px] items-center gap-2.5">
                   <button
-                    className="flash-arrow"
+                    className={FLASH_ARROW}
                     onClick={flashPrev}
                     title="Previous card"
                     disabled={flashPrevDisabled}
@@ -386,21 +385,22 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
                     </svg>
                   </button>
                   <div
-                    className={`flashcard${flashFlipped ? " flipped" : ""}`}
-                    id="flashcard"
+                    className={`h-[190px] flex-1 cursor-pointer [perspective:1000px]`}
                     onClick={flipFlash}
                   >
-                    <div className="flashcard-inner">
-                      <div className="flashcard-face flashcard-front">
+                    <div
+                      className={`relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] ${flashFlipped ? "[transform:rotateY(180deg)]" : ""}`}
+                    >
+                      <div className={`${FLASH_FACE} border-1_5 border-violet bg-violet-soft text-ink`}>
                         {cards[flashIndex] ? cards[flashIndex].front : ""}
                       </div>
-                      <div className="flashcard-face flashcard-back">
+                      <div className={`${FLASH_FACE} bg-ink text-input font-medium leading-[1.5] text-paper [transform:rotateY(180deg)]`}>
                         {cards[flashIndex] ? cards[flashIndex].back : ""}
                       </div>
                     </div>
                   </div>
                   <button
-                    className="flash-arrow"
+                    className={FLASH_ARROW}
                     onClick={flashNext}
                     title="Next card"
                     disabled={flashNextDisabled}
@@ -410,25 +410,23 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
                     </svg>
                   </button>
                 </div>
-                <div className="flash-progress">{flashProgressText}</div>
-                <div className="rate-row">
-                  <button className={`rate-btn rate-again${flashFlipped ? " show" : ""}`} onClick={() => rateFlash("again")}>
+                <div className="mb-3.5 mt-2.5 text-center font-mono text-xs text-ash">{flashProgressText}</div>
+                <div className="mx-auto flex w-full max-w-[420px] gap-2">
+                  <button className="flex-1 cursor-pointer rounded-tile border-1_5 border-ash-line bg-surface px-1 py-2.5 text-xs font-bold text-coral" onClick={() => rateFlash("again")}>
                     Again
                   </button>
-                  <button className={`rate-btn rate-good${flashFlipped ? " show" : ""}`} onClick={() => rateFlash("good")}>
+                  <button className="flex-1 cursor-pointer rounded-tile border-1_5 border-ash-line bg-surface px-1 py-2.5 text-xs font-bold text-ember" onClick={() => rateFlash("good")}>
                     Good
                   </button>
-                  <button className={`rate-btn rate-easy${flashFlipped ? " show" : ""}`} onClick={() => rateFlash("easy")}>
+                  <button className="flex-1 cursor-pointer rounded-tile border-1_5 border-ash-line bg-surface px-1 py-2.5 text-xs font-bold text-thread" onClick={() => rateFlash("easy")}>
                     Easy
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="flash-done card">
-                <div className="eyebrow" style={{ justifyContent: "center" }}>
-                  Deck reviewed
-                </div>
-                <p style={{ fontSize: 14, color: "var(--ash)", marginBottom: 12 }}>
+              <div className="card p-6 text-center">
+                <div className="eyebrow justify-center">Deck reviewed</div>
+                <p className="mb-3 text-sm text-ash">
                   Cards marked &quot;Again&quot; will resurface sooner next session.
                 </p>
                 <button
@@ -439,16 +437,7 @@ export default function SubjectHub({ subjectId, subjects, student, goTab, onDone
                     setFlashReview(false);
                     setFlashAgainQueue([]);
                   }}
-                  style={{
-                    background: "var(--ink)",
-                    color: "var(--paper)",
-                    border: "none",
-                    padding: "10px 20px",
-                    borderRadius: 20,
-                    fontWeight: 700,
-                    fontSize: "12.5px",
-                    cursor: "pointer",
-                  }}
+                  className="cursor-pointer rounded-[20px] border-none bg-ink px-5 py-2.5 text-[12.5px] font-bold text-paper"
                 >
                   Review again
                 </button>
